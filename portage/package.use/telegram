@@ -1,0 +1,4 @@
+net-im/telegram-desktop -webrtc
+# required by net-im/telegram-desktop-2.1.13::gentoo
+# # required by net-im/telegram-desktop (argument)
+>=media-video/ffmpeg-4.2.4 opus

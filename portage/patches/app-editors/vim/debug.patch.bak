@@ -1,0 +1,13 @@
+diff --git a/src/misc1.c b/src/misc1.c
+index da08bb2..ecabd5c 100644
+--- a/src/misc1.c
++++ b/src/misc1.c
+@@ -690,7 +690,7 @@ f_mode(typval_T *argvars, typval_T *rettv)
+     }
+     else
+     {
+-	buf[0] = 'n';
++       buf[0] = 'c';
+	if (finish_op)
+	{
+	    buf[1] = 'o';

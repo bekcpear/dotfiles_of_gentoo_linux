@@ -1,0 +1,15 @@
+[Desktop Entry]
+Name=QQ Music (Firejail)
+Name[zh_CN]=QQ 音乐 (Firejail)
+Name[zh_HK]=QQ 音樂 (Firejail)
+Name[zh_TW]=QQ 音樂 (Firejail)
+Exec=firejail /opt/bin/qqmusic-bin
+Terminal=false
+Type=Application
+Icon=qqmusic
+StartupWMClass=QQmusic
+Comment=QQ Music
+Comment[zh_CN]=QQ 音乐
+Comment[zh_HK]=QQ 音樂
+Comment[zh_TW]=QQ 音樂
+Categories=AudioVideo;

@@ -1,0 +1,29 @@
+#echo ${PV}
+#echo ${INHERITED}
+#echo ${EBUILD_PHASE}
+#set > /tmp/popo-${EBUILD_PHASE}.log || set > /tmp/popop-${EBUILD_PHASE}.log
+
+#if [[ ${EBUILD_PHASE} == "unpack" && ${INHERITED} =~ git\-r3 ]]; then
+#  git config --global http.proxy 'socks5h://127.0.0.1:1080'
+#fi
+
+if [[ ${EBUILD_PHASE} == "setup" ]]; then
+	local OLDEBUILD="/var/db/pkg/"${CATEGORY}"/"${PN}"-"${REPLACING_VERSIONS}"/"${PN}"-"${REPLACING_VERSIONS}".ebuild"
+	local MYNDATE=$(date +%Y/%m/%d/%HH)
+	local MYNTIME=$(date +%T%z)
+	local MYLOGDIR="/var/log/ebuild-diff-cus"
+	local MYDIR=${MYLOGDIR}"/"${MYNDATE}"/"${CATEGORY}"/"${PN}
+	local MYFILE=${MYDIR}"/"${REPLACING_VERSIONS}"-TO-"${PVR}"@T"${MYNTIME}".diff"
+	if [[ "${REPLACING_VERSIONS}"x == x ]]; then
+		OLDEBUILD=/dev/null
+		MYFILE=${MYDIR}"/NEW-"${PVR}"@T"${MYNTIME}".diff"
+	fi
+	if [ -z ${OLDEBUILD} ]; then
+		OLDEBUILD=/dev/null
+	fi
+	local DIFFC=$(diff $OLDEBUILD $EBUILD 2>/dev/null)
+	if [[ "${DIFFC}"x != x ]]; then
+		eval "mkdir -p '${MYDIR}'"
+		printf "%s" "${DIFFC}" >> ${MYFILE}
+	fi
+fi

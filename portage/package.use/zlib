@@ -1,0 +1,8 @@
+# required by sys-libs/libunwind-1.5.0::gentoo[zlib]
+# required by dev-cpp/glog-0.4.0::gentoo
+# required by app-i18n/librime-1.5.3-r1::gentoo
+# required by app-i18n/rime-data-0.38.20180515::gentoo
+# required by app-i18n/fcitx-rime-0.3.2::gentoo
+# required by @selected
+# required by @world (argument)
+>=sys-libs/zlib-1.2.11-r2 static-libs

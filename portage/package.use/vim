@@ -1,0 +1,2 @@
+app-editors/vim python lua terminal cscope perl racket vim-pager ruby tcl PYTHON_SINGLE_TARGET: -python3_7 python3_8
+app-editors/gvim python lua terminal

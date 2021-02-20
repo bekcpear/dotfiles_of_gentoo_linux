@@ -1,0 +1,12 @@
+diff --git a/src/TerminalDisplay.cpp b/src/TerminalDisplay.cpp
+index fd0c996..a6da25a 100644
+--- a/src/TerminalDisplay.cpp
++++ b/src/TerminalDisplay.cpp
+@@ -1641,6 +1641,7 @@ void TerminalDisplay::drawContents(QPainter& paint, const QRect& rect)
+                 return currentScript == script;
+             };
+             const auto canBeGrouped = [&](int column) {
++                return false; // Viz's HACK
+                 return _image[loc(column, y)].character <= 0x7e
+                        || (_image[loc(column, y)].rendition & RE_EXTENDED_CHAR)
+                        || (_bidiEnabled && !doubleWidth);

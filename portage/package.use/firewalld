@@ -1,0 +1,4 @@
+#net-firewall/firewalld PYTHON_SINGLE_TARGET: python3_7
+# required by net-firewall/firewalld-0.7.1-r3::gentoo[nftables,iptables]
+# required by firewalld (argument)
+#>=net-firewall/nftables-0.9.6 xtables

@@ -1,0 +1,13 @@
+net-misc/nextcloud-client dolphin
+
+# required by net-misc/nextcloud-client-3.0.2::gentoo
+# required by net-misc/nextcloud-client (argument)
+>=dev-qt/qtwebengine-5.14.2 widgets jumbo-build
+# required by dev-qt/qtwebengine-5.14.2::gentoo
+# required by net-misc/nextcloud-client-3.0.2::gentoo
+# required by net-misc/nextcloud-client (argument)
+>=dev-qt/qtwebchannel-5.14.2 qml
+# required by net-misc/nextcloud-client-3.1.1-r1::gentoo
+# required by @selected
+# required by @world (argument)
+>=dev-libs/qtkeychain-0.10.0 gnome-keyring

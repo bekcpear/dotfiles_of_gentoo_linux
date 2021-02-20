@@ -1,0 +1,45 @@
+# /etc/fstab: static file system information.
+#
+# noatime turns off atimes for increased performance (atimes normally aren't 
+# needed); notail increases performance of ReiserFS (at the expense of storage 
+# efficiency).  It's safe to drop the noatime options if you want and to 
+# switch between notail / tail freely.
+#
+# The root filesystem should have a pass number of either 0 or 1.
+# All other filesystems should have a pass number of 0 or greater than 1.
+#
+# See the manpage fstab(5) for more information.
+#
+
+# <fs>			<mountpoint>	<type>		<opts>		<dump/pass>
+
+# NOTE: If your BOOT partition is ReiserFS, add the notail option to opts.
+#
+# NOTE: Even though we list ext4 as the type here, it will work with ext2/ext3
+#       filesystems.  This just tells the kernel to use the ext4 driver.
+#
+# NOTE: You can use full paths to devices like /dev/sda3, but it is often
+#       more reliable to use filesystem labels or UUIDs. See your filesystem
+#       documentation for details on setting a label. To obtain the UUID, use
+#       the blkid(8) command.
+
+# /dev/sde1
+UUID=A5C5-5CA5    /boot     vfat      rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 2
+
+# /dev/sda2
+UUID=9050-86B8    /boot/efi vfat      rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 2
+
+# /dev/mapper/ct0
+UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /       btrfs   defaults,noatime,ssd,discard,subvolid=258,subvol=/subvol_root 0 1
+UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /home   btrfs   defaults,noatime,ssd,discard,subvolid=259,subvol=/subvol_home 0 2
+UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /var/cache/distfiles   btrfs   defaults,noatime,ssd,discard,subvolid=462,subvol=/subvol_distfiles 0 2
+UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /.sss   btrfs   defaults,noatime,ssd,discard,subvolid=260,subvol=/subvol_snapshots 0 2
+UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /srv/var/lib/docker   btrfs   defaults,noatime,ssd,discard,subvolid=472,subvol=/docker 0 2
+
+# tmpfs
+tmpfs       /tmp                tmpfs    rw,size=8G,nosuid,nodev,noatime,mode=1777 0 0
+tmpfs       /var/tmp            tmpfs    rw,size=32G,mode=775,nosuid,nodev,noatime 0 0
+tmpfs       /var/tmp/portage    tmpfs    rw,size=32G,uid=portage,gid=portage,mode=775,x-mount.mkdir=775,nosuid,nodev,noatime 0 0
+
+# swapfile
+#/swapspace/16G   none                swap     defaults 0 0

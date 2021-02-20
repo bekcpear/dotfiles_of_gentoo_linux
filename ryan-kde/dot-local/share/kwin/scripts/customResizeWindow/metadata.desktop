@@ -1,0 +1,19 @@
+[Desktop Entry]
+Name=Resize window
+Comment=Resize window (custom)
+Icon=preferences-system-windows-move
+
+Type=Service
+
+X-Plasma-API=javascript
+X-Plasma-MainScript=code/main.js
+X-KWin-Border-Activate=true
+X-KDE-PluginInfo-Author=Ryan Qian
+X-KDE-PluginInfo-Email=i@bitbili.net
+X-KDE-PluginInfo-Name=customResizeWindow
+X-KDE-PluginInfo-Version=1.0
+
+X-KDE-PluginInfo-Depends=
+X-KDE-PluginInfo-License=GPL
+X-KDE-ServiceTypes=KWin/Script
+X-KDE-PluginKeyword=customResizeWindow

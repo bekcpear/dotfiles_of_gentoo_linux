@@ -1,0 +1,74 @@
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=100000
+SAVEHIST=100000
+bindkey -v
+KEYTIMEOUT=1
+# End of lines configured by zsh-newuser-install
+
+zstyle :compinstall filename '/home/ryan/.zshrc'
+
+autoload -Uz compinit promptinit
+compinit
+promptinit; prompt gentoo
+
+zstyle ':completion::complete:*' use-cache 1
+zstyle ':completion:*:descriptions' format '%U%d%b%u'
+zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'
+
+#auto change current directory( /etc instead of cd /etc )
+setopt autocd
+#satisfy standard bash-like globbing
+setopt extendedglob
+
+#autoload -Uz add-zsh-hook
+#function xterm_title_precmd () {
+#  print -Pn '\e]0;%n@%m:%1~\a'
+#}
+#function xterm_title_preexec () {
+#  print -Pn "\e]0;%#> ${(p)1} | %n@%m:%1~\a"
+#}
+#add-zsh-hook -Uz precmd xterm_title_precmd
+#add-zsh-hook -Uz preexec xterm_title_preexec
+
+#highlight
+source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
+#autosuggestions
+source /usr/share/zsh/site-functions/zsh-autosuggestions.zsh
+
+PROMPT=" %B%F{11}%~%f %# %(?.%F{154}»%f%F{190}»%f%F{226}»%f.%F{124}»%f%F{160}»%f%F{196}»%f) %b"
+RPROMPT="%(?..%F{196}%? %f)%F{238}%*%f"
+
+#export GOPATH=~/go
+
+alias ssu='\
+	tmux start-server;\
+	tmux new-session -ds ssu -y -;\
+	tmux split-window -dl3;\
+	tmux split-window -dbl10;\
+	tmux send-keys -tssu:0.0 "htop" C-m;\
+	tmux send-keys -tssu:0.1 "emerge -avuDN @world" C-m;\
+	tmux send-keys -tssu:0.2 "watch -n 1 qlop -Htvr" C-m;\
+	tmux attach -tssu'
+
+alias ssuy='\
+	tmux start-server;\
+	tmux new-session -ds ssuy -y -;\
+	tmux split-window -dl3;\
+	tmux split-window -dbl10;\
+	tmux send-keys -tssuy:0.0 "htop" C-m;\
+	tmux send-keys -tssuy:0.1 "emerge -vuDN @world" C-m;\
+	tmux send-keys -tssuy:0.2 "watch -n 1 qlop -Htvr" C-m;\
+	tmux attach -tssuy'
+
+alias essunoti="su -c 'notify-send -u critical \"Pretend emerge DONE\" \"emerge -pvuDN @world done.\"' - ryan"
+alias essu='\
+	tmux start-server;\
+	tmux new-session -ds essu -y -;\
+	tmux split-window -dl3;\
+	tmux split-window -dbl10;\
+	tmux send-keys -tessu:0.0 "htop" C-m;\
+	tmux send-keys -tessu:0.1 "esync && emerge -pvuDN @world; essunoti" C-m;\
+	tmux send-keys -tessu:0.2 "watch -n 1 qlop -Htvr" C-m;\
+	tmux attach -tessu'
+

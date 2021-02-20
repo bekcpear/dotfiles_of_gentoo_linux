@@ -1,0 +1,24 @@
+# created by eselect-repo
+
+
+[benzene-overlay]
+location = /var/db/repos/benzene-overlay
+sync-type = git
+sync-uri = https://github.com/gentoo-mirror/benzene-overlay.git
+
+
+
+[gentoo-zh]
+location = /var/db/repos/gentoo-zh
+sync-type = git
+sync-uri = https://github.com/gentoo-mirror/gentoo-zh.git
+
+[guru]
+location = /var/db/repos/guru
+sync-type = git
+sync-uri = https://github.com/gentoo-mirror/guru.git
+
+[bobwya]
+location = /var/db/repos/bobwya
+sync-type = git
+sync-uri = https://github.com/gentoo-mirror/bobwya.git

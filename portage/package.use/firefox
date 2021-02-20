@@ -1,0 +1,4 @@
+# required by www-client/firefox-78.3.1::gentoo[system-libvpx]
+# required by firefox (argument)
+>=media-libs/libvpx-1.9.0 postproc
+www-client/firefox lto

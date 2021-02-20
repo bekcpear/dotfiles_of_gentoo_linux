@@ -1,0 +1,7 @@
+# package.use# required by dev-lang/spidermonkey-60.5.2_p0-r4::gentoo
+# required by sys-auth/polkit-0.116-r1::gentoo
+# required by sys-auth/elogind-243.7::gentoo[policykit]
+# required by sys-process/procps-3.3.16-r2::gentoo[elogind]
+# required by @system
+# required by @world (argument)
+>=dev-lang/python-2.7.18-r2:2.7 sqlite

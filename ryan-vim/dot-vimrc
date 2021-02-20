@@ -1,0 +1,241 @@
+" Specify a directory for plugins
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+Plug 'easymotion/vim-easymotion'
+Plug 'justinmk/vim-sneak'
+let g:sneak#label = 1
+Plug 'tpope/vim-fugitive'
+function! BuildYCM(info)
+  " info is a dictionary with 3 fields
+  " - name:   name of the plugin
+  " - status: 'installed', 'updated', or 'unchanged'
+  " - force:  set on PlugInstall! or PlugUpdate!
+  if a:info.status == 'installed' || a:info.force
+    !./install.py
+  endif
+endfunction
+Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+let g:ycm_gopls_binary_path = "~/go/bin"
+"let g:ycm_filetype_blacklist = {"go": 1}
+
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+"let g:go_def_mode = 'godef' " be very fast on resolving queries
+let g:go_def_mode = 'gopls'
+let g:go_decls_includes = "func,type"
+let g:go_info_mode = 'gopls'
+set ttimeoutlen=0
+set autowrite
+map <C-j> :cnext<CR>
+map <C-k> :cprevious<CR>
+autocmd FileType go nmap <leader>c :cclose<CR>
+if !has('nvim')
+  execute "set <M-j>=\ej"
+  map <M-j> :lnext<CR>
+  execute "set <M-k>=\ek"
+  map <M-k> :lprevious<CR>
+else
+  map <A-j> :lnext<CR>
+  map <A-k> :lprevious<CR>
+endif
+autocmd FileType go nmap <leader>l :lclose<CR>
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+":let mapleader = ","
+autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+autocmd FileType go nmap <leader>t  <Plug>(go-test)
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+autocmd FileType go nmap <Leader>i <Plug>(go-info)
+"let g:go_auto_type_info = 1
+"set updatetime=100
+":GoSameIds / :GoSameIdsClear highlight same identifiers
+"let g:go_auto_sameids = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+"let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_types = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_generate_tags = 1
+"let g:go_metalinter_autosave = 1
+"let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+"let g:go_metalinter_deadline = "5s"
+let g:go_fmt_command = "goimports"
+autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+Plug 'SirVer/ultisnips'
+let g:UltiSnipsExpandTrigger="<c-l>"
+"Plug 'dense-analysis/ale'
+"let g:ale_linters = {
+"  \ 'go': ['gopls'],
+"  \}
+"let g:ale_sign_error = '⤫'
+"let g:ale_sign_warning = '⚠'
+Plug 'preservim/tagbar'
+nmap <F8> :TagbarToggle<CR>
+
+Plug 'tmhedberg/SimpylFold'
+"let g:SimpylFold_docstring_preview=1
+"Plug 'vim-scripts/indentpython.vim'
+"Plug 'nvie/vim-flake8'
+"Plug 'scrooloose/syntastic'
+"let python_highlight_all=1
+Plug 'scrooloose/nerdtree'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+let g:airline_theme = 'lessnoise'
+let g:airline#extensions#tabline#enabled = 1
+"let g:airline_powerline_fonts = 1
+"Plug 'itchyny/lightline.vim'
+"set laststatus=2
+"if !has('gui_running')
+"  set t_Co=256
+"endif
+Plug 'tpope/vim-haml'
+" Initialize plugin system
+call plug#end()
+
+" NERDTree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+map <C-n> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+set pastetoggle=<F7>
+set encoding=utf-8
+set termencoding=utf-8  
+set fileencodings=utf-8,ucs-bom,gbk,default,latin1 
+
+set backupdir=~/.vimbak
+set ts=2
+set sw=2
+set expandtab
+set cursorline
+
+syntax on
+set nu
+set foldlevel=100
+set ai
+set si
+set cindent
+set smarttab
+set wrap
+set lbr
+set tw=0
+set foldmethod=syntax
+
+set autoread
+map <F6> :checktime<CR>
+au FocusGained,BufEnter * :checktime
+set noerrorbells
+set novisualbell
+set hlsearch
+set backspace=start,indent,eol
+
+if has("autocmd")
+  augroup vimStartup
+    au!
+
+    autocmd BufReadPost *
+      \ if line("'\"") >= 1 && line("'\"") <= line("$") |
+      \   exe "normal! g`\"" |
+      \ endif
+
+  augroup END
+endif
+
+if has('gui_running')
+  set guifont=JetBrains\ Mono\ Medium\ 12
+  set background=dark
+  colorscheme solarized
+  let g:solarized_degrade = 0
+  set guioptions-=m " 隐藏菜单栏
+  set guioptions-=T " 隐藏工具栏
+  set guioptions-=L " 隐藏左侧滚动条
+  set guioptions-=r " 隐藏右侧滚动条
+  set guioptions-=b " 隐藏底部滚动条
+else
+  let g:rehash256 = 1
+  let g:molokai_original = 1
+  colorscheme molokai
+  "hi Normal ctermbg=NONE
+  "hi LineNr ctermbg=NONE
+  "hi VertSplit ctermbg=NONE
+endif
+
+" Python
+au BufNewFile,BufRead *.py
+\set tabstop=4
+\set softtabstop=4
+\set shiftwidth=4
+\set expandtab
+\set textwidth=79
+\set autoindent
+\set fileformat=unix
+\set foldmethod=indent
+\set foldlevel=99
+
+" css
+au BufNewFile,BufRead *.css
+\set tabstop=2
+\set shiftwidth=2
+\set expandtab
+\set softtabstop=2
+
+" javascript
+au BufNewFile,BufRead *.js
+\set tabstop=2
+\set shiftwidth=2
+\set expandtab
+
+" PHP
+au BufNewFile,BufRead *.php
+\set tabstop=2
+\set softtabstop=2
+\set shiftwidth=2
+\set expandtab
+\set autoindent
+\set fileformat=unix
+
+augroup VimCSS3Syntax
+  autocmd!
+  autocmd FileType css setlocal iskeyword+=-
+augroup END
+autocmd BufRead,BufNewFile *.css,*.scss,*.less setlocal foldmethod=marker foldmarker={,}
+
+" Go to tab by number
+noremap <leader>1 1gt
+noremap <leader>2 2gt
+noremap <leader>3 3gt
+noremap <leader>4 4gt
+noremap <leader>5 5gt
+noremap <leader>6 6gt
+noremap <leader>7 7gt
+noremap <leader>8 8gt
+noremap <leader>9 9gt
+noremap <leader>0 :tablast<cr>
+if !has('nvim')
+  execute "set <M-l>=\el"
+  map <M-l> :tabnext<cr>
+  execute "set <M-h>=\eh"
+  map <M-h> :tabprevious<cr>
+  execute "set <M-S-l>=\eL"
+  map <M-S-l> :tabm +1<cr>
+  execute "set <M-S-h>=\eH"
+  map <M-S-h> :tabm -1<cr>
+else
+  map <A-l> :tabnext<cr>
+  map <A-h> :tabprevious<cr>
+  map <A-S-l> :tabm +1<cr>
+  map <A-S-h> :tabm -1<cr>
+endif

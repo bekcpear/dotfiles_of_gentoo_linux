@@ -1,0 +1,5 @@
+# required by dev-texlive/texlive-xetex-2020::gentoo
+# required by dev-texlive/texlive-formatsextra-2020-r2::gentoo
+# required by app-text/texlive-2020-r9::gentoo[-extra,xml]
+# required by app-text/texlive (argument)
+>=app-text/texlive-core-2020-r12 xetex

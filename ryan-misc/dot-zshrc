@@ -1,0 +1,53 @@
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=100000
+SAVEHIST=100000
+bindkey -v
+KEYTIMEOUT=1
+# End of lines configured by zsh-newuser-install
+
+zstyle :compinstall filename '/home/ryan/.zshrc'
+
+autoload -Uz compinit promptinit
+compinit
+promptinit; prompt gentoo
+
+zstyle ':completion::complete:*' use-cache 1
+zstyle ':completion:*:descriptions' format '%U%d%b%u'
+zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'
+
+#auto change current directory( /etc instead of cd /etc )
+setopt autocd
+#satisfy standard bash-like globbing
+setopt extendedglob
+
+#autoload -Uz add-zsh-hook
+#function xterm_title_precmd () {
+#  print -Pn '\e]0;%n@%m:%1~\a'
+#}
+#function xterm_title_preexec () {
+#  print -Pn "\e]0;%#> ${(p)1} | %n@%m:%1~\a"
+#}
+#add-zsh-hook -Uz precmd xterm_title_precmd
+#add-zsh-hook -Uz preexec xterm_title_preexec
+
+#highlight
+source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
+#autosuggestions
+source /usr/share/zsh/site-functions/zsh-autosuggestions.zsh
+
+PROMPT=" %F{227}%~%f %B%(?.%F{123}›%f.%F{196}›%f) %b"
+RPROMPT=" %(?..%F{196}%? %f)%F{239}%*%f"
+
+export GOPATH=~/go
+export PATH=$PATH":/home/ryan/go/bin"
+
+export GPG_TTY="$(tty)"
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+gpg-connect-agent updatestartuptty /bye > /dev/null
+#gpgconf --launch gpg-agent
+
+alias yd=ydcv-rs
+alias pb=~/Nextcloud/Documents/Linux/Scripts/uGtCustomScripts/vimcnpaste.sh
+
+export FCITX_SOCKET=/tmp/fcitx-socket-:0

@@ -1,0 +1,2 @@
+# required by sys-kernel/linux-firmware (argument)
+>=sys-kernel/linux-firmware-20200918 linux-fw-redistributable no-source-code

@@ -1,0 +1,51 @@
+# For KDE
+kde-plasma/*
+kde-frameworks/*
+dev-libs/wayland
+dev-util/wayland-scanner
+
+# Misc
+x11-wm/awesome
+x11-misc/picom
+dev-lang/go
+net-proxy/v2ray-core
+net-misc/nextcloud-client
+app-text/ydcv-rs
+dev-ruby/sass
+dev-ruby/sass-listen
+app-crypt/keybase
+media-video/obs-studio
+app-misc/openrazer **
+#www-client/microsoft-edge-dev
+net-news/rssguard
+net-news/quiterss
+www-client/firefox
+x11-libs/libva
+media-video/libva-utils
+app-office/wps-office
+net-misc/teamviewer
+media-fonts/jetbrains-mono
+x11-terms/alacritty
+app-editors/neovim
+app-text/pelican
+net-misc/youtube-dl
+dev-util/android-studio
+dev-lang/lua
+dev-lua/lgi
+app-eselect/eselect-lua
+app-editors/vim **
+app-editors/vim-core **
+app-editors/gvim **
+media-sound/qqmusic-bin
+net-im/wechat-uos::benzene-overlay
+app-portage/pacvis
+app-forensics/pev
+app-shells/zsh-autosuggestions
+net-im/telegram-desktop-bin
+net-misc/you-get
+app-admin/z16 **
+
+#for test
+#www-plugins/google-talkplugin::local **
+#net-print/foo2zjs::local **
+#x11-libs/lain

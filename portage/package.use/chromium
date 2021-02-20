@@ -1,0 +1,8 @@
+www-client/chromium -system-icu -system-ffmpeg official
+
+# required by www-client/chromium-85.0.4183.121::gentoo
+# required by chromium (argument)
+>=sys-libs/zlib-1.2.11-r2 minizip
+# required by www-client/chromium-85.0.4183.121::gentoo
+# required by chromium (argument)
+>=net-libs/nodejs-14.11.0 inspector

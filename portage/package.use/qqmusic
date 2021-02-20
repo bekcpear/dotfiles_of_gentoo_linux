@@ -1,0 +1,9 @@
+# required by gnome-base/gnome-keyring-3.36.0::gentoo
+# required by app-crypt/libsecret-0.20.3::gentoo
+# required by media-sound/qqmusic-1.0.5::local
+# required by qqmusic (argument)
+>=app-crypt/pinentry-1.1.0-r3 gnome-keyring
+# required by dev-libs/libappindicator-12.10.0-r301::gentoo
+# required by media-sound/qqmusic-1.0.5::local
+# required by qqmusic (argument)
+>=dev-libs/libdbusmenu-16.04.0-r1 gtk3

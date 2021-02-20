@@ -1,0 +1,11 @@
+# required by sys-power/suspend-1.0_p20190605::gentoo[lzo]
+# required by sys-power/suspend (argument)
+>=dev-libs/lzo-2.10 static-libs
+# required by sys-power/suspend-1.0_p20190605::gentoo[crypt]
+# required by @selected
+# required by @world (argument)
+>=dev-libs/libgcrypt-1.8.6 static-libs
+# required by sys-power/suspend-1.0_p20190605::gentoo[crypt]
+# required by @selected
+# required by @world (argument)
+>=dev-libs/libgpg-error-1.38 static-libs

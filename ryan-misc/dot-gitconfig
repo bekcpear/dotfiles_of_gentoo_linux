@@ -1,0 +1,8 @@
+[user]
+	name = bekcpear
+	email = i@bitbili.net
+	signingkey = 0x510BE6FB0FBDFC2A
+[commit]
+	gpgsign = true
+[gpg]
+	program = /usr/bin/gpg
