@@ -9,7 +9,10 @@ x11-wm/awesome
 x11-misc/picom
 dev-lang/go
 net-proxy/v2ray-core
+
 net-misc/nextcloud-client
+dev-db/sqlite
+
 app-text/ydcv-rs
 dev-ruby/sass
 dev-ruby/sass-listen
