@@ -48,6 +48,8 @@ net-im/telegram-desktop-bin
 net-misc/you-get
 app-admin/z16 **
 
+<sys-kernel/gentoo-sources-5.11
+
 #for test
 #www-plugins/google-talkplugin::local **
 #net-print/foo2zjs::local **
