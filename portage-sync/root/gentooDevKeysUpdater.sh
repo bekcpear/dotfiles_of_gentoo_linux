@@ -55,6 +55,7 @@ URL="https://qa-reports.gentoo.org/output/committing-devs.gpg"
 GPGFILE="/tmp/committing-devs"
 SUFFIX=$(date +%Y%m%d_%H)
 GPGFILE="${GPGFILE}_${SUFFIX}.gpg"
+UPGRADE=0
 
 if [ ! -e "${GPGFILE}" ]; then
   eval "${PROXYC}wget '${URL}' -O '${GPGFILE}_tmp'" && \
@@ -71,12 +72,17 @@ if [[ ! -e "${LISTFILE}" ]]; then
   LISTFILEL=${LISTFILE%%_*}
   if [ -e "${LISTFILEL}" ]; then
     colordiff "${LISTFILEL}" "${LISTFILE}_tmp" || :
-    while read -n 1 -rep 'continue?[y/N] ' read_parm; do
+    while read -n 1 -rep 'continue or upgrade?[y/u/N] ' read_parm; do
       case ${read_parm} in
         [yY])
           mv "${LISTFILE}_tmp" "${LISTFILE}"
           break
           ;;
+        [uU])
+          mv "${LISTFILE}_tmp" "${LISTFILE}"
+					UPGRADE=1
+          break
+					;;
         *)
           if [[ "${read_parm}" == "" ]]; then
             echo
@@ -94,3 +100,7 @@ if [[ ! -e "${LISTFILE}" ]]; then
   LISTFILE="${LISTFILEL}"
 fi
 echo "LIST FILE: ${LISTFILE}"
+
+if [[ ${UPGRADE} -eq 1 ]]; then
+	eval "${0}"
+fi

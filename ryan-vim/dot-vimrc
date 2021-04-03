@@ -113,8 +113,9 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 set pastetoggle=<F7>
 set encoding=utf-8
-set termencoding=utf-8  
-set fileencodings=utf-8,ucs-bom,gbk,default,latin1 
+set termencoding=utf-8
+set fileencodings=utf-8,ucs-bom,gbk,default,latin1
+set tabpagemax=100
 
 set backupdir=~/.vimbak
 set ts=2

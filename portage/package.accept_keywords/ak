@@ -1,6 +1,7 @@
 # For KDE
 kde-plasma/*
 kde-frameworks/*
+kde-apps/kio-extras
 dev-libs/wayland
 dev-util/wayland-scanner
 
@@ -49,6 +50,7 @@ net-misc/you-get
 app-admin/z16 **
 
 <sys-kernel/gentoo-sources-5.11
+net-vpn/wireguard-tools
 
 #for test
 #www-plugins/google-talkplugin::local **

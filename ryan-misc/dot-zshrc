@@ -37,7 +37,7 @@ source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/site-functions/zsh-autosuggestions.zsh
 
 PROMPT=" %F{227}%~%f %B%(?.%F{123}›%f.%F{196}›%f) %b"
-RPROMPT=" %(?..%F{196}%? %f)%F{239}%*%f"
+RPROMPT=" %(?..%F{196}%? %f)%F{239}%* /%D{%f}%f"
 
 export GOPATH=~/go
 export PATH=$PATH":/home/ryan/go/bin"
