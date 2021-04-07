@@ -1,11 +1,17 @@
 [Background]
 Color=33,33,33
+RandomHueRange=360
+RandomSaturationRange=100
 
 [BackgroundFaint]
 Color=33,33,33
+RandomHueRange=360
+RandomSaturationRange=100
 
 [BackgroundIntense]
 Color=33,33,33
+RandomHueRange=360
+RandomSaturationRange=100
 
 [Color0]
 Color=0,0,0
@@ -81,12 +87,18 @@ Color=255,255,255
 
 [Foreground]
 Color=250,250,250
+RandomHueRange=360
+RandomSaturationRange=100
 
 [ForegroundFaint]
 Color=157,157,157
+RandomHueRange=360
+RandomSaturationRange=100
 
 [ForegroundIntense]
 Color=255,255,255
+RandomHueRange=360
+RandomSaturationRange=100
 
 [General]
 Blur=true

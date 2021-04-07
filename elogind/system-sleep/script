@@ -1,0 +1,11 @@
+#!/bin/bash
+case $1/$2 in
+  pre/*)
+    # Put here any commands you want to be run when suspending or hibernating.
+		/usr/sbin/rfkill block bluetooth
+    ;;
+  post/*)
+    # Put here any commands you want to be run when resuming from suspension or thawing from hibernation.
+		/usr/sbin/rfkill unblock bluetooth
+    ;;
+esac
