@@ -4,6 +4,7 @@ kde-frameworks/*
 kde-apps/kio-extras
 dev-libs/wayland
 dev-util/wayland-scanner
+dev-libs/plasma-wayland-protocols
 
 # Misc
 x11-wm/awesome
@@ -49,7 +50,6 @@ net-im/telegram-desktop-bin
 net-misc/you-get
 app-admin/z16 **
 
-<sys-kernel/gentoo-sources-5.11
 net-vpn/wireguard-tools
 
 #for test

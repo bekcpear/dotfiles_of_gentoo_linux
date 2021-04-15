@@ -1,10 +1,16 @@
 #echo ${PV}
 #echo ${INHERITED}
-#echo ${EBUILD_PHASE}
+#echo PHASE::${EBUILD_PHASE}
 #set > /tmp/popo-${EBUILD_PHASE}.log || set > /tmp/popop-${EBUILD_PHASE}.log
 
 #if [[ ${EBUILD_PHASE} == "unpack" && ${INHERITED} =~ git\-r3 ]]; then
+#	echo "GIT-CONFIG::BEFORESETTING"
+#	echo "$(git config --list --show-origin)"
 #  git config --global http.proxy 'socks5h://127.0.0.1:1080'
+#	git config --global url."https://hub.fastgit.org".insteadOf "https://github.com"
+#	git config --global url."https://raw.fastgit.org".insteadOf "https://raw.githubusercontent.com"
+#	echo "GIT-CONFIG::AFTERSETTING"
+#	echo "$(git config --list --show-origin)"
 #fi
 
 if [[ ${EBUILD_PHASE} == "setup" ]]; then
