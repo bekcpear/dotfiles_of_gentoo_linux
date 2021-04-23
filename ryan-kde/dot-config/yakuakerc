@@ -1,0 +1,15 @@
+[Animation]
+Frames=10
+
+[Desktop Entry]
+DefaultProfile=Default.profile
+
+[Dialogs]
+FirstRun=false
+
+[Shortcuts]
+toggle-window-state=Esc
+
+[Window]
+Height=69
+KeepOpen=false
