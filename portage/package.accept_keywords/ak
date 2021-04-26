@@ -58,5 +58,5 @@ net-vpn/wireguard-tools
 #x11-libs/lain
 
 sys-kernel/dkms::guru
-app-misc/openrazer-drivers
-app-misc/openrazer
+sys-apps/openrazer-drivers
+sys-apps/openrazer
