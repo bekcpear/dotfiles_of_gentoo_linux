@@ -56,3 +56,7 @@ net-vpn/wireguard-tools
 #www-plugins/google-talkplugin::local **
 #net-print/foo2zjs::local **
 #x11-libs/lain
+
+sys-kernel/dkms::guru
+app-misc/openrazer-drivers
+app-misc/openrazer

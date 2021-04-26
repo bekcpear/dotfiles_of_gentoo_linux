@@ -94,6 +94,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_theme = 'lessnoise'
+let g:airline#extensions#searchcount#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
 "let g:airline_powerline_fonts = 1
 "Plug 'itchyny/lightline.vim'
@@ -240,3 +241,7 @@ else
   map <A-S-l> :tabm +1<cr>
   map <A-S-h> :tabm -1<cr>
 endif
+
+"profile start profile.log
+"profile func *
+"profile file *

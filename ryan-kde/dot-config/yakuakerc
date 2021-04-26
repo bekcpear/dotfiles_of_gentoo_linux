@@ -8,8 +8,8 @@ DefaultProfile=Default.profile
 FirstRun=false
 
 [Shortcuts]
-toggle-window-state=Esc
+toggle-window-state=Ctrl+Q
 
 [Window]
 Height=69
-KeepOpen=false
+KeepAbove=false
