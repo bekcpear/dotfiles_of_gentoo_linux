@@ -1,0 +1,20 @@
+#!/sbin/openrc-run
+# Copyright 2021 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+command=##PREFIX##/bin/openrazer-daemon
+command_args="${EXTRA_OPTS} -F"
+pidfile=/run/openrazerd/openrazerd.pid
+name="OpenRazer Daemon"
+
+start_stop_daemon_args="--user openrazerd:openrazerd"
+
+depend() {
+	need localmount
+	after udev dbus
+	use logger
+}
+
+start_pre() {
+	checkpath -q -d -m 0755 -o openrazerd:openrazerd /run/openrazerd
+}
