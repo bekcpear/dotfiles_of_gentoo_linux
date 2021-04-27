@@ -9,11 +9,9 @@ inherit git-r3 meson
 
 DESCRIPTION="Razer devices configurator"
 HOMEPAGE="https://github.com/z3ntu/RazerGenie"
-SRC_URI=""
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS=""
 IUSE="matrix"
 
 DEPEND="
@@ -22,14 +20,17 @@ DEPEND="
 	dev-qt/qtdbus:5
 	dev-qt/qtgui:5
 	dev-qt/qtnetwork:5
-	dev-qt/qtwidgets:5"
+	dev-qt/qtwidgets:5
+"
 RDEPEND="${DEPEND}
 	sys-apps/openrazer
-	x11-themes/hicolor-icon-theme"
+	x11-themes/hicolor-icon-theme
+"
 BDEPEND="
 	dev-qt/linguist-tools:5
 	sys-apps/openrazer_test
-	virtual/pkgconfig"
+	virtual/pkgconfig
+"
 
 src_configure() {
 	local emesonargs=(

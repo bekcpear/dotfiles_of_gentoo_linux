@@ -58,6 +58,9 @@ net-vpn/wireguard-tools
 #x11-libs/lain
 
 sys-kernel/dkms::guru
-sys-apps/openrazer-drivers
-sys-apps/openrazer
+sys-apps/openrazer-driver::ryans
+sys-apps/openrazer::ryans
+sys-apps/openrazer_test::ryans **
+dev-libs/libopenrazer::ryans **
+app-misc/razergenie::ryans **
 dev-python/daemonize

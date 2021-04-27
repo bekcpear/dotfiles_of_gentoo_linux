@@ -36,9 +36,9 @@ src_compile() {
 src_install() {
 	linux-mod_src_install
 	if use dkms; then
-		insinto /usr/src/openrazer-driver-${PV}
+		insinto /usr/src/${P}
 		doins ../Makefile ../install_files/dkms/dkms.conf
-		insinto /usr/src/openrazer-driver-${PV}/driver
+		insinto /usr/src/${P}/driver
 		doins Makefile *.c *.h
 	fi
 }
@@ -47,7 +47,7 @@ pkg_postinst() {
 	linux-mod_pkg_postinst
 	if use modules; then
 		if [[ $(uname -r) != "${KV_FULL}" ]]; then
-			ewarn "You have just built openrazer-drivers for kernel ${KV_FULL}, yet the currently"
+			ewarn "You have just built ${PN} for kernel ${KV_FULL}, yet the currently"
 			ewarn "running kernel is $(uname -r). If you intend to use these openrazer modules"
 			ewarn "on the currently running machine, you will first need to reboot it into the"
 			ewarn "kernel ${KV_FULL}, for which these modules was built."
@@ -62,16 +62,16 @@ pkg_postinst() {
 			done
 			if [[ ${old} != '' && ${old} != ${PV} ]]; then
 				ewarn
-				ewarn "You appear to have just upgraded openrazer-drivers from version v$old to v$PV."
+				ewarn "You appear to have just upgraded ${PN} from version v$old to v$PV."
 				ewarn "However, the old version is still running on your system. In order to use the"
-				ewarn "new version, you will need to remove the old module and load the new one. As"
+				ewarn "new version, you will need to remove the old modules and load the new ones. As"
 				ewarn "root, you can accomplish this with the following commands:"
 				ewarn
 				ewarn "	# modprobe -r ${my_modules[@]}"
 				ewarn "	# modprobe -a ${my_modules[@]}"
 				ewarn
 			fi
-		fi  
+		fi
 		elog
 		elog "Everytime when you upgrade/downgrade the kernel, these modules should be rebuilt via:"
 		elog " # emerge @module-rebuild"
@@ -86,8 +86,8 @@ pkg_postinst() {
 		has_version sys-kernel/dkms && inststate="(INSTALLED)"
 		ewarn
 		ewarn "You should build these modules by yourself via DKMS tools like sys-kernel/dkms ${inststate}."
-		ewarn " e.g.: # dkms add openrazer-driver/${PV}"
-		ewarn "       # dkms install openrazer-driver/${PV}"
+		ewarn " e.g.: # dkms add ${PN}/${PV}"
+		ewarn "       # dkms install ${PN}/${PV}"
 		ewarn
 	fi
 }

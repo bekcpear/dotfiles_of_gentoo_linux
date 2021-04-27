@@ -5,7 +5,4 @@
 		<email>i@bitbili.net</email>
 		<name>Ryan Qian</name>
 	</maintainer>
-	<use>
-		<flag name="client">Enable client libraries for python</flag>
-	</use>
 </pkgmetadata>

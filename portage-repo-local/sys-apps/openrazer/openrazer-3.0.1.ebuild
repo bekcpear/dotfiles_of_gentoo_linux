@@ -13,15 +13,10 @@ SRC_URI="https://github.com/openrazer/openrazer/archive/refs/tags/v${PV}.tar.gz 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="client"
-
-ORUSER="openrazerd"
-ORGROUP="openrazerd"
+IUSE="client systemd"
 
 DEPEND=""
 RDEPEND="${DEPEND}
-	acct-user/openrazerd
-	acct-group/openrazerd
 	dev-python/dbus-python[${PYTHON_USEDEP}]
 	>=dev-python/daemonize-2.4[${PYTHON_USEDEP}]
 	client? ( dev-python/numpy[${PYTHON_USEDEP}] )
@@ -29,7 +24,9 @@ RDEPEND="${DEPEND}
 	dev-python/pygobject[${PYTHON_USEDEP}]
 	dev-python/pyudev[${PYTHON_USEDEP}]
 	dev-python/setproctitle[${PYTHON_USEDEP}]
-	sys-apps/openrazer-drivers
+	sys-apps/openrazer-driver
+	systemd? ( sys-apps/systemd[acl] )
+	!systemd? ( acct-group/plugdev )
 	x11-libs/gtk+:3[introspection]
 	x11-misc/xautomation
 "
@@ -38,12 +35,9 @@ BDEPEND="
 "
 
 python_prepare_all() {
-	cp "${FILESDIR%/}/openrazerd.initd" "${T%/}/" || die
-	sed -i "s|##PREFIX##|${EROOT%/}/usr|" "${T%/}/openrazerd.initd" || die
+	sed -i "/^Exec=/s|\-\-verbose||" "install_files/desktop/openrazer-daemon.desktop" || die
 	sed -i "s|##PREFIX##|${EROOT%/}/usr|" "daemon/resources/org.razer.service.in" || die
 	sed -i "s|##PREFIX##|${EROOT%/}/usr|" "daemon/resources/openrazer-daemon.systemd.service.in" || die
-	sed -i "/BusName/aUser=${ORUSER}\nGroup=${ORGROUP}" \
-		"daemon/resources/openrazer-daemon.systemd.service.in" || die
 	distutils-r1_python_prepare_all
 }
 
@@ -94,9 +88,6 @@ python_install_all() {
 	#desktop menu
 	domenu "install_files/desktop/openrazer-daemon.desktop"
 
-	#openrc service
-	newinitd "${T%/}/openrazerd.initd" openrazerd
-
 	#systemd service
 	systemd_newunit "daemon/resources/openrazer-daemon.systemd.service.in" openrazer-daemon.service
 }
@@ -109,11 +100,10 @@ src_prepare() {
 pkg_postinst() {
 	xdg_pkg_postinst
 	udev_reload
-	if [[ -z "${REPLACING_VERSIONS}" ]]; then
+	if [[ -z "${REPLACING_VERSIONS}" ]] && ! use systemd; then
 		elog
-		elog "If you run openrazer-daemon via CLI directly,"
-		elog "the user must be a member of 'plugdev' group"
-		elog "to be able to access the razer devices,"
+		elog "To be able to access the razer devices,"
+		elog "the user must be a member of 'plugdev' group."
 		elog " # usermod -aG plugdev <username>"
 		elog
 	fi
