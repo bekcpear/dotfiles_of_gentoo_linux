@@ -60,3 +60,4 @@ net-vpn/wireguard-tools
 sys-kernel/dkms::guru
 sys-apps/openrazer-drivers
 sys-apps/openrazer
+dev-python/daemonize
