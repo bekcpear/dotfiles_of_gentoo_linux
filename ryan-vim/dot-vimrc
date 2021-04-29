@@ -242,6 +242,6 @@ else
   map <A-S-h> :tabm -1<cr>
 endif
 
-"profile start profile.log
+"profile start /tmp/vim-profile.log
 "profile func *
 "profile file *

@@ -26,6 +26,7 @@ TerminalMargin=0
 AutoCopySelectedText=false
 CopyTextAsHTML=false
 MouseWheelZoomEnabled=true
+UnderlineFilesEnabled=true
 
 [Keyboard]
 KeyBindings=default

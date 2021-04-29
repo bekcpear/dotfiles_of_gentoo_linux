@@ -1,0 +1,26 @@
+[Desktop Entry]
+DefaultProfile=Default.profile
+
+[DownloadDialog Settings]
+Height 1200=408
+Width 1920=700
+
+[Favorite Profiles]
+Favorites=Default.profile
+
+[KonsoleWindow]
+SaveGeometryOnExit=false
+ShowMenuBarByDefault=false
+
+[MainWindow]
+MenuBar=Disabled
+State=AAAA/wAAAAD9AAAAAAAAA4QAAAG5AAAABAAAAAQAAAAIAAAACPwAAAAA
+ToolBarsMovable=Disabled
+
+[SearchSettings]
+SearchCaseSensitive=true
+SearchRegExpression=true
+
+[ThumbnailsSettings]
+ThumbnailAlt=true
+ThumbnailSize=500
