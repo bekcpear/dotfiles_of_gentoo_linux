@@ -1,10 +1,9 @@
 #!/bin/bash
 #
 
-#set -e
+set -e
 
 declare -i TIMEOUT=10800 #seconds, 3 hours
-declare -a ACTIONS=( 'suspend' 'hibernate' 'poweroff' 'notify' )
 
 # @FUNCTION: _log
 # @USAGE: [-d|-i|-w|-e] <message>
@@ -59,6 +58,18 @@ function _log() {
   eval ">${outfd} echo -e '${color}${prefix}${msg//\'/\'\\\'\'}${reset}'"
 }
 
+# define the power control command and options
+declare -a ACTIONS=( 'suspend' 'hibernate' 'poweroff' 'reboot' )
+DEFAULT_ACTION="suspend"
+if loginctl --version >/dev/null; then
+  CMD="loginctl"
+elif systemctl --version >/dev/null; then
+  CMD="systemctl"
+else
+  _log -e "Unknown power control tool!"
+fi
+
+# check emerge log dir
 _log "Checking emerge log file dir..."
 LOG_DIR=$(emerge --info -v | egrep '^EMERGE_LOG_DIR' | cut -d'"' -f2)
 : ${LOG_DIR:=/var/log}
@@ -215,11 +226,11 @@ function _do_action() {
   echo -en "\e[G\e[Ksleeping now.. "
   echo
 
-  eval "loginctl ${1}"
+  eval "${CMD} ${1}"
 }
 
 action="${1}"
-: ${action:=suspend}
+: ${action:=${DEFAULT_ACTION}}
 actions_pattern="${ACTIONS[@]}"
 actions_pattern="^(${actions_pattern// /|})$"
 if [[ ${action} =~ ${actions_pattern} ]]; then
@@ -231,4 +242,6 @@ if [[ ${action} =~ ${actions_pattern} ]]; then
 
 " _check_finished_or_not && \
   _do_action ${action}
+else
+  _log -e "Unknown action '${action}'."
 fi
