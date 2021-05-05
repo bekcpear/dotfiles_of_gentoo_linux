@@ -3,6 +3,10 @@
 
 set -e
 
+#OPTS:   suspend    (the default)
+#      hibernate
+#       poweroff
+#         reboot
 declare -i TIMEOUT=10800 #seconds, 3 hours
 
 # @FUNCTION: _log
@@ -63,8 +67,8 @@ declare -a ACTIONS=( 'suspend' 'hibernate' 'poweroff' 'reboot' )
 DEFAULT_ACTION="suspend"
 if loginctl --version >/dev/null; then
   CMD="loginctl"
-elif systemctl --version >/dev/null; then
-  CMD="systemctl"
+#elif systemctl --version >/dev/null; then
+#  CMD="systemctl"
 else
   _log -e "Unknown power control tool!"
 fi
