@@ -72,6 +72,14 @@ if loginctl --version >/dev/null; then
 else
   _log -e "Unknown power control tool!"
 fi
+action="${1}"
+: ${action:=${DEFAULT_ACTION}}
+actions_pattern="${ACTIONS[@]}"
+actions_pattern="^(${actions_pattern// /|})$"
+if [[ ! ${action} =~ ${actions_pattern} ]]; then
+  _log -e "Unknown action '${action}'."
+  exit 1
+fi
 
 # check emerge log dir
 _log "Checking emerge log file dir..."
@@ -233,19 +241,11 @@ function _do_action() {
   eval "${CMD} ${1}"
 }
 
-action="${1}"
-: ${action:=${DEFAULT_ACTION}}
-actions_pattern="${ACTIONS[@]}"
-actions_pattern="^(${actions_pattern// /|})$"
-if [[ ${action} =~ ${actions_pattern} ]]; then
-  _countdown ${TIMEOUT} "\
+_countdown ${TIMEOUT} "\
 
         This computer will do action [${action}]
             when it completes the emerge
               or after %cd seconds!
 
 " _check_finished_or_not && \
-  _do_action ${action}
-else
-  _log -e "Unknown action '${action}'."
-fi
+_do_action ${action}
