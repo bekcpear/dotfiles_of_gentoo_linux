@@ -3,5 +3,5 @@
 #*/*::bobwya
 */*::guru
 =net-im/telegram-desktop-2.4.5
->www-client/chromium-88.0.4324.150
+#>www-client/chromium-88.0.4324.150
 =net-misc/nextcloud-client-3.1.2

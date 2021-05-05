@@ -10,7 +10,12 @@ dev-libs/plasma-wayland-protocols
 x11-wm/awesome
 x11-misc/picom
 dev-lang/go
-net-proxy/v2ray-core
+
+# v2ray
+net-proxy/v2ray-core::ryans
+dev-libs/v2ray-geoip-bin::ryans
+dev-libs/v2ray-domain-list-community::ryans
+dev-libs/v2ray-domain-list-community-bin::ryans
 
 net-misc/nextcloud-client
 dev-db/sqlite
