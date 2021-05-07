@@ -74,10 +74,11 @@ function _fatal() {
 
 REPONAME=$(< profiles/repo_name)
 _log -w "Reponame: ${REPONAME}"
-printf "## A personal ebuild repository\n\n"
-printf "Reponame: \`${REPONAME}\`\n\n"
-printf "can be added by run:\n"
-printf '```
+printf -- "## A personal ebuild repository\n\n"
+printf -- "- Reponame: **\`${REPONAME}\`**\n"
+printf -- "- Maintainer: **[bekcpear](https://github.com/bekcpear)**\n\n"
+printf -- "can be added to the system by running:\n"
+printf -- '```
 eselect repository add ryans
 ```
 \n'
@@ -173,9 +174,9 @@ function _set_indent() {
 }
 
 # 1: index 2: val
-function _set_rule() {
+function _set_role() {
   if [[ -n ${2} ]]; then
-    eval "ROLE[${1}]+=' ${2}'"
+    eval "ROLE[${1}]+=' \"${2}\"'"
   fi
 }
 
@@ -271,14 +272,14 @@ for (( i = 0; i < ${PKGINDEX}; i++ )); do
   _set_vers ${i} "${_vers[@]}"
   _set_order ${i}
   _set_indent ${i}
-  _set_rule ${i}
+  _set_role ${i}
 
   _pkg_match_pattern='s/^[><=~]\+\(.*\)$/\1/;s/-[[:digit:]].*$//'
   for (( k = 0; k < ${#_deps[@]}; k++ )); do
     eval "_p=\$(sed '${_pkg_match_pattern}' <<< '${_deps[k]}')"
     if [[ ${_p} =~ ${PKGS_PATTERN} ]]; then
       idx=${PKGSR[${_p}]}
-      _set_rule ${idx} ' D'
+      _set_role ${idx} ' D'
       _pkg_deps+=( ${idx} )
     fi
   done
@@ -286,7 +287,7 @@ for (( i = 0; i < ${PKGINDEX}; i++ )); do
     eval "_p=\$(sed '${_pkg_match_pattern}' <<< '${_bdeps[k]}')"
     if [[ ${_p} =~ ${PKGS_PATTERN} ]]; then
       idx=${PKGSR[${_p}]}
-      _set_rule ${idx} ' BD'
+      _set_role ${idx} 'BD'
       _pkg_deps+=( ${idx} )
     fi
   done
@@ -294,7 +295,7 @@ for (( i = 0; i < ${PKGINDEX}; i++ )); do
     eval "_p=\$(sed '${_pkg_match_pattern}' <<< '${_rdeps[k]}')"
     if [[ ${_p} =~ ${PKGS_PATTERN} ]]; then
       idx=${PKGSR[${_p}]}
-      _set_rule ${idx} ' RD'
+      _set_role ${idx} 'RD'
       _pkg_deps+=( ${idx} )
     fi
   done
@@ -317,7 +318,8 @@ done
 
 #tidy rules
 for (( i = 0; i < ${#ROLE[@]}; ++i )); do
-  eval "ROLE[i]=\$(sed 's/[[:space:]]\+/\\n/g' <<< '${ROLE[i]}' | sort -u | sed ':a;N;\$!ba;s/\\n/, /g;s/^\s*,\s*//')"
+  eval "ROLE[${i}]=\$(sed 's/[[:space:]]\+\"/\\n\"/g' <<< '${ROLE[i]}' | sort -u | sed ':a;N;\$!ba;s/\\n/, /g;s/^\s*,\s*//')"
+  eval "ROLE[${i}]='${ROLE[i]//\"/}'"
 done
 
 #reverse ORDER
@@ -450,7 +452,7 @@ function _print_uniform() {
   eval "printf -- \"\${PATTERN_${1}}\" \"\${${1}_NAME}\" \"\${${1}_VERSION}\" \"\${${1}_ROLE}\" \"\${${1}_HOMEPAGE}\" \"\${${1}_DESCRIPTION}\""
 }
 
-printf '### Current packages\n\n'
+printf '### Packages\n\n'
 printf -- '```\n'
 _print_uniform TITLE
 _print_uniform HORIZONTAL_SEPARATOR_D
@@ -504,19 +506,22 @@ _print_uniform HORIZONTAL_SEPARATOR_D
 printf -- '```'
 
 #print some description
-printf "
-For role,
-
+printf -- "
 + \` D\` means the classic dependencies (e.g.: libraries and headers)
 + \`BD\` means the build dependencies (e.g.: virtual/pkgconfig)
 + \`RD\` means runtime dependencies
 
 _(All these dependencies are parsed literally.)_
 
-For now,\
-`[[ ${#LAZY_MAINTAINED[@]} -gt 0 ]] && sed 's/\s/\n+ /g;s/^/+ /;s/^/\n\n/' <<<\"${LAZY_MAINTAINED[@]}\n\n\" || echo ' no package '`\
+### Maintenance status
+
+`[[ ${#LAZY_MAINTAINED[@]} -gt 0 ]] && sed 's/\s/\n+ /g;s/^/+ /' <<<\"${LAZY_MAINTAINED[@]}\n\n\" || echo 'No package '`\
 `[[ ${#LAZY_MAINTAINED[@]} -gt 1 ]] && echo are || echo is` under lazy maintained.
 
-`[[ ${#UNMAINTAINED[@]} -gt 0 ]] && sed 's/\s/\n+ /g;s/^/+ /;s/^/\n\n/' <<<\"${UNMAINTAINED[@]}\n\n\" || echo 'No package '`\
+`[[ ${#UNMAINTAINED[@]} -gt 0 ]] && sed 's/\s/\n+ /g;s/^/+ /' <<<\"${UNMAINTAINED[@]}\n\n\" || echo 'No package '`\
 `[[ ${#UNMAINTAINED[@]} -gt 1 ]] && echo are || echo is` under inactive maintained.
+
+### License
+
+[GPL-2.0](LICENSE)
 "
