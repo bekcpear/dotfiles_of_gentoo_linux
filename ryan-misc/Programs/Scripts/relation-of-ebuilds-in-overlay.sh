@@ -28,7 +28,7 @@ function _log() {
   local color='\e[36m'
   local reset='\e[0m'
   local outfd='&1'
-  if [[ ${1} =~ ^\- ]] && [[ -n ${2} ]]; then
+  if [[ ${1} =~ ^- ]] && [[ -n ${2} ]]; then
     case ${1} in
       -d)
         lv="DEBUG"
@@ -58,7 +58,7 @@ function _log() {
     shift
   fi
   local prefix=""
-  local msg="${1}"
+  local msg="${@}"
   if [[ ${lv} != normal ]]; then
     prefix="[$(date '+%Y-%m-%d %H:%M:%S') ${lv}] "
   fi
@@ -94,8 +94,8 @@ for (( i = 0; i < ${#_pkgdirs[@]}; ++i )); do
   if [[ ${#_ebuilds[@]} -le 0 ]]; then
     _log -w "No ebuild file under ${_pkgdirs[i]}."
   else
-    PKGS+=( ${_pkgdirs[i]} )
-    PKGSR[${_pkgdirs[i]}]=${i}
+    eval "PKGS[${PKGINDEX}]='${_pkgdirs[i]}'"
+    eval "PKGSR[${_pkgdirs[i]}]=${PKGINDEX}"
     for (( j = 0; j < ${#_ebuilds[@]}; ++j )); do
       _version=${_ebuilds[j]%\.ebuild}
       _version=${_version#${_pkgdirs[i]#*/}-}
@@ -185,35 +185,20 @@ function _set_order() {
   if [[ -n ${2} ]]; then
     eval "ORDER[${1}]=${2}"
   elif [[ -z ${ORDER[${1}]} ]]; then
-    LINEINDEX+=50 #这里是一个问题，目前通过加大间隙来解决，但是不好
+    LINEINDEX+=1
     eval ": \${ORDER[${1}]:=${LINEINDEX}}"
   fi
 }
 
-# 1: parent index
-function _reset_child_order() {
-  local -i _i=${ORDER[${1}]}
-  for child in ${CHILDREN[${1}]} ; do
-    _i+=1
-    _set_order ${child} ${_i}
-    _reset_child_order ${child}
-  done
-}
-
 # 1: parent index 2: val(the child)
 function _set_children() {
-  #break circular dependency
-  if [[ ${1} == ${2} ]]; then
-    eval "PARENT[${1}]=-1"
-    eval "PARENT[${2}]=-1"
-    return
-  fi
   local -i _parent=${1}
   local -i _child=${2}
   #set parent if it has none
   eval ": \${PARENT[${2}]:=${1}}"
   #add child
   eval "CHILDREN[${1}]+=' ${2}'"
+
   #reset parent when the already setted parent
   #(or has a parent) that is the same as the child's
   if [[ ${1} != ${PARENT[${2}]} ]]; then
@@ -231,15 +216,20 @@ function _set_children() {
   fi
 }
 
-# 1: parent idx
-function _step_up_children_indent() {
-  if [[ -n ${CHILDREN[${1}]} ]]; then
-    local -i _i=$((${INDENT[${1}]} + 1))
-    for child in ${CHILDREN[${1}]}; do
+# 1: parent index
+function _reset_child_order_and_indent() {
+  local _o=${ORDER[${1}]}
+  local -i _i=$((${INDENT[${1}]} + 1))
+
+  local -i _oo=0
+  for child in ${CHILDREN[${1}]} ; do
+    if [[ ${child} != ${PARENT[${1}]} ]]; then
+      _set_order ${child} "${_o}.${_oo}"
       _set_indent ${child} ${_i}
-      _step_up_children_indent ${child}
-    done
-  fi
+      _reset_child_order_and_indent ${child}
+      _oo+=1
+    fi
+  done
 }
 
 # 1: index $@: versions...
@@ -274,11 +264,11 @@ for (( i = 0; i < ${PKGINDEX}; i++ )); do
   _set_indent ${i}
   _set_role ${i}
 
-  _pkg_match_pattern='s/^[><=~]\+\(.*\)$/\1/;s/-[[:digit:]].*$//'
+  _pkg_match_pattern='s/^[><=~]\+\(.*\)$/\1/;s/-[[:digit:]].*$//;s/:.*//'
   for (( k = 0; k < ${#_deps[@]}; k++ )); do
     eval "_p=\$(sed '${_pkg_match_pattern}' <<< '${_deps[k]}')"
     if [[ ${_p} =~ ${PKGS_PATTERN} ]]; then
-      idx=${PKGSR[${_p}]}
+      idx=${PKGSR["${_p}"]}
       _set_role ${idx} ' D'
       _pkg_deps+=( ${idx} )
     fi
@@ -286,7 +276,7 @@ for (( i = 0; i < ${PKGINDEX}; i++ )); do
   for (( k = 0; k < ${#_bdeps[@]}; k++ )); do
     eval "_p=\$(sed '${_pkg_match_pattern}' <<< '${_bdeps[k]}')"
     if [[ ${_p} =~ ${PKGS_PATTERN} ]]; then
-      idx=${PKGSR[${_p}]}
+      idx=${PKGSR["${_p}"]}
       _set_role ${idx} 'BD'
       _pkg_deps+=( ${idx} )
     fi
@@ -294,7 +284,7 @@ for (( i = 0; i < ${PKGINDEX}; i++ )); do
   for (( k = 0; k < ${#_rdeps[@]}; k++ )); do
     eval "_p=\$(sed '${_pkg_match_pattern}' <<< '${_rdeps[k]}')"
     if [[ ${_p} =~ ${PKGS_PATTERN} ]]; then
-      idx=${PKGSR[${_p}]}
+      idx=${PKGSR["${_p}"]}
       _set_role ${idx} 'RD'
       _pkg_deps+=( ${idx} )
     fi
@@ -308,8 +298,7 @@ for (( i = 0; i < ${PKGINDEX}; i++ )); do
     _set_children ${i} ${idx}
     if [[ ${PARENT[idx]} == ${i} ]]; then
       #resort this line and it's children
-      _reset_child_order ${i}
-      _step_up_children_indent ${i}
+      _reset_child_order_and_indent ${i}
     fi
   done
 
@@ -322,10 +311,97 @@ for (( i = 0; i < ${#ROLE[@]}; ++i )); do
   eval "ROLE[${i}]='${ROLE[i]//\"/}'"
 done
 
-#reverse ORDER
+#sort LINE
 declare -a LINE
+# 1: val0 2: val1
+# return 0 if val0 > val1
+function _gt() {
+  local -i val0=${1%%.*}
+  local -i val1=${2%%.*}
+  if [[ ${val0} -gt ${val1} ]]; then
+    return 0
+  elif [[ ${val0} -eq ${val1} ]]; then
+    local -i _i=1
+    function __more_gt() {
+      local -a v0=( ${1//./ } )
+      local -a v1=( ${2//./ } )
+      if [[ ${v0[${_i}]:--1} -gt ${v1[${_i}]:--1} ]]; then
+        return 0
+      elif [[ ${v0[${_i}]:--1} -eq ${v1[${_i}]:--1} ]]; then
+        if [[ ${_i} > 50 ]]; then
+          _fatal "Too much comparations!"
+        fi
+        _i+=1
+        __more_gt ${1} ${2}
+      else
+        return 1
+      fi
+    }
+    local -i ret=0
+    __more_gt ${1} ${2} || ret=1
+    return ${ret}
+  else
+    return 1
+  fi
+}
+
+# 1: left string explaining array; 2: right
+function _sort_merge {
+  local -a _l=( ${1} )
+  local -a _r=( ${2} )
+  local -i _llen=${#_l[@]}
+  local -i _rlen=${#_r[@]}
+  local -i i=0 j=0 index=0
+
+  local -a _new
+  while true; do
+    if _gt ${_l[${i}]} ${_r[${j}]}; then
+      _new[index]=${_r[${j}]}
+      index+=1
+      j+=1
+      if [[ ${j} == ${_rlen} ]]; then
+        eval "_new+=( \${_l[@]:${i}} )"
+        break
+      fi
+    else
+      _new[index]=${_l[${i}]}
+      index+=1
+      i+=1
+      if [[ ${i} == ${llen} ]]; then
+        eval "_new+=( \${_r[@]:${j}} )"
+        break
+      fi
+    fi
+  done
+  echo "${_new[@]}"
+}
+
+# 1: string explaining array
+function _sort_order {
+  local -a _a=( ${1} )
+  local -i _n=${#_a[@]}
+  if [[ ${_n} -lt 2 ]]; then
+    echo -n "${_a[@]}"
+    return
+  fi
+  local -i _key=$(( ${_n} / 2 ))
+  eval "local _left=\"\${_a[@]:0:${_key}}\""
+  eval "local _right=\"\${_a[@]:${_key}}\""
+  eval " _left=\$(_sort_order  '${_left}')"
+  eval "_right=\$(_sort_order '${_right}')"
+  eval "echo \$(_sort_merge '${_left}' '${_right}')"
+}
+
+#switch key & val of ORDER
+declare -A ORDERR
 for (( i = 0; i < ${#ORDER[@]}; ++i )); do
-  eval "LINE[${ORDER[i]}]=${i}"
+  eval "ORDERR[${ORDER[${i}]}]=${i}"
+done
+#sort ORDER
+eval "ORDER=( \$(_sort_order '${ORDER[@]}') )"
+#set LINE item
+for (( i = 0; i < ${#ORDER[@]}; ++i )); do
+  eval "LINE[${i}]=\${ORDERR[${ORDER[i]}]}"
 done
 
 #format print
@@ -372,7 +448,7 @@ done
 #check version's longest length
 for v in "${VERSIONS[@]}"; do
   _vers=( ${v} )
-  for vv in ${_vers}; do
+  for vv in ${_vers[@]}; do
     if [[ ${#vv} -gt ${_longest_v} ]]; then
       _longest_v=${#vv}
     fi
