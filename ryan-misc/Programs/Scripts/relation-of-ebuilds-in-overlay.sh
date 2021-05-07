@@ -120,7 +120,7 @@ for (( i = 0; i < ${#_pkgdirs[@]}; ++i )); do
       _d=${_d//<NEW-LINE>/ }
       _d=${_d//\$/}
       _d=${_d//[[:space:]]/ }
-      _to_array_pattern='s/{[^}]*}//g;s/\[.*\]//g;s/[^ ]*?/ /g;s/\![^ ]\+\(\s\|$\)/ /g;s/[()^&|]//g'
+      _to_array_pattern='s/{[^}]*}//g;s/\[[^]]*\]//g;s/[^ ]*?/ /g;s/\![^ ]\+\(\s\|$\)/ /g;s/[()^&|]//g'
       eval "_d=\$(sed '${_to_array_pattern}' <<< '${_d}')"
       _bd="$(
       sed '/\(<NEW-LINE>\s*BDEPEND="\)/!s/$/<NEW-LINE>BDEPEND="/;s/.*<NEW-LINE>\s*BDEPEND="//;s/\([^\]\)\?"\s*\(<NEW-LINE>\)\?.*/\1/' \
@@ -189,28 +189,14 @@ function _set_order() {
   fi
 }
 
-# 1: child index
-function _reset_parent_order() {
-  if [[ -n ${PARENT[${1}]} ]]; then
-    local -i _p=${PARENT[${1}]}
-    local -i _i=$((${ORDER[${1}]} - 1))
-    _set_order ${_p} ${_i}
-    _reset_parent_order ${_p}
-    #reset parent's child order
-    #if it has a different one from this
-    local _c=${CHILDREN[${_p}]}
-    if [[ ${_c/ ${1} /} =~ [[:digit:]] ]]; then
-      local -i _nidx=${_i}
-      function __reset_child_order() {
-        for child in ${CHILDREN[${1}]} ; do
-          _nidx+=1
-          _set_order ${child} ${_nidx}
-          __reset_child_order ${child}
-        done
-      }
-      __reset_child_order ${_p}
-    fi
-  fi
+# 1: parent index
+function _reset_child_order() {
+  local -i _i=${ORDER[${1}]}
+  for child in ${CHILDREN[${1}]} ; do
+    _i+=1
+    _set_order ${child} ${_i}
+    _reset_child_order ${child}
+  done
 }
 
 # 1: parent index 2: val(the child)
@@ -321,7 +307,7 @@ for (( i = 0; i < ${PKGINDEX}; i++ )); do
     _set_children ${i} ${idx}
     if [[ ${PARENT[idx]} == ${i} ]]; then
       #resort this line and it's children
-      _reset_parent_order ${idx}
+      _reset_child_order ${i}
       _step_up_children_indent ${i}
     fi
   done
