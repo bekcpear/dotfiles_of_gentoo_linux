@@ -293,7 +293,7 @@ for (( i = 0; i < ${PKGINDEX}; i++ )); do
   done
 
   #unified setting
-  _pkg_deps=($(echo "${_pkg_deps[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
+  _pkg_deps=($(echo "${_pkg_deps[@]}" | tr ' ' '\n' | sort -nu | tr '\n' ' '))
   for (( k = 0; k < ${#_pkg_deps[@]}; ++k )); do
     idx=${_pkg_deps[k]}
     _set_order ${idx}
