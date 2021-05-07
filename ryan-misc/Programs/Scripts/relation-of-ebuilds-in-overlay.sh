@@ -103,17 +103,19 @@ for (( i = 0; i < ${#_pkgdirs[@]}; ++i )); do
         sed ':a;N;$!ba;s/\n/<NEW-LINE>/g' ./${_pkgdirs[i]}/${_ebuilds[j]} | tr "'" " " | tr '`' ' '
       )"
       _desc="$(
-        sed 's/.*<NEW-LINE>\s*DESCRIPTION="//;s/\([^\]\)"\s*<NEW-LINE>.*/\1/' <<< "${_summary}"
+        sed 's/.*<NEW-LINE>\s*DESCRIPTION="//;s/\([^\]\)\?"\s*<NEW-LINE>.*/\1/' <<< "${_summary}"
       )"
       _desc=${_desc//<NEW-LINE>/}
+      [[ ! ${_desc} =~ ^[[:space:]]*$ ]] || _desc='#'
       _homepage="$(
-        sed 's/.*<NEW-LINE>\s*HOMEPAGE="//;s/\([^\]\)"\s*<NEW-LINE>.*/\1/' <<< "${_summary}"
+        sed 's/.*<NEW-LINE>\s*HOMEPAGE="//;s/\([^\]\)\?"\s*<NEW-LINE>.*/\1/' <<< "${_summary}"
       )"
       _homepage=${_homepage//<NEW-LINE>/}
       _homepage="${_homepage##$'\t'}"
       _homepage="${_homepage##[[:space:]]}"
       _homepage="${_homepage%%[[:space:]]*}"
       _homepage="$(sed 's/\(.\+\)http.*/\1/' <<<${_homepage})"
+      [[ ! ${_homepage} =~ ^[[:space:]]*$ ]] || _homepage='#'
       _d="$(
       sed '/\(<NEW-LINE>\s*DEPEND="\)/!s/$/<NEW-LINE>DEPEND="/;s/.*<NEW-LINE>\s*DEPEND="//;s/\([^\]\)\?"\s*\(<NEW-LINE>\)\?.*/\1/' \
         <<< "${_summary}"
@@ -568,7 +570,7 @@ for idx in ${LINE[@]}; do
   for (( i = 0; i < ${#_vers[@]}; ++i)); do
     if [[ ${_pkg_name_printed} == 0 ]]; then
       _pkg_name_printed=1
-      if [[ ${DESCRIPTION[idx]} =~ [a-zA-Z] ]]; then
+      if [[ ${DESCRIPTION[idx]} =~ [a-zA-Z#] ]]; then
         _desc=" ${DESCRIPTION[idx]}"
       fi
       printf -- "${PATTERN_DATA}" "${PKGS[idx]}" "${_vers[i]}" "${ROLE[idx]}" "${HOMEPAGE[idx]}" "${_desc}"
