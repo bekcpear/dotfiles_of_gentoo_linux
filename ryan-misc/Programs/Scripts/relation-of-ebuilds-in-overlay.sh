@@ -90,74 +90,91 @@ declare -a PKGS
 declare -A PKGSR
 for (( i = 0; i < ${#_pkgdirs[@]}; ++i )); do
   _pkgdirs[i]=${_pkgdirs[i]%/}
-  _ebuilds=($(find ${_pkgdirs[i]} -name '*.ebuild' -printf '%f\n'))
+  _ebuilds=($(find ${_pkgdirs[i]} -maxdepth 1 -name '*.ebuild' -printf '%f\n'))
   if [[ ${#_ebuilds[@]} -le 0 ]]; then
     _log -w "No ebuild file under ${_pkgdirs[i]}."
   else
-    eval "PKGS[${PKGINDEX}]='${_pkgdirs[i]}'"
-    eval "PKGSR[${_pkgdirs[i]}]=${PKGINDEX}"
+    _ebuild_handled=0
     for (( j = 0; j < ${#_ebuilds[@]}; ++j )); do
-      _version=${_ebuilds[j]%\.ebuild}
-      _version=${_version#${_pkgdirs[i]#*/}-}
-      _summary="$(
-        sed ':a;N;$!ba;s/\n/<NEW-LINE>/g' ./${_pkgdirs[i]}/${_ebuilds[j]} | tr "'" " " | tr '`' ' '
-      )"
-      _desc="$(
-        sed 's/.*<NEW-LINE>\s*DESCRIPTION="//;s/\([^\]\)\?"\s*<NEW-LINE>.*/\1/' <<< "${_summary}"
-      )"
-      _desc=${_desc//<NEW-LINE>/}
-      [[ ! ${_desc} =~ ^[[:space:]]*$ ]] || _desc='#'
-      _homepage="$(
-        sed 's/.*<NEW-LINE>\s*HOMEPAGE="//;s/\([^\]\)\?"\s*<NEW-LINE>.*/\1/' <<< "${_summary}"
-      )"
-      _homepage=${_homepage//<NEW-LINE>/}
-      _homepage="${_homepage##$'\t'}"
-      _homepage="${_homepage##[[:space:]]}"
-      _homepage="${_homepage%%[[:space:]]*}"
-      _homepage="$(sed 's/\(.\+\)http.*/\1/' <<<${_homepage})"
-      [[ ! ${_homepage} =~ ^[[:space:]]*$ ]] || _homepage='#'
-      _d="$(
-      sed '/\(<NEW-LINE>\s*DEPEND="\)/!s/$/<NEW-LINE>DEPEND="/;s/.*<NEW-LINE>\s*DEPEND="//;s/\([^\]\)\?"\s*\(<NEW-LINE>\)\?.*/\1/' \
-        <<< "${_summary}"
-      )"
-      _d=${_d//<NEW-LINE>/ }
-      _d=${_d//\$/}
-      _d=${_d//[[:space:]]/ }
-      _to_array_pattern='s/{[^}]*}//g;s/\[[^]]*\]//g;s/[^ ]*?/ /g;s/\![^ ]\+\(\s\|$\)/ /g;s/[()^&|]//g'
-      eval "_d=\$(sed '${_to_array_pattern}' <<< '${_d}')"
-      _bd="$(
-      sed '/\(<NEW-LINE>\s*BDEPEND="\)/!s/$/<NEW-LINE>BDEPEND="/;s/.*<NEW-LINE>\s*BDEPEND="//;s/\([^\]\)\?"\s*\(<NEW-LINE>\)\?.*/\1/' \
-        <<< "${_summary}"
-      )"
-      _bd=${_bd//<NEW-LINE>/ }
-      _bd=${_bd//\$/}
-      _bd=${_bd//[[:space:]]/ }
-      eval "_bd=\$(sed '${_to_array_pattern}' <<< '${_bd}')"
-      _rd="$(
-      sed '/\(<NEW-LINE>\s*RDEPEND="\)/!s/$/<NEW-LINE>RDEPEND="/;s/.*<NEW-LINE>\s*RDEPEND="//;s/\([^\]\)\?"\s*\(<NEW-LINE>\)\?.*/\1/' \
-        <<< "${_summary}"
-      )"
-      _rd=${_rd//<NEW-LINE>/ }
-      _rd=${_rd//\$/}
-      _rd=${_rd//[[:space:]]/ }
-      eval "_rd=\$(sed '${_to_array_pattern}' <<< '${_rd}')"
-      eval "declare -A PKG_${PKGINDEX}_${j}=(
-        [CATE]=${_pkgdirs[i]%/*}
-        [NAME]=${_pkgdirs[i]#*/}
-        [VERSION]=${_version}
-        [DESCRIPTION]=\${_desc}
-        [HOMEPAGE]=\${_homepage}
-        [D]=\${_d}
-        [BD]=\${_bd}
-        [RD]=\${_rd}
-      )"
-      unset _version _desc _summary _homepage _d _bd _rd
+      if [[ ! -e ${_pkgdirs[i]}/${_ebuilds[j]} ]]; then
+        _log -w "${_pkgdirs[i]}/${_ebuilds[j]} not exist."
+        continue
+      fi
+      declare -i _ret=0
+      _declare_array=$(
+        set -e
+        _version=${_ebuilds[j]%\.ebuild}
+        _version=${_version#${_pkgdirs[i]#*/}-}
+        _summary="$(
+          sed ':a;N;$!ba;s/\n/<NEW-LINE>/g' ./${_pkgdirs[i]}/${_ebuilds[j]} | tr "'" " " | tr '`' ' '
+        )"
+        _desc="$(
+          sed 's/.*<NEW-LINE>\s*DESCRIPTION="//;s/\([^\]\)\?"\s*<NEW-LINE>.*/\1/' <<< "${_summary}"
+        )"
+        _desc=${_desc//<NEW-LINE>/}
+        [[ ! ${_desc} =~ ^[[:space:]]*$ ]] || _desc='#'
+        _homepage="$(
+          sed 's/.*<NEW-LINE>\s*HOMEPAGE="//;s/\([^\]\)\?"\s*<NEW-LINE>.*/\1/' <<< "${_summary}"
+        )"
+        _homepage=${_homepage//<NEW-LINE>/}
+        _homepage="${_homepage##$'\t'}"
+        _homepage="${_homepage##[[:space:]]}"
+        _homepage="${_homepage%%[[:space:]]*}"
+        _homepage="$(sed 's/\(.\+\)http.*/\1/' <<<${_homepage})"
+        [[ ! ${_homepage} =~ ^[[:space:]]*$ ]] || _homepage='#'
+        _d="$(
+        sed '/\(<NEW-LINE>\s*DEPEND="\)/!s/$/<NEW-LINE>DEPEND="/;s/.*<NEW-LINE>\s*DEPEND="//;s/\([^\]\)\?"\s*\(<NEW-LINE>\)\?.*/\1/' \
+          <<< "${_summary}"
+        )"
+        _d=${_d//<NEW-LINE>/ }
+        _d=${_d//\$/}
+        _d=${_d//[[:space:]]/ }
+        _to_array_pattern='s/{[^}]*}//g;s/\[[^]]*\]//g;s/[^ ]*?/ /g;s/\![^ ]\+\(\s\|$\)/ /g;s/[()^&|]//g'
+        eval "_d=\$(sed '${_to_array_pattern}' <<< '${_d}')"
+        _bd="$(
+        sed '/\(<NEW-LINE>\s*BDEPEND="\)/!s/$/<NEW-LINE>BDEPEND="/;s/.*<NEW-LINE>\s*BDEPEND="//;s/\([^\]\)\?"\s*\(<NEW-LINE>\)\?.*/\1/' \
+          <<< "${_summary}"
+        )"
+        _bd=${_bd//<NEW-LINE>/ }
+        _bd=${_bd//\$/}
+        _bd=${_bd//[[:space:]]/ }
+        eval "_bd=\$(sed '${_to_array_pattern}' <<< '${_bd}')"
+        _rd="$(
+        sed '/\(<NEW-LINE>\s*RDEPEND="\)/!s/$/<NEW-LINE>RDEPEND="/;s/.*<NEW-LINE>\s*RDEPEND="//;s/\([^\]\)\?"\s*\(<NEW-LINE>\)\?.*/\1/' \
+          <<< "${_summary}"
+        )"
+        _rd=${_rd//<NEW-LINE>/ }
+        _rd=${_rd//\$/}
+        _rd=${_rd//[[:space:]]/ }
+        eval "_rd=\$(sed '${_to_array_pattern}' <<< '${_rd}')"
+        echo "declare -A PKG_${PKGINDEX}_${j}=(
+          [CATE]=${_pkgdirs[i]%/*}
+          [NAME]=${_pkgdirs[i]#*/}
+          [VERSION]=${_version}
+          [DESCRIPTION]='${_desc}'
+          [HOMEPAGE]='${_homepage}'
+          [D]='${_d}'
+          [BD]='${_bd}'
+          [RD]='${_rd}'
+        )"
+      ) || _ret=$?
+      if [[ ${_ret} == 0 ]]; then
+        _ebuild_handled=1
+        eval "${_declare_array}"
+      fi
+      unset _declare_array #_version _desc _summary _homepage _d _bd _rd
     done
-    PKGINDEX+=1
+    if [[ ${_ebuild_handled} == 1 ]]; then
+      eval "PKGS[${PKGINDEX}]='${_pkgdirs[i]}'"
+      eval "PKGSR[${_pkgdirs[i]}]=${PKGINDEX}"
+      PKGINDEX+=1
+      echo -ne "\e[G\e[J${PKGINDEX} collected. (${_pkgdirs[i]})" >&2
+    fi
   fi
-  unset _ebuilds
+  unset _ebuilds _ebuild_handled
 done
 unset _pkgdirs
+echo >&2
 
 declare -i LINEINDEX=0
 PKGS_PATTERN="^(${PKGS[@]})$"
@@ -304,8 +321,10 @@ for (( i = 0; i < ${PKGINDEX}; i++ )); do
     fi
   done
 
+  echo -ne "\e[G\e[J[$((${i}+1))/${PKGINDEX}] handled. (${_name})" >&2
   unset _deps _bdeps _rdeps _vers _pkg_deps
 done
+echo >&2
 
 #tidy rules
 for (( i = 0; i < ${#ROLE[@]}; ++i )); do
@@ -387,6 +406,7 @@ function _sort_order {
     return
   fi
   local -i _key=$(( ${_n} / 2 ))
+  echo -ne "\e[G\e[J${_key}" >&2
   eval "local _left=\"\${_a[@]:0:${_key}}\""
   eval "local _right=\"\${_a[@]:${_key}}\""
   eval " _left=\$(_sort_order  '${_left}')"
@@ -400,7 +420,9 @@ for (( i = 0; i < ${#ORDER[@]}; ++i )); do
   eval "ORDERR[${ORDER[${i}]}]=${i}"
 done
 #sort ORDER
+_log -w "Sorting..."
 eval "ORDER=( \$(_sort_order '${ORDER[@]}') )"
+echo >&2
 #set LINE item
 for (( i = 0; i < ${#ORDER[@]}; ++i )); do
   eval "LINE[${i}]=\${ORDERR[${ORDER[i]}]}"
