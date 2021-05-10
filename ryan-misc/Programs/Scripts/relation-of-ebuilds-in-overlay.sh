@@ -70,7 +70,33 @@ function _fatal() {
   exit 1
 }
 
+# 1: last recorded val (date +%s%N)
+function _last_duration() {
+  echo "scale=9; ( $(date +%s%N) - ${1} ) / 1000000000" | bc
+}
+# (omit for last called time)
+function _last_duration_echo() {
+  #if [[ -z ${_LAST_DURATION_TIME} ]]; then
+  #  _LAST_DURATION_TIME=$(date +%s%N)
+  #fi
+  echo ${1:-L}:$(_last_duration ${2:-${_LAST_DURATION_TIME}}) >&2
+  _LAST_DURATION_TIME=$(date +%s%N)
+}
+
 [[ -f profiles/repo_name ]] || _fatal "should be run under a portage repository."
+
+__received_sig=
+__last_command=
+__current_command=
+__errfn="/tmp/$(basename ${0%.*})-$(uuidgen).err"
+#_log -e "Failed in ${__last_command}"
+trap 'if [[ ${__received_sig} != INT ]]; then
+  set >${__errfn}
+  _log -e "Environment vars have been add to ${__errfn}" >&2
+fi' ERR
+trap "__received_sig=INT; exit 1" SIGINT
+#trap '__last_command=${__current_command};\
+#__current_command="L$((${LINENO}-1)): ${BASH_COMMAND}"' DEBUG
 
 REPONAME=$(< profiles/repo_name)
 _log -w "Reponame: ${REPONAME}"
@@ -83,103 +109,103 @@ eselect repository add ryans
 ```
 \n'
 
-_log -w "Collecting information..."
-_pkgdirs=($(ls --file-type -1d */* | egrep '/$'))
+BACKUP_FILE_PREFIX="roe_hczAbkvN"
+BACKUP_FILE="/tmp/${BACKUP_FILE_PREFIX}_${REPONAME}_$(date +%Y%m%d%H).info.tmp"
+declare -i i=0
+while [[ -e ${BACKUP_FILE} || -L ${BACKUP_FILE} ]]; do
+  BACKUP_FILE="${BACKUP_FILE%.[[:digit:]]*}.${i}"
+  i+=1
+done
 declare -i PKGINDEX=0
 declare -a PKGS
 declare -A PKGSR
-for (( i = 0; i < ${#_pkgdirs[@]}; ++i )); do
-  _pkgdirs[i]=${_pkgdirs[i]%/}
-  _ebuilds=($(find ${_pkgdirs[i]} -maxdepth 1 -name '*.ebuild' -printf '%f\n'))
-  if [[ ${#_ebuilds[@]} -le 0 ]]; then
-    _log -w "No ebuild file under ${_pkgdirs[i]}."
-  else
-    _ebuild_handled=0
-    for (( j = 0; j < ${#_ebuilds[@]}; ++j )); do
-      if [[ ! -e ${_pkgdirs[i]}/${_ebuilds[j]} ]]; then
-        _log -w "${_pkgdirs[i]}/${_ebuilds[j]} not exist."
-        continue
+
+_collect_start=$(date +%s%N)
+if [[ -z ${1} ]]; then
+  _log -w "Collecting information..."
+  _pkgdirs=($(ls --file-type -1d */* | egrep '/$'))
+  for (( i = 0; i < ${#_pkgdirs[@]}; ++i )); do
+    _pkgdirs[i]=${_pkgdirs[i]%/}
+    _ebuilds=($(find ${_pkgdirs[i]} -maxdepth 1 -name '*.ebuild' -printf '%f\n'))
+    if [[ ${#_ebuilds[@]} -le 0 ]]; then
+      _log -w "No ebuild file under ${_pkgdirs[i]}."
+    else
+      _ebuild_handled=0
+      for (( j = 0; j < ${#_ebuilds[@]}; ++j )); do
+        if [[ ! -e ${_pkgdirs[i]}/${_ebuilds[j]} ]]; then
+          _log -w "${_pkgdirs[i]}/${_ebuilds[j]} not exist."
+          continue
+        fi
+        declare -i _ret=0
+        _declare_array=$(
+          set -e
+          _version=${_ebuilds[j]%\.ebuild}
+          _version=${_version#${_pkgdirs[i]#*/}-}
+          _summary="$(
+            sed ':a;N;$!ba;s/\n/<NEW-LINE>/g' ./${_pkgdirs[i]}/${_ebuilds[j]} | tr "'" " " | tr '`' ' '
+          )"
+          _desc="$(
+            sed 's/.*<NEW-LINE>\s*DESCRIPTION="//;s/\([^\]\)\?"\s*<NEW-LINE>.*/\1/;s/<NEW-LINE>//g' <<<${_summary}
+          )"
+          _homepage="$(
+            sed 's/.*<NEW-LINE>\s*HOMEPAGE="//;s/\([^\]\)\?"\s*<NEW-LINE>.*/\1/;s/<NEW-LINE>//g;s/^[[:space:]]\+//;s/^http\([[:graph:]]\+\)[[:space:]].*/http\1/' \
+              <<<${_summary}
+          )"
+          _d="$(
+            sed '/\(<NEW-LINE>\s*DEPEND="\)/!s/$/<NEW-LINE>DEPEND="/;s/.*<NEW-LINE>\s*DEPEND="//;s/\([^\]\)\?"\s*\(<NEW-LINE>\)\?.*/\1/;s/<NEW-LINE>//g;s/[[:space:]\$]/ /g;s/{[^}]*}//g;s/\[[^]]*\]//g;s/[^ ]*?/ /g;s/\![^ ]\+\(\s\|$\)/ /g;s/[()^&|]//g' \
+              <<<${_summary}
+          )"
+          _bd="$(
+            sed '/\(<NEW-LINE>\s*BDEPEND="\)/!s/$/<NEW-LINE>BDEPEND="/;s/.*<NEW-LINE>\s*BDEPEND="//;s/\([^\]\)\?"\s*\(<NEW-LINE>\)\?.*/\1/;s/<NEW-LINE>//g;s/[[:space:]\$]/ /g;s/{[^}]*}//g;s/\[[^]]*\]//g;s/[^ ]*?/ /g;s/\![^ ]\+\(\s\|$\)/ /g;s/[()^&|]//g' \
+              <<<${_summary}
+          )"
+          _rd="$(
+            sed '/\(<NEW-LINE>\s*RDEPEND="\)/!s/$/<NEW-LINE>RDEPEND="/;s/.*<NEW-LINE>\s*RDEPEND="//;s/\([^\]\)\?"\s*\(<NEW-LINE>\)\?.*/\1/;s/<NEW-LINE>//g;s/[[:space:]\$]/ /g;s/{[^}]*}//g;s/\[[^]]*\]//g;s/[^ ]*?/ /g;s/\![^ ]\+\(\s\|$\)/ /g;s/[()^&|]//g' \
+              <<<${_summary}
+          )"
+          echo "declare -A PKG_${PKGINDEX}_${j}=(
+            [CATE]=${_pkgdirs[i]%/*}
+            [NAME]=${_pkgdirs[i]#*/}
+            [VERSION]=${_version}
+            [DESCRIPTION]='${_desc}'
+            [HOMEPAGE]='${_homepage}'
+            [D]='${_d}'
+            [BD]='${_bd}'
+            [RD]='${_rd}'
+          )"
+        ) || _ret=$?
+        if [[ ${_ret} == 0 ]]; then
+          _ebuild_handled=1
+          #backup temporary database
+          echo "${_declare_array}" >>${BACKUP_FILE}
+          eval "${_declare_array}"
+        fi
+        unset _declare_array #_version _desc _summary _homepage _d _bd _rd
+      done
+      if [[ ${_ebuild_handled} == 1 ]]; then
+        eval "PKGS[${PKGINDEX}]='${_pkgdirs[i]}'"
+        eval "PKGSR[${_pkgdirs[i]}]=${PKGINDEX}"
+        PKGINDEX+=1
+        echo -ne "\e[G\e[J${PKGINDEX} collected. (${_pkgdirs[i]})" >&2
       fi
-      declare -i _ret=0
-      _declare_array=$(
-        set -e
-        _version=${_ebuilds[j]%\.ebuild}
-        _version=${_version#${_pkgdirs[i]#*/}-}
-        _summary="$(
-          sed ':a;N;$!ba;s/\n/<NEW-LINE>/g' ./${_pkgdirs[i]}/${_ebuilds[j]} | tr "'" " " | tr '`' ' '
-        )"
-        _desc="$(
-          sed 's/.*<NEW-LINE>\s*DESCRIPTION="//;s/\([^\]\)\?"\s*<NEW-LINE>.*/\1/' <<< "${_summary}"
-        )"
-        _desc=${_desc//<NEW-LINE>/}
-        [[ ! ${_desc} =~ ^[[:space:]]*$ ]] || _desc='#'
-        _homepage="$(
-          sed 's/.*<NEW-LINE>\s*HOMEPAGE="//;s/\([^\]\)\?"\s*<NEW-LINE>.*/\1/' <<< "${_summary}"
-        )"
-        _homepage=${_homepage//<NEW-LINE>/}
-        _homepage="${_homepage##$'\t'}"
-        _homepage="${_homepage##[[:space:]]}"
-        _homepage="${_homepage%%[[:space:]]*}"
-        _homepage="$(sed 's/\(.\+\)http.*/\1/' <<<${_homepage})"
-        [[ ! ${_homepage} =~ ^[[:space:]]*$ ]] || _homepage='#'
-        _d="$(
-        sed '/\(<NEW-LINE>\s*DEPEND="\)/!s/$/<NEW-LINE>DEPEND="/;s/.*<NEW-LINE>\s*DEPEND="//;s/\([^\]\)\?"\s*\(<NEW-LINE>\)\?.*/\1/' \
-          <<< "${_summary}"
-        )"
-        _d=${_d//<NEW-LINE>/ }
-        _d=${_d//\$/}
-        _d=${_d//[[:space:]]/ }
-        _to_array_pattern='s/{[^}]*}//g;s/\[[^]]*\]//g;s/[^ ]*?/ /g;s/\![^ ]\+\(\s\|$\)/ /g;s/[()^&|]//g'
-        eval "_d=\$(sed '${_to_array_pattern}' <<< '${_d}')"
-        _bd="$(
-        sed '/\(<NEW-LINE>\s*BDEPEND="\)/!s/$/<NEW-LINE>BDEPEND="/;s/.*<NEW-LINE>\s*BDEPEND="//;s/\([^\]\)\?"\s*\(<NEW-LINE>\)\?.*/\1/' \
-          <<< "${_summary}"
-        )"
-        _bd=${_bd//<NEW-LINE>/ }
-        _bd=${_bd//\$/}
-        _bd=${_bd//[[:space:]]/ }
-        eval "_bd=\$(sed '${_to_array_pattern}' <<< '${_bd}')"
-        _rd="$(
-        sed '/\(<NEW-LINE>\s*RDEPEND="\)/!s/$/<NEW-LINE>RDEPEND="/;s/.*<NEW-LINE>\s*RDEPEND="//;s/\([^\]\)\?"\s*\(<NEW-LINE>\)\?.*/\1/' \
-          <<< "${_summary}"
-        )"
-        _rd=${_rd//<NEW-LINE>/ }
-        _rd=${_rd//\$/}
-        _rd=${_rd//[[:space:]]/ }
-        eval "_rd=\$(sed '${_to_array_pattern}' <<< '${_rd}')"
-        echo "declare -A PKG_${PKGINDEX}_${j}=(
-          [CATE]=${_pkgdirs[i]%/*}
-          [NAME]=${_pkgdirs[i]#*/}
-          [VERSION]=${_version}
-          [DESCRIPTION]='${_desc}'
-          [HOMEPAGE]='${_homepage}'
-          [D]='${_d}'
-          [BD]='${_bd}'
-          [RD]='${_rd}'
-        )"
-      ) || _ret=$?
-      if [[ ${_ret} == 0 ]]; then
-        _ebuild_handled=1
-        eval "${_declare_array}"
-      fi
-      unset _declare_array #_version _desc _summary _homepage _d _bd _rd
-    done
-    if [[ ${_ebuild_handled} == 1 ]]; then
-      eval "PKGS[${PKGINDEX}]='${_pkgdirs[i]}'"
-      eval "PKGSR[${_pkgdirs[i]}]=${PKGINDEX}"
-      PKGINDEX+=1
-      echo -ne "\e[G\e[J${PKGINDEX} collected. (${_pkgdirs[i]})" >&2
     fi
-  fi
-  unset _ebuilds _ebuild_handled
-done
-unset _pkgdirs
-echo >&2
+    unset _ebuilds _ebuild_handled
+  done
+  unset _pkgdirs
+  echo >&2
+  _log -w "<duration: $(_last_duration ${_collect_start})>"
+  #backup temporary database
+  declare -p PKGS >>${BACKUP_FILE}
+  declare -p PKGSR >>${BACKUP_FILE}
+  declare -p PKGINDEX >>${BACKUP_FILE}
+  _log -w "Collected information has been backup to ${BACKUP_FILE}"
+else
+  _log -w "Reading information from ${1} ..."
+  source "${1}"
+  BACKUP_FILE="${1}"
+fi
 
 declare -i LINEINDEX=0
-PKGS_PATTERN="^(${PKGS[@]})$"
-PKGS_PATTERN="${PKGS_PATTERN// /|}"
-
 
 declare -a INDENT ROLE ORDER CHILDREN PARENT VERSIONS HOMEPAGE DESCRIPTION
 
@@ -222,11 +248,17 @@ function _set_children() {
   #(or has a parent) that is the same as the child's
   if [[ ${1} != ${PARENT[${2}]} ]]; then
     local -i _p=${PARENT[${2}]}
+    local -a _pa
     function __reset_parent() {
       if [[ -n ${PARENT[${1}]} ]]; then
+        _pa+=( ${PARENT[${1}]} )
         if [[ ${PARENT[${1}]} == ${_p} ]]; then
           eval "PARENT[${_child}]=${_parent}"
         else
+          local -i _pam=$((${#_pa[@]} - 1))
+          if [[ ${_pa[0]} == ${_pa[${_pam}]} ]]; then
+            return
+          fi
           __reset_parent ${PARENT[${1}]}
         fi
       fi
@@ -237,18 +269,26 @@ function _set_children() {
 
 # 1: parent index
 function _reset_child_order_and_indent() {
-  local _o=${ORDER[${1}]}
-  local -i _i=$((${INDENT[${1}]} + 1))
+  local -a _pa="${1}"
+  function __reset_child_order_and_indent() {
+    local _o=${ORDER[${1}]}
+    local -i _i=$((${INDENT[${1}]} + 1))
 
-  local -i _oo=0
-  for child in ${CHILDREN[${1}]} ; do
-    if [[ ${child} != ${PARENT[${1}]} ]]; then
-      _set_order ${child} "${_o}.${_oo}"
-      _set_indent ${child} ${_i}
-      _reset_child_order_and_indent ${child}
-      _oo+=1
-    fi
-  done
+    local -i _oo=0
+    for child in ${CHILDREN[${1}]} ; do
+      if [[ ${child} =~ ^(${_pa})$ ]]; then
+        continue
+      fi
+      _pa+="|${child}"
+      if [[ ${child} != ${PARENT[${1}]} ]]; then
+        _set_order ${child} "${_o}.${_oo}"
+        _set_indent ${child} ${_i}
+        __reset_child_order_and_indent ${child}
+        _oo+=1
+      fi
+    done
+  }
+  __reset_child_order_and_indent "${@}"
 }
 
 # 1: index $@: versions...
@@ -259,7 +299,24 @@ function _set_vers() {
 }
 
 _log -w "Handle information..."
-for (( i = 0; i < ${PKGINDEX}; i++ )); do
+declare -i _handle_offset=0
+if [[ -n ${2} ]]; then
+  _log -w "Reading handled data from ${2} ..."
+  source ${2}
+  _handle_offset=${_HANDLE_OFFSET_NEXT}
+fi
+__md5=$(md5sum ${BACKUP_FILE} | cut -d' ' -f1)
+BACKUP_FILE_1="${BACKUP_FILE%%.*}_${__md5}.data.tmp"
+i=0
+while [[ -e ${BACKUP_FILE_1} || -L ${BACKUP_FILE_1} ]]; do
+  BACKUP_FILE_1="${BACKUP_FILE_1%.[[:digit:]]*}.${i}"
+  i+=1
+done
+_log -w "Handled data will be backup to ${BACKUP_FILE_1}"
+echo >&2
+_handle_start=$(date +%s%N)
+for (( i = ${_handle_offset}; i < ${PKGINDEX}; i++ )); do
+  _handle_start_each=$(date +%s%N)
   _name=${PKGS[i]}
   eval "HOMEPAGE[${i}]=\${PKG_${i}_0[HOMEPAGE]}"
   eval "DESCRIPTION[${i}]=\${PKG_${i}_0[DESCRIPTION]}"
@@ -274,39 +331,43 @@ for (( i = 0; i < ${PKGINDEX}; i++ )); do
       break
     fi
   done
-  _deps=($(echo "${_deps[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
-  _bdeps=($(echo "${_bdeps[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
-  _rdeps=($(echo "${_rdeps[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
+
+  _deps=$(echo "${_deps[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' ')
+  _deps=( $(sed -E 's/[><=~]|-[[:digit:]][^[:space:]]*|:[^[:space:]]*//g' <<<${_deps}) )
+
+  _bdeps=$(echo "${_bdeps[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' ')
+  _bdeps=( $(sed -E 's/[><=~]|-[[:digit:]][^[:space:]]*|:[^[:space:]]*//g' <<<${_bdeps}) )
+
+  _rdeps=$(echo "${_rdeps[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' ')
+  _rdeps=( $(sed -E 's/[><=~]|-[[:digit:]][^[:space:]]*|:[^[:space:]]*//g' <<<${_rdeps}) )
 
   _set_vers ${i} "${_vers[@]}"
   _set_order ${i}
   _set_indent ${i}
   _set_role ${i}
 
-  _pkg_match_pattern='s/^[><=~]\+\(.*\)$/\1/;s/-[[:digit:]].*$//;s/:.*//'
-  for (( k = 0; k < ${#_deps[@]}; k++ )); do
-    eval "_p=\$(sed '${_pkg_match_pattern}' <<< '${_deps[k]}')"
-    if [[ ${_p} =~ ${PKGS_PATTERN} ]]; then
-      idx=${PKGSR["${_p}"]}
-      _set_role ${idx} ' D'
-      _pkg_deps+=( ${idx} )
-    fi
-  done
-  for (( k = 0; k < ${#_bdeps[@]}; k++ )); do
-    eval "_p=\$(sed '${_pkg_match_pattern}' <<< '${_bdeps[k]}')"
-    if [[ ${_p} =~ ${PKGS_PATTERN} ]]; then
-      idx=${PKGSR["${_p}"]}
-      _set_role ${idx} 'BD'
-      _pkg_deps+=( ${idx} )
-    fi
-  done
-  for (( k = 0; k < ${#_rdeps[@]}; k++ )); do
-    eval "_p=\$(sed '${_pkg_match_pattern}' <<< '${_rdeps[k]}')"
-    if [[ ${_p} =~ ${PKGS_PATTERN} ]]; then
-      idx=${PKGSR["${_p}"]}
-      _set_role ${idx} 'RD'
-      _pkg_deps+=( ${idx} )
-    fi
+  for __pkg in ${PKGS[@]}; do
+    for __p in ${_deps[@]}; do
+      if [[ ${__pkg} == ${__p} ]]; then
+        idx=${PKGSR["${__pkg}"]}
+        _set_role ${idx} ' D'
+        _pkg_deps+=( ${idx} )
+      fi
+    done
+    for __p in ${_bdeps[@]}; do
+      if [[ ${__pkg} == ${__p} ]]; then
+        idx=${PKGSR["${__pkg}"]}
+        _set_role ${idx} 'BD'
+        _pkg_deps+=( ${idx} )
+      fi
+    done
+    for __p in ${_rdeps[@]}; do
+      if [[ ${__pkg} == ${__p} ]]; then
+        idx=${PKGSR["${__pkg}"]}
+        _set_role ${idx} 'RD'
+        _pkg_deps+=( ${idx} )
+      fi
+    done
   done
 
   #unified setting
@@ -321,14 +382,20 @@ for (( i = 0; i < ${PKGINDEX}; i++ )); do
     fi
   done
 
-  echo -ne "\e[G\e[J[$((${i}+1))/${PKGINDEX}] handled. (${_name})" >&2
+  declare -i _HANDLE_OFFSET_NEXT=$((${i} + 1))
+  declare -p INDENT PARENT CHILDREN ROLE ORDER VERSIONS HOMEPAGE DESCRIPTION LINEINDEX _HANDLE_OFFSET_NEXT >"${BACKUP_FILE_1}" || _log -e "Corrupted backup file."
+
+  echo -ne "\e[1A\e[G\e[J[$((${i}+1))/${PKGINDEX}] handled. <duration: $(_last_duration ${_handle_start_each})> (${_name})\nNow: ${PKGS[${i}+1]:-<End>} " >&2
   unset _deps _bdeps _rdeps _vers _pkg_deps
 done
 echo >&2
+_log -w "<duration: $(_last_duration ${_handle_start})>"
+_log -w "Handled information have been backup to ${BACKUP_FILE_1}"
 
-#tidy rules
+#tidy roles
+_log -w "Tidying roles ..."
 for (( i = 0; i < ${#ROLE[@]}; ++i )); do
-  eval "ROLE[${i}]=\$(sed 's/[[:space:]]\+\"/\\n\"/g' <<< '${ROLE[i]}' | sort -u | sed ':a;N;\$!ba;s/\\n/, /g;s/^\s*,\s*//')"
+  eval "ROLE[${i}]=\$(sed 's/[[:space:]]\+\"/\\n\"/g' <<< '${ROLE[i]}' | sort -du | sed ':a;N;\$!ba;s/\\n/, /g;s/^\s*,\s*//')"
   eval "ROLE[${i}]='${ROLE[i]//\"/}'"
 done
 
@@ -398,15 +465,18 @@ function _sort_merge {
 }
 
 # 1: string explaining array
+_sort_latest=
 function _sort_order {
+  _sort_latest=$(date +%s%N)
   local -a _a=( ${1} )
   local -i _n=${#_a[@]}
   if [[ ${_n} -lt 2 ]]; then
     echo -n "${_a[@]}"
+    echo -ne "\e[G\e[J<duration: $(_last_duration ${_sort_latest})>" >&2
+    _sort_latest=$(date +%s%N)
     return
   fi
   local -i _key=$(( ${_n} / 2 ))
-  echo -ne "\e[G\e[J${_key}" >&2
   eval "local _left=\"\${_a[@]:0:${_key}}\""
   eval "local _right=\"\${_a[@]:${_key}}\""
   eval " _left=\$(_sort_order  '${_left}')"
@@ -416,13 +486,18 @@ function _sort_order {
 
 #switch key & val of ORDER
 declare -A ORDERR
+_log -w "Making ORDERR ..."
 for (( i = 0; i < ${#ORDER[@]}; ++i )); do
   eval "ORDERR[${ORDER[${i}]}]=${i}"
+  echo -ne "\e[G\e[JORDERR[${ORDER[${i}]}]=${i}" >&2
 done
+echo >&2
 #sort ORDER
 _log -w "Sorting..."
+_sort_start=$(date +%s%N)
 eval "ORDER=( \$(_sort_order '${ORDER[@]}') )"
 echo >&2
+_log -w "<duration: $(_last_duration ${_sort_start})>"
 #set LINE item
 for (( i = 0; i < ${#ORDER[@]}; ++i )); do
   eval "LINE[${i}]=\${ORDERR[${ORDER[i]}]}"
