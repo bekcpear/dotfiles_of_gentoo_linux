@@ -86,17 +86,12 @@ function _last_duration_echo() {
 [[ -f profiles/repo_name ]] || _fatal "should be run under a portage repository."
 
 __received_sig=
-__last_command=
-__current_command=
 __errfn="/tmp/$(basename ${0%.*})-$(uuidgen).err"
-#_log -e "Failed in ${__last_command}"
 trap 'if [[ ${__received_sig} != INT ]]; then
   set >${__errfn}
   _log -e "Environment vars have been add to ${__errfn}" >&2
 fi' ERR
 trap "__received_sig=INT; exit 1" SIGINT
-#trap '__last_command=${__current_command};\
-#__current_command="L$((${LINENO}-1)): ${BASH_COMMAND}"' DEBUG
 
 REPONAME=$(< profiles/repo_name)
 _log -w "Reponame: ${REPONAME}"
@@ -122,66 +117,72 @@ if [[ -z ${1} ]]; then
     if [[ ${#_ebuilds[@]} -le 0 ]]; then
       _log -w "No ebuild file under ${_pkgdirs[i]}."
     else
-      _ebuild_handled=0
       for (( j = 0; j < ${#_ebuilds[@]}; ++j )); do
-        if [[ ! -e ${_pkgdirs[i]}/${_ebuilds[j]} ]]; then
-          _log -w "${_pkgdirs[i]}/${_ebuilds[j]} not exist."
+        __ebuild_path="${_pkgdirs[i]}/${_ebuilds[j]}"
+        if [[ ! -e ${__ebuild_path} ]]; then
+          _log -w "${__ebuild_path} not exist."
           continue
         fi
+        __zRZI_j=${j}
+        __zRZI_pkgi=${PKGINDEX}
+        __zRZI_cate="${_pkgdirs[i]%/*}"
+        __zRZI_name="${_pkgdirs[i]#*/}"
+        __zRZI_version=${_ebuilds[j]%\.ebuild}
+        __zRZI_version=${__zRZI_version#${__zRZI_name}-}
         declare -i _ret=0
         _declare_array=$(
           set -e
-          _version=${_ebuilds[j]%\.ebuild}
-          _version=${_version#${_pkgdirs[i]#*/}-}
-          _summary="$(
-            sed ':a;N;$!ba;s/\n/<NEW-LINE>/g' ./${_pkgdirs[i]}/${_ebuilds[j]} | tr "'" " " | tr '`' ' '
-          )"
-          _desc="$(
-            sed '/\(<NEW-LINE>\s*DESCRIPTION="\)/!s/$/<NEW-LINE>DESCRIPTION="/;s/.*<NEW-LINE>\s*DESCRIPTION="//;s/\([^\]\)\?"\s*<NEW-LINE>.*/\1/;s/<NEW-LINE>//g' <<<${_summary}
-          )"
-          _homepage="$(
-            sed '/\(<NEW-LINE>\s*HOMEPAGE="\)/!s/$/<NEW-LINE>HOMEPAGE="/;s/.*<NEW-LINE>\s*HOMEPAGE="//;s/\([^\]\)\?"\s*<NEW-LINE>.*/\1/;s/<NEW-LINE>//g;s/^[[:space:]]\+//;s/^http\([[:graph:]]\+\)[[:space:]].*/http\1/' \
-              <<<${_summary}
-          )"
-          _d="$(
-            sed '/\(<NEW-LINE>\s*DEPEND="\)/!s/$/<NEW-LINE>DEPEND="/;s/.*<NEW-LINE>\s*DEPEND="//;s/\([^\]\)\?"\s*\(<NEW-LINE>\)\?.*/\1/;s/<NEW-LINE>//g;s/[[:space:]\$]/ /g;s/{[^}]*}//g;s/\[[^]]*\]//g;s/[^ ]*?/ /g;s/\![^ ]\+\(\s\|$\)/ /g;s/[()^&|]//g' \
-              <<<${_summary}
-          )"
-          _bd="$(
-            sed '/\(<NEW-LINE>\s*BDEPEND="\)/!s/$/<NEW-LINE>BDEPEND="/;s/.*<NEW-LINE>\s*BDEPEND="//;s/\([^\]\)\?"\s*\(<NEW-LINE>\)\?.*/\1/;s/<NEW-LINE>//g;s/[[:space:]\$]/ /g;s/{[^}]*}//g;s/\[[^]]*\]//g;s/[^ ]*?/ /g;s/\![^ ]\+\(\s\|$\)/ /g;s/[()^&|]//g' \
-              <<<${_summary}
-          )"
-          _rd="$(
-            sed '/\(<NEW-LINE>\s*RDEPEND="\)/!s/$/<NEW-LINE>RDEPEND="/;s/.*<NEW-LINE>\s*RDEPEND="//;s/\([^\]\)\?"\s*\(<NEW-LINE>\)\?.*/\1/;s/<NEW-LINE>//g;s/[[:space:]\$]/ /g;s/{[^}]*}//g;s/\[[^]]*\]//g;s/[^ ]*?/ /g;s/\![^ ]\+\(\s\|$\)/ /g;s/[()^&|]//g' \
-              <<<${_summary}
-          )"
-          echo "declare -A PKG_${PKGINDEX}_${j}=(
-            [CATE]=${_pkgdirs[i]%/*}
-            [NAME]=${_pkgdirs[i]#*/}
-            [VERSION]=${_version}
-            [DESCRIPTION]='${_desc}'
-            [HOMEPAGE]='${_homepage}'
-            [D]='${_d}'
-            [BD]='${_bd}'
-            [RD]='${_rd}'
+          DESCRIPTION=
+          HOMEPAGE=
+          DEPEND=
+          BDEPEND=
+          RDEPEND=
+          declare -r __zRZI_j __zRZI_pkgi __zRZI_cate __zRZI_name __zRZI_version
+          . ./${__ebuild_path} 2>/dev/null || true
+          _desc=$(sed -E '/^[[:space:]]*$/d;s/\$/\\\$/g;s/^[[:space:]]+//;s/[[:space:]]+$//;s/\"/\\\"/g' <<<"${DESCRIPTION}")
+          _homepage=( ${HOMEPAGE} )
+          _sed_pattern="s/\[[^]]*\]//g;\
+                        s/[^[:space:]]*\?/ /g;\
+                        s/\![^[:space:]]+([[:space:]]|$)/ /g;\
+                        s/[()^&|><=~'\"]|-[[:digit:]][^[:space:]]*|:[^[:space:]]*//g"
+           _d=$(sed -E "${_sed_pattern}"  <<<"${DEPEND}")
+          _bd=$(sed -E "${_sed_pattern}" <<<"${BDEPEND}")
+          _rd=$(sed -E "${_sed_pattern}" <<<"${RDEPEND}")
+          echo "declare -A PKG_${__zRZI_pkgi}_${__zRZI_j}=(
+            [CATE]=\"${__zRZI_cate}\"
+            [NAME]=\"${__zRZI_name}\"
+            [VERSION]=\"${__zRZI_version}\"
+            [DESCRIPTION]=\"${_desc}\"
+            [HOMEPAGE]=\"${_homepage[0]}\"
+            [D]=\"${_d}\"
+            [BD]=\"${_bd}\"
+            [RD]=\"${_rd}\"
           )"
         ) || _ret=$?
-        if [[ ${_ret} == 0 ]]; then
-          _ebuild_handled=1
-          #backup temporary database
-          echo "${_declare_array}" >>${BACKUP_FILE}
-          eval "${_declare_array}"
+        if [[ ${_ret} != 0 ]]; then
+          _log -e "Something error when parsing ${__ebuild_path}"
+          _declare_array="declare -A PKG_${__zRZI_pkgi}_${__zRZI_j}=(
+            [CATE]=\"${__zRZI_cate}\"
+            [NAME]=\"${__zRZI_name}\"
+            [VERSION]=\"${__zRZI_version}\"
+            [DESCRIPTION]=\"[Something error when parsing.]\"
+            [HOMEPAGE]=\"#\"
+            [D]=\"\"
+            [BD]=\"\"
+            [RD]=\"\"
+          )"
         fi
+        #backup temporary database
+        echo "${_declare_array}" >>${BACKUP_FILE}
+        eval ${_declare_array}
         unset _declare_array #_version _desc _summary _homepage _d _bd _rd
       done
-      if [[ ${_ebuild_handled} == 1 ]]; then
-        eval "PKGS[${PKGINDEX}]='${_pkgdirs[i]}'"
-        eval "PKGSR[${_pkgdirs[i]}]=${PKGINDEX}"
-        PKGINDEX+=1
-        echo -ne "\e[G\e[J${PKGINDEX} collected. (${_pkgdirs[i]})" >&2
-      fi
+      eval "PKGS[${PKGINDEX}]=${_pkgdirs[i]}"
+      eval "PKGSR[${_pkgdirs[i]}]=${PKGINDEX}"
+      PKGINDEX+=1
+      echo -ne "\e[G\e[J${PKGINDEX} collected. (${_pkgdirs[i]})" >&2
     fi
-    unset _ebuilds _ebuild_handled
+    unset _ebuilds
   done
   unset _pkgdirs
   echo >&2
@@ -329,14 +330,9 @@ for (( i = ${_handle_offset}; i < ${PKGINDEX}; i++ )); do
     fi
   done
 
-  _deps=$(echo "${_deps[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' ')
-  _deps=( $(sed -E 's/[><=~]|-[[:digit:]][^[:space:]]*|:[^[:space:]]*//g' <<<${_deps}) )
-
-  _bdeps=$(echo "${_bdeps[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' ')
-  _bdeps=( $(sed -E 's/[><=~]|-[[:digit:]][^[:space:]]*|:[^[:space:]]*//g' <<<${_bdeps}) )
-
-  _rdeps=$(echo "${_rdeps[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' ')
-  _rdeps=( $(sed -E 's/[><=~]|-[[:digit:]][^[:space:]]*|:[^[:space:]]*//g' <<<${_rdeps}) )
+  _deps=($(echo "${_deps[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
+  _bdeps=($(echo "${_bdeps[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
+  _rdeps=($(echo "${_rdeps[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
 
   _set_vers ${i} "${_vers[@]}"
   _set_order ${i}
