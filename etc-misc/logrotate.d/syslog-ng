@@ -1,0 +1,14 @@
+#
+# Syslog-ng logrotate snippet for Gentoo Linux
+# contributed by Michael Sterrett
+#
+
+/var/log/auth.log /var/log/cron.log /var/log/kern.log /var/log/mail.log /var/log/messages {
+    size 10M
+    delaycompress
+    missingok
+    sharedscripts
+    postrotate
+        /etc/init.d/syslog-ng reload > /dev/null 2>&1 || true
+    endscript
+}

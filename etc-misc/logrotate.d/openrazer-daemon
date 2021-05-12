@@ -1,0 +1,10 @@
+/home/ryan/.local/share/openrazer/logs/razer.log {
+	weekly
+	rotate 48
+	dateext
+	su ryan ryan
+	olddir old
+	copytruncate
+	compress
+	notifempty
+}

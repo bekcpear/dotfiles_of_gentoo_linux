@@ -215,7 +215,7 @@ vol_timer:connect_signal("timeout", function()
 vol_timer:emit_signal("timeout")
 
 -- binding click event
-mywi.sliderwidget:buttons(awful.util.table.join(
+mywi.sliderwidget:buttons(gears.table.join(
   awful.button({}, 3, function () 
     if mywi.sliderbar.handle_color == beautiful.fg_normal then mywi.sliderbar.handle_color = beautiful.bg_urgent
     else mywi.sliderbar.handle_color = beautiful.fg_normal end

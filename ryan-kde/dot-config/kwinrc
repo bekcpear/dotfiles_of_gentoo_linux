@@ -134,6 +134,7 @@ DesktopLayout=org.kde.breeze.desktop
 DesktopListLayout=org.kde.breeze.desktop
 HighlightWindows=false
 LayoutName=thumbnail_grid
+MoveMinimizedWindowsToEndOfTabBoxFocusChain=true
 
 [TabBoxAlternative]
 LayoutName=coverswitch
