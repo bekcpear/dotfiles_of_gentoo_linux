@@ -69,3 +69,5 @@ sys-apps/openrazer_test::ryans **
 dev-libs/libopenrazer::ryans **
 app-misc/razergenie::ryans **
 dev-python/daemonize
+
+x11-misc/ksnip::guru

@@ -3,3 +3,4 @@ net-im/wechat-uos::benzene-overlay
 app-portage/pacvis::guru
 app-forensics/pev::bobwya
 sys-kernel/dkms::guru
+x11-misc/ksnip::guru
