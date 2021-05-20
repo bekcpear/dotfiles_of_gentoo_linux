@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Tencent QQ (firejail)
+Comment=Tencent QQ
+Exec=/usr/bin/firejail /opt/linuxqq-bin/qq
+Icon=/opt/linuxqq-bin/qq.png
+Terminal=false
+Type=Application
+Categories=Network;InstantMessaging
+StartupNotify=true
+Name[zh_CN]=腾讯 QQ (firejail)
+Comment[zh_CN]=腾讯 QQ

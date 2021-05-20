@@ -62,6 +62,15 @@ wmclass=google-chrome google-chrome
 wmclasscomplete=true
 wmclassmatch=1
 
+[14]
+Description=Rules for linuxqq-bin
+skiptaskbar=true
+skiptaskbarrule=3
+types=1
+wmclass=qq qq
+wmclasscomplete=true
+wmclassmatch=1
+
 [2]
 Description=Application settings for quiterss
 activity=00000000-0000-0000-0000-000000000000
@@ -162,4 +171,4 @@ wmclass=chromium-browser-chromium
 wmclassmatch=1
 
 [General]
-count=13
+count=14
