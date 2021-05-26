@@ -8,7 +8,7 @@ KEYTIMEOUT=1
 
 zstyle :compinstall filename '/home/ryan/.zshrc'
 
-autoload -Uz compinit promptinit
+autoload -Uz compinit promptinit vcs_info
 compinit
 promptinit; prompt gentoo
 
@@ -36,8 +36,22 @@ source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
 #autosuggestions
 source /usr/share/zsh/site-functions/zsh-autosuggestions.zsh
 
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' check-for-staged-changes true
+zstyle ':vcs_info:*' stagedstr "*"
+zstyle ':vcs_info:*' actionformats '%K{233} ᚠ %b %k%K{3} %F{233}%a%f %k'
+zstyle ':vcs_info:*' formats '%K{233} ᚠ %b%F{2}%c%f %k'
+precmd () {
+  vcs_info
+  if [[ -n ${vcs_info_msg_0_} ]]; then
+    RPROMPT="${vcs_info_msg_0_} ${D_RPROMPT}"
+  else
+    RPROMPT="${D_RPROMPT}"
+  fi
+}
+
 PROMPT=" %F{227}%~%f %B%(?.%F{123}›%f.%F{196}›%f) %b"
-RPROMPT=" %(?..%F{196}%? %f)%F{239}%* /%D{%f}%f"
+D_RPROMPT=" %(?..%F{196}%? %f)%F{239}%* /%D{%f}%f"
 
 export GOPATH=~/go
 export PATH=$PATH":/home/ryan/go/bin"
