@@ -39,7 +39,7 @@ source /usr/share/zsh/site-functions/zsh-autosuggestions.zsh
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' check-for-staged-changes true
 zstyle ':vcs_info:*' stagedstr "*"
-zstyle ':vcs_info:*' actionformats '%K{233} ᚠ %b %k%K{3} %F{233}%a%f %k'
+zstyle ':vcs_info:*' actionformats '%K{233} ᚠ %b%F{2}%c%f %k%K{3} %F{233}%a%f %k'
 zstyle ':vcs_info:*' formats '%K{233} ᚠ %b%F{2}%c%f %k'
 precmd () {
   vcs_info
