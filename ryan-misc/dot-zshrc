@@ -63,5 +63,6 @@ gpg-connect-agent updatestartuptty /bye > /dev/null
 
 alias yd=ydcv-rs
 alias pb=~/Nextcloud/Documents/Linux/Scripts/uGtCustomScripts/vimcnpaste.sh
+alias myscreenkey="screenkey --opacity 0.6 -t0.5 --bak-mode normal -M -p fixed -g \$(slop -n -f '%g')"
 
 export FCITX_SOCKET=/tmp/fcitx-socket-:0
