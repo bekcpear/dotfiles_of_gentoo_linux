@@ -54,13 +54,17 @@ app-shells/zsh-autosuggestions
 net-im/telegram-desktop-bin
 net-misc/you-get
 app-admin/z16 **
-
 net-vpn/wireguard-tools
+dev-util/github-cli
 
 #for test
 #www-plugins/google-talkplugin::local **
 #net-print/foo2zjs::local **
 #x11-libs/lain
+sys-apps/pkgcore **
+dev-util/pkgcheck **
+dev-python/snakeoil **
+app-misc/broot
 
 sys-kernel/dkms::guru
 sys-apps/openrazer-driver::ryans
@@ -75,6 +79,3 @@ x11-misc/ksnip::guru
 
 net-im/linuxqq-bin
 www-client/google-chrome-beta
-
-#tmp
-app-i18n/librime

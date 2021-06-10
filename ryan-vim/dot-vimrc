@@ -14,9 +14,19 @@ function! BuildYCM(info)
     !./install.py
   endif
 endfunction
-Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
-let g:ycm_gopls_binary_path = "~/go/bin"
+"Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+"let g:ycm_gopls_binary_path = "~/go/bin"
 "let g:ycm_filetype_blacklist = {"go": 1}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 "let g:go_def_mode = 'godef' " be very fast on resolving queries

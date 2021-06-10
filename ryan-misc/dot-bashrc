@@ -19,3 +19,5 @@ fi
 #alias tt="echo $1"
 
 PS1="\[\033[01;34m\] \w \$\[\033[00m\] "
+
+source /home/ryan/.config/broot/launcher/bash/br

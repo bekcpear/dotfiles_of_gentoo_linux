@@ -4,3 +4,4 @@ app-portage/pacvis::guru
 app-forensics/pev::bobwya
 sys-kernel/dkms::guru
 x11-misc/ksnip::guru
+app-misc/broot::guru
