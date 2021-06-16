@@ -1,7 +1,7 @@
 # For KDE
 kde-plasma/*
 kde-frameworks/*
-kde-apps/kio-extras
+kde-apps/*
 dev-libs/wayland
 dev-util/wayland-scanner
 dev-libs/plasma-wayland-protocols
@@ -79,3 +79,11 @@ x11-misc/ksnip::guru
 
 net-im/linuxqq-bin
 www-client/google-chrome-beta
+
+##::gentoo-zh fcitx5
+app-i18n/fcitx5
+app-i18n/fcitx5-configtool
+app-i18n/fcitx5-gtk
+app-i18n/fcitx5-qt
+app-i18n/fcitx5-rime
+x11-libs/xcb-imdkit

@@ -1,5 +1,9 @@
+MenuBar=Disabled
+State=AAAA/wAAAAD9AAAAAAAABKYAAAMBAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAA
+StatusBar=Disabled
+
 [Desktop Entry]
-DefaultProfile=Default.profile
+DefaultProfile=Mine.profile
 
 [DownloadDialog Settings]
 Height 1200=408
@@ -13,14 +17,16 @@ SaveGeometryOnExit=false
 ShowMenuBarByDefault=false
 
 [MainWindow]
+HDMI-A-0 XPosition 1920x1200=640
+HDMI-A-0 YPosition 1920x1200=30
 MenuBar=Disabled
-State=AAAA/wAAAAD9AAAAAAAAA4QAAAG5AAAABAAAAAQAAAAIAAAACPwAAAAA
+State=AAAA/wAAAAD9AAAAAAAABKYAAAMvAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAA
+StatusBar=Disabled
 ToolBarsMovable=Disabled
 
-[SearchSettings]
-SearchCaseSensitive=true
-SearchRegExpression=true
+[Open-with settings]
+CompletionMode=1
+History=
 
 [ThumbnailsSettings]
 ThumbnailAlt=true
-ThumbnailSize=500

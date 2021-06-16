@@ -1,0 +1,12 @@
+diff --git a/src/terminalDisplay/TerminalPainter.cpp b/src/terminalDisplay/TerminalPainter.cpp
+index 76585d9..f63b841 100644
+--- a/src/terminalDisplay/TerminalPainter.cpp
++++ b/src/terminalDisplay/TerminalPainter.cpp
+@@ -134,6 +134,7 @@ namespace Konsole
+                     return currentScript == script;
+                 };
+                 const auto canBeGrouped = [&](int column) {
++                    return false;
+                     return image[display->loc(column, y)].character <= 0x7e
+                             || (image[display->loc(column, y)].rendition & RE_EXTENDED_CHAR)
+                             || (bidiEnabled && !doubleWidth);

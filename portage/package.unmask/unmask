@@ -5,3 +5,11 @@ app-forensics/pev::bobwya
 sys-kernel/dkms::guru
 x11-misc/ksnip::guru
 app-misc/broot::guru
+
+##::gentoo-zh fcitx5
+app-i18n/fcitx5
+app-i18n/fcitx5-configtool
+app-i18n/fcitx5-gtk
+app-i18n/fcitx5-qt
+app-i18n/fcitx5-rime
+x11-libs/xcb-imdkit
