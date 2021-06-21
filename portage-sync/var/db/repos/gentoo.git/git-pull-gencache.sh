@@ -15,7 +15,7 @@ function verify-sign-until() {
 	declare -i i=${#commits[@]}-1 len=0
 	for (( ; i > -1; i-- )); do
 		commit=${commits[i]}
-		msg=$(git --no-pager log -1 --format="%h %s << %ce" "$commit")
+		msg=$(git --no-pager log -1 --format="%h %s (%cr) << %ce" "$commit")
 		echo "Verifying $msg"
 		output=$(git verify-commit --raw "$commit" 2>&1)
 		res=$?

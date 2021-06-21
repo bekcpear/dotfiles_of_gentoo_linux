@@ -79,6 +79,8 @@ x11-misc/ksnip::guru
 
 net-im/linuxqq-bin
 www-client/google-chrome-beta
+games-action/minecraft-launcher
+games-action/multimc
 
 ##::gentoo-zh fcitx5
 app-i18n/fcitx5
