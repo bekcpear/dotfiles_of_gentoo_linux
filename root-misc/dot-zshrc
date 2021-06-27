@@ -47,7 +47,7 @@ alias ssu='\
 	tmux split-window -dl3;\
 	tmux split-window -dbl10;\
 	tmux send-keys -tssu:0.0 "htop" C-m;\
-	tmux send-keys -tssu:0.1 "emerge -avuDN @world" C-m;\
+	tmux send-keys -tssu:0.1 "emerge -ajvuDN @world" C-m;\
 	tmux send-keys -tssu:0.2 "watch -n 1 qlop -Htvr" C-m;\
 	tmux attach -tssu'
 
@@ -57,7 +57,7 @@ alias ssuy='\
 	tmux split-window -dl3;\
 	tmux split-window -dbl10;\
 	tmux send-keys -tssuy:0.0 "htop" C-m;\
-	tmux send-keys -tssuy:0.1 "emerge -vuDN @world" C-m;\
+	tmux send-keys -tssuy:0.1 "emerge -jvuDN @world" C-m;\
 	tmux send-keys -tssuy:0.2 "watch -n 1 qlop -Htvr" C-m;\
 	tmux attach -tssuy'
 

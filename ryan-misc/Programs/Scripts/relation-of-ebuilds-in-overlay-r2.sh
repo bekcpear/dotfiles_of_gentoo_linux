@@ -9,67 +9,144 @@
 
 set -e
 
-export LC_ALL=C
 LAZY_MAINTAINED=( dev-util/v2ray-geoip-generator)
 UNMAINTAINED=()
 
+REPOPATH=${REPOPATH:-.}
+
+# @VARIABLE: SHOWPROCESS
+# #DEFAULT: 1
+# @DESCRIPTION:
+# show the process of handling data
+SHOWPROCESS=${SHOWPROCESS:-1}
+
+# @VARIABLE: LOGLEVEL
+# #DEFAULT: 2
+# @DESCRIPTION:
+# Used to control output level of messages. Should only be setted
+# by shell itself.
+# 0 -> DEBUG; 1 -> INFO; 2 -> NORMAL; 3 -> WARNNING; 4 -> ERROR
+LOGLEVEL=2
+
+# @VARIABLE: FD_STD_OUT
+# #DEFAULT: 1
+# @DESCRIPTION:
+# The STDOUT file descriptor
+FD_STD_OUT=1
+
+# @VARIABLE: FD_STD_OUT
+# #DEFAULT: 2
+# @DESCRIPTION:
+# The STDERR file descriptor
+FD_STD_ERR=2
+
 # @FUNCTION: _log
-# @USAGE: [-d|-i|-w|-e] <message>
+# @USAGE: <[dinwe]> <message>
 # @INTERNAL
 # @DESCRIPTION:
 # Echo messages with a unified format.
-#  '-d' means it's an DEBUG level msg;
-#  '-i' means it's an  INFO level msg;
-#  '-w' means it's an  WARN level msg;
-#  '-e' means it's an ERROR level msg;
+#  'd' means showing in    DEBUG level;
+#  'i' means showing in     INFO level;
+#  'n' means showing in   NORMAL level;
+#  'w' means showing in WARNNING level;
+#  'e' means showing in    ERROR level;
 # Msg will be printed to the standard output normally
 # when this function is called without any option.
 function _log() {
-  local lv="normal"
-  local color='\e[36m'
+  local color='\e[0m'
   local reset='\e[0m'
-  local outfd='&1'
-  if [[ ${1} =~ ^- ]] && [[ -n ${2} ]]; then
-    case ${1} in
-      -d)
-        lv="DEBUG"
-        color='\e[0m'
-        outfd='&1'
-        ;;
-      -i)
-        lv=" INFO"
-        color='\e[0m'
-        outfd='&1'
-        ;;
-      -w)
-        lv=" WARN"
-        color='\e[33m'
-        outfd='&2'
-        ;;
-      -e)
-        lv="ERROR"
-        color='\e[31m'
-        outfd='&2'
-        ;;
-      *)
-        echo "UNRECOGNIZED OPTION OF _log FUNCTION!" >&2
-        exit 1
-        ;;
-    esac
+  local ofd="&${FD_STD_OUT}"
+  local -i lv=2
+  if [[ ! ${1} =~ ^[dinwe]+$ ]]; then
+    echo "UNRECOGNIZED OPTIONS OF INTERNAL <_log> FUNCTION!" >&2
+    exit 1
+  fi
+  case ${1} in
+    *e*)
+      lv=4
+      color='\e[31m'
+      ofd="&${FD_STD_ERR}"
+      ;;
+    *w*)
+      lv=3
+      color='\e[33m'
+      ofd="&${FD_STD_ERR}"
+      ;;
+    *n*)
+      lv=2
+      color='\e[36m'
+      ;;
+    *i*)
+      lv=1
+      ;;
+    *d*)
+      lv=0
+      ;;
+  esac
+  if [[ ${lv} -ge ${LOGLEVEL} ]]; then
     shift
+    local prefix=""
+    local msg="${@}"
+    if [[ ${lv} != 2 ]]; then
+      prefix="[$(date '+%Y-%m-%d %H:%M:%S')] " || true
+    fi
+    eval ">${ofd} echo -e '${color}${prefix}${msg//\'/\'\\\'\'}${reset}'"
+    _last_process_text_lines=0
   fi
-  local prefix=""
-  local msg="${@}"
-  if [[ ${lv} != normal ]]; then
-    prefix="[$(date '+%Y-%m-%d %H:%M:%S') ${lv}] "
-  fi
-  eval ">${outfd} echo -e '${color}${prefix}${msg//\'/\'\\\'\'}${reset}'"
 }
 
+# @FUNCTION: _fatal
+# @USAGE: <exit-code> <message>
+# @INTERNAL
+# @DESCRIPTION:
+# Print an error message and exit shell.
 function _fatal() {
-  _log -e "${@}"
-  exit 1
+  if [[ ${1} =~ ^[[:digit:]]+$ ]]; then
+    local exit_code=${1}
+    shift
+  else
+    local exit_code=1
+  fi
+  _log e "${@}"
+  exit ${exit_code}
 }
+
+_last_process_text_lines=0
+_last_process_state=0
+# $1: 's' means sub info
+function _show_process() {
+  [[ ${SHOWPROCESS} == 1 ]] || return 0
+  local _move_lines='' _indent=''
+  if [[ ${1} == 's' ]]; then
+    _last_process_state=1
+    if [[ -z ${_tmp_process_text_lines} ]]; then
+      _tmp_process_text_lines=${_last_process_text_lines}
+      _last_process_text_lines=0
+    fi
+    _indent='  '
+    shift
+  elif [[ ${1} == '1l' ]]; then
+    _last_process_text_lines=1
+    shift
+    if [[ -z ${1} ]]; then
+      echo >&2
+      return
+    fi
+  else
+    _last_process_state=0
+    _last_process_text_lines=$(( ${_last_process_text_lines} + ${_tmp_process_text_lines:-0} ))
+    unset _tmp_process_text_lines
+  fi
+  if [[ ${_last_process_text_lines} -ge 1 ]]; then
+    _move_lines="\e[${_last_process_text_lines}A"
+  fi
+  eval "echo -e \"${_move_lines}\\e[G\\e[J${_indent}${*}\" >&2"
+  _last_process_text_lines=$(wc -l <<<"${*}")
+}
+
+export LC_ALL=C
+cd ${REPOPATH}
+[[ -f profiles/repo_name ]] || _fatal "should be run under a portage repository."
 
 # 1: last recorded val (date +%s%N)
 function _last_duration() {
@@ -84,18 +161,16 @@ function _last_duration_echo() {
   _LAST_DURATION_TIME=$(date +%s%N)
 }
 
-[[ -f profiles/repo_name ]] || _fatal "should be run under a portage repository."
-
 __received_sig=
 __errfn="/tmp/$(basename ${0%.*})-$(uuidgen).err"
 trap 'if [[ ${__received_sig} != INT ]]; then
   set >${__errfn}
-  _log -e "Environment vars have been add to ${__errfn}" >&2
+  _log e "Environment vars have been add to ${__errfn}" >&2
 fi' ERR
 trap "__received_sig=INT; exit 1" SIGINT
 
 REPONAME=$(< profiles/repo_name)
-_log -w "Reponame: ${REPONAME}"
+_log w "Reponame: ${REPONAME}"
 
 BACKUP_FILE_PREFIX="roe_hczAbkvN"
 BACKUP_FILE="/tmp/${BACKUP_FILE_PREFIX}_${REPONAME}_$(date +%Y%m%d%H).info.tmp"
@@ -110,18 +185,21 @@ declare -A PKGSR
 
 _collect_start=$(date +%s%N)
 if [[ -z ${1} ]]; then
-  _log -w "Collecting information ..."
+  _log w "Collecting information ..."
   _pkgdirs=($(ls --file-type -1d */* | egrep '/$'))
   for (( i = 0; i < ${#_pkgdirs[@]}; ++i )); do
     _pkgdirs[i]=${_pkgdirs[i]%/}
     _ebuilds=($(find ${_pkgdirs[i]} -maxdepth 1 -name '*.ebuild' -printf '%f\n'))
     if [[ ${#_ebuilds[@]} -le 0 ]]; then
-      _log -w "No ebuild file under ${_pkgdirs[i]}."
+      _log w "No ebuild file under ${_pkgdirs[i]}."
     else
+      ## FAKE FUNCS FOR SOURCE
+      function ver_cut() { echo 0; }
+      ## FAKE FUNCS FOR SOURCE
       for (( j = 0; j < ${#_ebuilds[@]}; ++j )); do
         __ebuild_path="${_pkgdirs[i]}/${_ebuilds[j]}"
         if [[ ! -e ${__ebuild_path} ]]; then
-          _log -w "${__ebuild_path} not exist."
+          _log w "${__ebuild_path} not exist."
           continue
         fi
         __zRZI_j=${j}
@@ -139,7 +217,7 @@ if [[ -z ${1} ]]; then
           BDEPEND=
           RDEPEND=
           declare -r __zRZI_j __zRZI_pkgi __zRZI_cate __zRZI_name __zRZI_version
-          . ./${__ebuild_path} 2>/dev/null || true
+          . ./${__ebuild_path} 2>/dev/null
           _desc=$(sed -E '/^[[:space:]]*$/d;s/\$/\\\$/g;s/^[[:space:]]+//;s/[[:space:]]+$//;s/\"/\\\"/g' <<<"${DESCRIPTION}")
           _homepage=( ${HOMEPAGE} )
           _sed_pattern="s/\[[^]]*\]//g;\
@@ -161,7 +239,7 @@ if [[ -z ${1} ]]; then
           )"
         ) || _ret=$?
         if [[ ${_ret} != 0 ]]; then
-          _log -e "Something error when parsing ${__ebuild_path}"
+          _log e "Something error when parsing ${__ebuild_path}"
           _declare_array="declare -A PKG_${__zRZI_pkgi}_${__zRZI_j}=(
             [CATE]=\"${__zRZI_cate}\"
             [NAME]=\"${__zRZI_name}\"
@@ -181,21 +259,20 @@ if [[ -z ${1} ]]; then
       eval "PKGS[${PKGINDEX}]=${_pkgdirs[i]}"
       eval "PKGSR[${_pkgdirs[i]}]=${PKGINDEX}"
       PKGINDEX+=1
-      echo -ne "\e[G\e[J${PKGINDEX} collected. (${_pkgdirs[i]})" >&2
+      _show_process "${PKGINDEX} collected. (${_pkgdirs[i]})"
     fi
     unset _ebuilds
   done
   unset _pkgdirs
-  echo >&2
-  _log -w "<duration: $(_last_duration ${_collect_start})>"
+  _log w "<duration: $(_last_duration ${_collect_start})>"
   #backup temporary database
   declare -p PKGS >>${BACKUP_FILE}
   declare -p PKGSR >>${BACKUP_FILE}
   declare -p PKGINDEX >>${BACKUP_FILE}
-  _log -w "Collected information has been backup to ${BACKUP_FILE}"
+  _log w "Collected information has been backup to ${BACKUP_FILE}"
   BACKUP_FILE_REAL="${BACKUP_FILE}"
 else
-  _log -w "Reading information from ${1} ..."
+  _log w "Reading information from ${1} ..."
   source "${1}"
   BACKUP_FILE_REAL="${1}"
 fi
@@ -266,7 +343,7 @@ function _set_children() {
 function _reset_child_order_and_indent() {
   local -a _pa="${1}"
   function __reset_child_order_and_indent() {
-    echo -ne "\e[40G\e[K (P:${1})" >&2
+    _show_process s "Resetting children's order.. indent.. (P:${1})"
     local _o=${ORDER[${1}]}
     local -i _i=$((${INDENT[${1}]} + 1))
 
@@ -296,10 +373,11 @@ function _set_vers() {
   eval "VERSIONS[${_i}]='${@}'"
 }
 
-_log -w "Handle information ..."
+_log w "Handle information ..."
+_last_process_text_lines=0
 declare -i _handle_offset=0
 if [[ -n ${2} ]]; then
-  _log -w "Reading handled data from ${2} ..."
+  _log w "Reading handled data from ${2} ..."
   source ${2}
   _handle_offset=${_HANDLE_OFFSET_NEXT}
 fi
@@ -310,13 +388,13 @@ while [[ -e ${BACKUP_FILE_1} || -L ${BACKUP_FILE_1} ]]; do
   BACKUP_FILE_1="${BACKUP_FILE_1%.[[:digit:]]*}.${i}"
   i+=1
 done
-_log -w "Handled data will be backup to ${BACKUP_FILE_1}"
+_log w "Handled data will be backup to ${BACKUP_FILE_1}"
 _handle_start=$(date +%s%N)
 for (( i = ${_handle_offset}; i < ${PKGINDEX}; i++ )); do
-  echo -e "\e[G\e[K[${i}/${PKGINDEX}] handled. <duration: $(_last_duration ${_handle_start_each:-${_handle_start}})> (${PKGS[${i}-1]})" >&2
-  _handle_start_each=$(date +%s%N)
   _name=${PKGS[i]}
-  echo -ne "\e[G\e[JNow: ${_name} ... " >&2
+  _show_process "[${i}/${PKGINDEX}] handled. <duration: $(_last_duration ${_handle_start_each:-${_handle_start}})> (${PKGS[${i}-1]})
+Now: ${_name} ... "
+  _handle_start_each=$(date +%s%N)
   eval "HOMEPAGE[${i}]=\${PKG_${i}_0[HOMEPAGE]}"
   eval "DESCRIPTION[${i}]=\${PKG_${i}_0[DESCRIPTION]}"
   declare -a _deps _bdeps _rdeps _vers _pkg_deps
@@ -372,24 +450,21 @@ for (( i = ${_handle_offset}; i < ${PKGINDEX}; i++ )); do
     _set_children ${i} ${idx}
     if [[ ${PARENT[idx]} == ${i} ]]; then
       #resort this line and it's children
-      echo -ne "\n  Resetting children's order.. indent.. " >&2
       _reset_child_order_and_indent ${i}
-      echo -ne "\e[1A" >&2
     fi
   done
 
   declare -i _HANDLE_OFFSET_NEXT=$((${i} + 1))
-  declare -p INDENT PARENT CHILDREN ROLE ORDER VERSIONS HOMEPAGE DESCRIPTION LINEINDEX _HANDLE_OFFSET_NEXT >"${BACKUP_FILE_1}" || _log -e "Corrupted backup file."
+  declare -p INDENT PARENT CHILDREN ROLE ORDER VERSIONS HOMEPAGE DESCRIPTION LINEINDEX _HANDLE_OFFSET_NEXT >"${BACKUP_FILE_1}" || _log e "Corrupted backup file."
 
-  echo -ne "\e[1A" >&2
   unset _deps _bdeps _rdeps _vers _pkg_deps
 done
-echo -e "\e[G\e[K[${i}/${PKGINDEX}] handled. <total duration: $(_last_duration ${_handle_start})> (the last: ${_name})" >&2
+_log w "[${i}/${PKGINDEX}] handled. <total duration: $(_last_duration ${_handle_start})> (the last: ${_name})"
 
-_log -w "Handled information have been backup to ${BACKUP_FILE_1}"
+_log w "Handled information have been backup to ${BACKUP_FILE_1}"
 
 #tidy roles
-_log -w "Tidying roles ..."
+_log w "Tidying roles ..."
 for (( i = 0; i < ${#ROLE[@]}; ++i )); do
   eval "ROLE[${i}]=\$(sed 's/[[:space:]]\+\"/\\n\"/g' <<< '${ROLE[i]}' | sort -du | sed ':a;N;\$!ba;s/\\n/, /g;s/^\s*,\s*//')"
   eval "ROLE[${i}]='${ROLE[i]//\"/}'"
@@ -468,7 +543,7 @@ function _sort_order {
   local -i _n=${#_a[@]}
   if [[ ${_n} -lt 2 ]]; then
     echo -n "${_a[@]}"
-    echo -ne "\e[G\e[J:: $(_last_duration ${_sort_latest})" >&2
+    _show_process 1l "sorting... $(_last_duration ${_sort_latest})"
     _sort_latest=$(date +%s%N)
     return
   fi
@@ -482,25 +557,26 @@ function _sort_order {
 
 #switch key & val of ORDER
 declare -A ORDERR
-_log -w "Making ORDERR ..."
+_log w "Making ORDERR ..."
+_last_process_text_lines=0
 for (( i = 0; i < ${#ORDER[@]}; ++i )); do
   eval "ORDERR[${ORDER[${i}]}]=${i}"
-  echo -ne "\e[G\e[JORDERR[${ORDER[${i}]}]=${i}" >&2
+  _show_process "ORDERR[${ORDER[${i}]}]=${i}"
 done
-echo >&2
 #sort ORDER
-_log -w "Sorting ..."
+_log w "Sorting ..."
+_last_process_text_lines=0
 _sort_start=$(date +%s%N)
+_show_process 1l
 eval "ORDER=( \$(_sort_order '${ORDER[@]}') )"
-echo >&2
-_log -w "<duration: $(_last_duration ${_sort_start})>"
+_log w "<duration: $(_last_duration ${_sort_start})>"
 #set LINE item
 for (( i = 0; i < ${#ORDER[@]}; ++i )); do
   eval "LINE[${i}]=\${ORDERR[${ORDER[i]}]}"
 done
 
 #format print
-_log -w "Format printing ..."
+_log w "Format printing ..."
 TITLE_NAME='Package name'
 TITLE_VERSION='Version'
 TITLE_ROLE='Role'

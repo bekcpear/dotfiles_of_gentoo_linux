@@ -1,0 +1,10 @@
+# required by x11-misc/ksnip-1.9.0::guru
+# required by @selected
+# required by @world (argument)
+>=media-libs/kimageannotator-0.5.1 ~amd64
+# required by ksnip (argument)
+>=x11-misc/ksnip-1.9.0 ~amd64
+# required by x11-misc/ksnip-1.9.0::guru
+# required by @selected
+# required by @world (argument)
+>=media-libs/kcolorpicker-0.1.6 ~amd64

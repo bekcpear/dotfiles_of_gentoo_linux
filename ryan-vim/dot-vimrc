@@ -4,16 +4,16 @@ call plug#begin('~/.vim/plugged')
 Plug 'easymotion/vim-easymotion'
 Plug 'justinmk/vim-sneak'
 let g:sneak#label = 1
-Plug 'tpope/vim-fugitive'
-function! BuildYCM(info)
+"Plug 'tpope/vim-fugitive'
+"function! BuildYCM(info)
   " info is a dictionary with 3 fields
   " - name:   name of the plugin
   " - status: 'installed', 'updated', or 'unchanged'
   " - force:  set on PlugInstall! or PlugUpdate!
-  if a:info.status == 'installed' || a:info.force
-    !./install.py
-  endif
-endfunction
+"  if a:info.status == 'installed' || a:info.force
+"    !./install.py
+"  endif
+"endfunction
 "Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
 "let g:ycm_gopls_binary_path = "~/go/bin"
 "let g:ycm_filetype_blacklist = {"go": 1}
@@ -106,6 +106,7 @@ Plug 'vim-airline/vim-airline-themes'
 let g:airline_theme = 'lessnoise'
 let g:airline#extensions#searchcount#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#branch#enabled=1
 "let g:airline_powerline_fonts = 1
 "Plug 'itchyny/lightline.vim'
 "set laststatus=2
