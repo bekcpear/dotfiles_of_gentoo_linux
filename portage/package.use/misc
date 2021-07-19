@@ -1,0 +1,6 @@
+# required by x11-libs/pango-1.48.7::gentoo
+# required by dev-scheme/racket-7.0-r1::gentoo
+# required by app-editors/vim-9999::gentoo[racket]
+# required by @selected
+# required by @world (argument)
+>=media-libs/freetype-2.10.4 harfbuzz

@@ -36,7 +36,9 @@ source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
 #autosuggestions
 source /usr/share/zsh/site-functions/zsh-autosuggestions.zsh
 
-PROMPT=" %B%F{11}%~%f %# %(?.%F{154}»%f%F{190}»%f%F{226}»%f.%F{124}»%f%F{160}»%f%F{196}»%f) %b"
+setopt prompt_subst
+PROMPT='%F{238}${(l:${COLUMNS}::·:):-}%f\
+ %B%F{11}%~%f %# %(?.%F{154}»%f%F{190}»%f%F{226}»%f.%F{124}»%f%F{160}»%f%F{196}»%f) %b'
 RPROMPT="%(?..%F{196}%? %f)%F{238}%* @%D{%f}%f"
 
 #export GOPATH=~/go

@@ -313,8 +313,6 @@ function _set_children() {
   local -i _child=${2}
   #set parent if it has none
   eval ": \${PARENT[${2}]:=${1}}"
-  #add child
-  eval "CHILDREN[${1}]+=' ${2}'"
 
   #reset parent when the already setted parent
   #(or has a parent) that is the same as the child's
@@ -326,6 +324,8 @@ function _set_children() {
         _pa+=( ${PARENT[${1}]} )
         if [[ ${PARENT[${1}]} == ${_p} ]]; then
           eval "PARENT[${_child}]=${_parent}"
+          eval "CHILDREN[${_parent}]+=' ${_child}'"
+          eval "CHILDREN[${_p}]=\${CHILDREN[${_p}]//${_child}/}"
         else
           local -i _pam=$((${#_pa[@]} - 1))
           if [[ ${_pa[0]} == ${_pa[${_pam}]} ]]; then
@@ -336,6 +336,8 @@ function _set_children() {
       fi
     }
     __reset_parent ${1}
+  else
+    eval "CHILDREN[${_parent}]+=' ${_child}'"
   fi
 }
 

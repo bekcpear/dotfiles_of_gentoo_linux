@@ -81,10 +81,6 @@ www-client/google-chrome-beta
 games-action/minecraft-launcher
 games-action/multimc
 
-##::gentoo-zh fcitx5
-app-i18n/fcitx5
-app-i18n/fcitx5-configtool
-app-i18n/fcitx5-gtk
-app-i18n/fcitx5-qt
-app-i18n/fcitx5-rime
-x11-libs/xcb-imdkit
+# for fcitx
+x11-libs/xcb-imdkit::ryans
+app-i18n/*::ryans
