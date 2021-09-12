@@ -6,6 +6,9 @@ dev-libs/wayland
 dev-util/wayland-scanner
 dev-libs/plasma-wayland-protocols
 
+#for kde-apps/kdenlive
+media-libs/mlt
+
 # Misc
 x11-wm/awesome
 x11-misc/picom
@@ -26,7 +29,7 @@ dev-ruby/sass-listen
 app-crypt/keybase
 media-video/obs-studio
 app-misc/openrazer **
-#www-client/microsoft-edge-dev
+www-client/microsoft-edge-dev
 net-news/rssguard
 net-news/quiterss
 www-client/firefox
@@ -84,3 +87,12 @@ games-action/multimc
 # for fcitx
 x11-libs/xcb-imdkit::ryans
 app-i18n/*::ryans
+
+net-p2p/syncthing
+kde-misc/krunner-pass::ryans **
+
+media-tv/plex-media-server
+
+net-libs/nodejs
+
+www-apps/filebrowser::ryans

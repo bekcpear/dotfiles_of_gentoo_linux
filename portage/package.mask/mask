@@ -5,3 +5,6 @@
 =net-im/telegram-desktop-2.4.5
 >www-client/chromium-90.0.4430.93
 =net-misc/nextcloud-client-3.1.2
+
+#~kde-apps/konsole-21.08.0
+#=kde-apps/yakuake-21.08.0

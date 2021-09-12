@@ -1,0 +1,3 @@
+# required by net-print/hplip-3.20.11-r2::gentoo[-minimal,snmp]
+# required by hplip (argument)
+>=net-dns/avahi-0.8-r4 python

@@ -705,8 +705,9 @@ printf -- "## A personal ebuild repository\n\n"
 printf -- "- Reponame: **\`${REPONAME}\`**\n"
 printf -- "- Maintainer: **[bekcpear](https://github.com/bekcpear)**\n\n"
 printf -- "can be added to the system by running:\n"
-printf -- '```
-eselect repository add ryans
+printf -- '```bash
+eselect repository enable ryans
+# you may need to install app-eselect/eselect-repository first
 ```
 \n'
 
