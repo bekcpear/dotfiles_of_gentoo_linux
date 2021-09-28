@@ -12,8 +12,11 @@ ip addr add 10.0.1.1/24 dev br0
 
 sysctl net.ipv4.conf.tap0.proxy_arp=1
 sysctl net.ipv4.conf.wlp3s0.proxy_arp=1
+sysctl net.ipv4.conf.enp9s0.proxy_arp=1
 sysctl net.ipv4.ip_forward=1
 
 iptables -t nat -A POSTROUTING -o wlp3s0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -o enp9s0 -j MASQUERADE
 iptables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -A FORWARD -i br0 -o wlp3s0 -j ACCEPT
+iptables -A FORWARD -i br0 -o enp9s0 -j ACCEPT
