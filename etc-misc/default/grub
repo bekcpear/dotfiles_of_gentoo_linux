@@ -20,7 +20,7 @@ GRUB_DISTRIBUTOR="Gentoo"
 # Append parameters to the linux kernel command line
 #
 # for genkernel initramfs
-GRUB_CMDLINE_LINUX="dobtrfs crypt_root=UUID=35dfeae8-4ac8-41da-892b-3b2cfabcd810 root=UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6"
+GRUB_CMDLINE_LINUX="dobtrfs crypt_root=UUID=35dfeae8-4ac8-41da-892b-3b2cfabcd810 root=UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6 ivrs_ioapic[130]=00:00.2 amd_iommu_dump=1"
 # for dracut initramfs
 #GRUB_CMDLINE_LINUX="quiet splash rd.luks.uuid=35dfeae8-4ac8-41da-892b-3b2cfabcd810 root=UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6"
 
