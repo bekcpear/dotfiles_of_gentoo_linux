@@ -22,7 +22,6 @@ dev-libs/v2ray-geoip-bin::ryans
 dev-libs/v2ray-domain-list-community::ryans
 dev-libs/v2ray-domain-list-community-bin::ryans
 
-net-misc/nextcloud-client
 dev-db/sqlite
 
 app-text/ydcv-rs

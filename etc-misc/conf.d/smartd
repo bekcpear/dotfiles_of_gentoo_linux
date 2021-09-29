@@ -1,0 +1,4 @@
+# /etc/conf.d/smartd: config file for /etc/init.d/smartd
+
+# Insert any other options needed
+SMARTD_OPTS="-i 7200 -l local0"
