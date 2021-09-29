@@ -22,7 +22,7 @@ Toggle Touchpad=Touchpad Toggle,Touchpad Toggle,Toggle Touchpad
 _k_friendly_name=Touchpad
 
 [kded5]
-Show System Activity=Ctrl+Esc,Ctrl+Esc,Show System Activity
+Show System Activity=,Ctrl+Esc,Show System Activity
 _k_friendly_name=KDE Daemon
 display=Display\tMeta+Shift+P,Display\tMeta+P,Switch Display
 

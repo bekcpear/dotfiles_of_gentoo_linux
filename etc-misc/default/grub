@@ -34,7 +34,7 @@ GRUB_CMDLINE_LINUX="dobtrfs crypt_root=UUID=35dfeae8-4ac8-41da-892b-3b2cfabcd810
 # GRUB_CMDLINE_LINUX="init=/usr/lib/systemd/systemd"
 
 # Append parameters to the linux kernel command line for non-recovery entries
-GRUB_CMDLINE_LINUX_DEFAULT="resume=UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6 resume_offset=2364681"
+#GRUB_CMDLINE_LINUX_DEFAULT="resume=UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6 resume_offset=2364681"
 
 # Uncomment to disable graphical terminal (grub-pc only)
 #GRUB_TERMINAL=console
