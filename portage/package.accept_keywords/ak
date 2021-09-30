@@ -98,3 +98,6 @@ net-libs/nodejs
 
 www-apps/filebrowser::ryans
 app-crypt/acme-sh
+
+app-crypt/gnupg
+dev-libs/libgcrypt
