@@ -79,3 +79,4 @@ GRUB_THEME="/boot/grub/themes/tela/theme.txt"
 # to know when they can make a choice on the menu.
 #GRUB_INIT_TUNE="60 800 1"
 
+GRUB_DISABLE_OS_PROBER=false

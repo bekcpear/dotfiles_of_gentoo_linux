@@ -99,5 +99,5 @@ net-libs/nodejs
 www-apps/filebrowser::ryans
 app-crypt/acme-sh
 
-app-crypt/gnupg
+=app-crypt/gnupg-2.3.2
 dev-libs/libgcrypt

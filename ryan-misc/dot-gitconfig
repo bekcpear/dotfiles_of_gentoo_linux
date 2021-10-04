@@ -1,7 +1,7 @@
 [user]
 	name = bekcpear
 	email = i@bitbili.net
-	signingkey = 0x510BE6FB0FBDFC2A
+	signingkey = 0x510A72801905CE16
 [commit]
 	gpgsign = true
 [gpg]
