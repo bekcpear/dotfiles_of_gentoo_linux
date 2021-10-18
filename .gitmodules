@@ -1,0 +1,3 @@
+[submodule "ryan-misc/dot-local/share/fcitx5/themes/2233"]
+	path = ryan-misc/dot-local/share/fcitx5/themes/2233
+	url = https://gitlab.com/cwittlut/fcitx5-theme-2233.git
