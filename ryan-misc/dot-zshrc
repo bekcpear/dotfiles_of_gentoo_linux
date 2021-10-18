@@ -16,6 +16,8 @@ zstyle ':completion::complete:*' use-cache 1
 zstyle ':completion:*:descriptions' format '%U%d%b%u'
 zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'
 
+bindkey "^R" history-incremental-search-backward
+
 #auto change current directory( /etc instead of cd /etc )
 setopt autocd
 #satisfy standard bash-like globbing

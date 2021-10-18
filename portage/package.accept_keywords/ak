@@ -1,9 +1,11 @@
 # For KDE
 kde-plasma/*
 kde-frameworks/*
+
 kde-apps/*
 # for kde-apps/akregator
 app-crypt/gpgme
+
 dev-libs/wayland
 dev-util/wayland-scanner
 dev-libs/plasma-wayland-protocols
@@ -65,8 +67,8 @@ dev-util/github-cli
 #www-plugins/google-talkplugin::local **
 #net-print/foo2zjs::local **
 #x11-libs/lain
-sys-apps/pkgcore **
-dev-util/pkgcheck **
+#sys-apps/pkgcore **
+#dev-util/pkgcheck **
 dev-python/snakeoil **
 app-misc/broot
 
@@ -101,3 +103,5 @@ app-crypt/acme-sh
 
 =app-crypt/gnupg-2.3.2
 dev-libs/libgcrypt
+
+#x11-misc/sddm::local **

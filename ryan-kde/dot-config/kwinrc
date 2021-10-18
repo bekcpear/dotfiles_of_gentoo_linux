@@ -1,5 +1,5 @@
 [$Version]
-update_info=kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-effect-to-js,kwin.upd:port-scale-effect-to-js,kwin.upd:port-dimscreen-effect-to-js,kwin.upd:auto-bordersize,kwin.upd:animation-speed,kwin.upd:desktop-grid-click-behavior,kwin.upd:no-swap-encourage
+update_info=kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-effect-to-js,kwin.upd:port-scale-effect-to-js,kwin.upd:port-dimscreen-effect-to-js,kwin.upd:auto-bordersize,kwin.upd:animation-speed,kwin.upd:desktop-grid-click-behavior,kwin.upd:no-swap-encourage,kwin.upd:make-translucency-effect-disabled-by-default,kwin.upd:remove-flip-switch-effect,kwin.upd:remove-cover-switch-effect,kwin.upd:remove-cubeslide-effect,kwin.upd:remove-xrender-backend
 
 [Compositing]
 Backend=OpenGL
@@ -24,6 +24,11 @@ Id_8=4440f387-e798-4679-b8ce-103f1be3afd1
 Id_9=55452089-ea0e-4319-98fb-e3aa65c26af2
 Number=9
 Rows=3
+
+[DrmOutputs][3369a739-0f1f-5d41-8953-db6c86ce0264][3369a739-0f1f-5d41-8953-db6c86ce0264]
+Mode=1920x1200_59950
+Scale=1
+Transform=normal
 
 [Effect-CoverSwitch]
 TabBoxAlternative=true
@@ -171,5 +176,3 @@ WindowSnapZone=10
 [org.kde.kdecoration2]
 ButtonsOnLeft=XIAFS
 ButtonsOnRight=H
-library=org.kde.breeze
-theme=Breeze

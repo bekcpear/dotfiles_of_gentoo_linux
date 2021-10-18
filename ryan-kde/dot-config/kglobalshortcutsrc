@@ -8,7 +8,7 @@ switch-to-activity-b01f026f-ffac-41ff-80a1-390874a19042=Meta+Ctrl+9\tMeta+Ctrl+1
 [KDE Keyboard Layout Switcher]
 Switch keyboard layout to English (US)=none,none,Switch keyboard layout to English (US)
 Switch keyboard layout to 英语（美国）=none,none,切换到键盘布局 英语（美国）
-Switch to Next Keyboard Layout=,none,Switch to Next Keyboard Layout
+Switch to Next Keyboard Layout=,Ctrl+Alt+K,Switch to Next Keyboard Layout
 _k_friendly_name=Keyboard Layout Switcher
 
 [kaccess]
