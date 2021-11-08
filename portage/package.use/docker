@@ -2,3 +2,5 @@ app-emulation/docker aufs btrfs device-mapper overlay
 # required by app-emulation/docker-19.03.13-r2::gentoo
 # required by app-emulation/docker (argument)
 >=app-emulation/containerd-1.3.7 device-mapper btrfs
+
+app-emulation/podman btrfs

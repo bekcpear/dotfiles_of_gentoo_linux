@@ -490,7 +490,8 @@ function _gt() {
         return 0
       elif [[ ${v0[${_i}]:--1} -eq ${v1[${_i}]:--1} ]]; then
         if [[ ${_i} > 50 ]]; then
-          _fatal "Too much comparations!"
+          _log w "Too much comparations!"
+          return 0
         fi
         _i+=1
         __more_gt ${1} ${2}

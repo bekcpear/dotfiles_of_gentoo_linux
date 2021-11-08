@@ -114,6 +114,11 @@ let g:airline#extensions#branch#enabled=1
 "  set t_Co=256
 "endif
 Plug 'tpope/vim-haml'
+Plug 'glench/vim-jinja2-syntax'
+
+Plug 'jonsmithers/vim-html-template-literals'
+Plug 'pangloss/vim-javascript'
+
 " Initialize plugin system
 call plug#end()
 

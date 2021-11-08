@@ -105,3 +105,16 @@ app-crypt/acme-sh
 dev-libs/libgcrypt
 
 #x11-misc/sddm::local **
+
+
+app-emulation/podman
+net-misc/cni-plugins
+app-emulation/conmon
+# required by app-emulation/podman-3.4.0::gentoo[fuse]
+# # required by podman (argument)
+=sys-fs/fuse-overlayfs-1.7.1 ~amd64
+# required by app-emulation/podman-3.4.0::gentoo[rootless]
+# required by podman (argument)
+=app-emulation/slirp4netns-1.1.12 ~amd64
+
+games-util/lutris

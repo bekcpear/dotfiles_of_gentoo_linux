@@ -11,5 +11,7 @@ FirstRun=false
 toggle-window-state=Ctrl+Q
 
 [Window]
-Height=69
+DynamicTabTitles=true
+Height=70
 KeepAbove=false
+ShowTitleBar=false

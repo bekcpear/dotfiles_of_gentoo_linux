@@ -135,14 +135,12 @@ BorderActivate=9
 [TabBox]
 BorderActivate=9
 BorderAlternativeActivate=9
-DesktopLayout=org.kde.breeze.desktop
-DesktopListLayout=org.kde.breeze.desktop
 HighlightWindows=false
 LayoutName=thumbnail_grid
 MoveMinimizedWindowsToEndOfTabBoxFocusChain=true
 
 [TabBoxAlternative]
-LayoutName=coverswitch
+LayoutName=
 
 [Windows]
 ActiveMouseScreen=false
@@ -165,7 +163,6 @@ MaximizeButtonLeftClickCommand=Maximize
 MaximizeButtonMiddleClickCommand=Maximize (vertical only)
 MaximizeButtonRightClickCommand=Maximize (horizontal only)
 NextFocusPrefersMouse=false
-Placement=Smart
 SeparateScreenFocus=false
 ShadeHover=false
 ShadeHoverInterval=250

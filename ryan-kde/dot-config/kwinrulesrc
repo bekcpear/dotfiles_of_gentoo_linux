@@ -132,19 +132,20 @@ wmclassmatch=1
 [6]
 Description=chromium app for Gmail rule
 activity=00000000-0000-0000-0000-000000000000
-activityrule=2
 desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
 desktopsrule=2
+ignoregeometry=true
+ignoregeometryrule=2
 minimizerule=2
 noborder=true
 noborderrule=3
-position=0,480
+position=0,509
 positionrule=3
-size=1152,720
+size=1152,691
 sizerule=3
 skiptaskbar=true
 skiptaskbarrule=2
-wmclass=mail.google.com__mail chromium-browser-chromium
+wmclass=mail.google.com__mail google-chrome
 wmclasscomplete=true
 wmclassmatch=1
 
@@ -183,3 +184,4 @@ wmclassmatch=1
 
 [General]
 count=15
+rules=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15

@@ -1,1 +1,10 @@
 app-emulation/qemu alsa gtk ncurses opengl sdl spice usb virgl virtfs QEMU_SOFTMMU_TARGETS: arm x86_64 sparc aarch64 QEMU_USER_TARGETS: x86_64 aarch64
+
+# required by app-emulation/virt-manager-3.2.0::gentoo[gtk]
+# required by virt-manager (argument)
+>=net-misc/spice-gtk-0.37-r3 usbredir
+# required by app-emulation/libvirt-7.7.0::gentoo[virt-network]
+# required by app-emulation/libvirt-glib-4.0.0::gentoo
+# required by app-emulation/virt-manager-3.2.0::gentoo
+# required by virt-manager (argument)
+>=net-dns/dnsmasq-2.85 script

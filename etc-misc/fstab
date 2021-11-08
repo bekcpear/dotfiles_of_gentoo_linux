@@ -35,6 +35,8 @@ UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /home   btrfs   defaults,noatime,ssd
 UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /var/cache/distfiles   btrfs   defaults,noatime,ssd,discard,subvolid=462,subvol=/subvol_distfiles 0 2
 UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /.sss   btrfs   defaults,noatime,ssd,discard,subvolid=260,subvol=/subvol_snapshots 0 2
 UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /srv/var/lib/docker   btrfs   defaults,noatime,ssd,discard,subvolid=472,subvol=/docker 0 2
+UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /var/lib/containers/storage   btrfs   defaults,noatime,ssd,discard,subvolid=2563,subvol=/subvol_nocow 0 2
+UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /home/ryan/.local/share/containers/storage   btrfs   defaults,noatime,ssd,discard,subvolid=2564,subvol=/subvol_nocow_for_ryan 0 2
 
 # tmpfs
 tmpfs       /tmp                tmpfs    rw,size=8G,nosuid,nodev,noatime,mode=1777 0 0
