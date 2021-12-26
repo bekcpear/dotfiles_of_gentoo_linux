@@ -1,0 +1,2 @@
+# required by steam-launcher (argument)
+>=games-util/steam-launcher-1.0.0.72 ValveSteamLicense

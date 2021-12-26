@@ -6,9 +6,9 @@ kde-apps/*
 # for kde-apps/akregator
 app-crypt/gpgme
 
-dev-libs/wayland
-dev-util/wayland-scanner
-dev-libs/plasma-wayland-protocols
+#dev-libs/wayland
+#dev-util/wayland-scanner
+#dev-libs/plasma-wayland-protocols
 
 #for kde-apps/kdenlive
 media-libs/mlt
@@ -118,3 +118,11 @@ app-emulation/conmon
 =app-emulation/slirp4netns-1.1.12 ~amd64
 
 games-util/lutris
+
+# required by steam-launcher (argument)
+=games-util/steam-launcher-1.0.0.72::steam-overlay ~amd64
+# required by games-util/steam-launcher-1.0.0.72::steam-overlay[udev,joystick]
+# required by steam-launcher (argument)
+=games-util/game-device-udev-rules-20201228 ~amd64
+
+dev-vcs/git-filter-repo

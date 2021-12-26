@@ -12,12 +12,14 @@ Width 1920=700
 Favorites=Default.profile
 
 [KonsoleWindow]
-SaveGeometryOnExit=false
+RememberWindowSize=false
 ShowMenuBarByDefault=false
 
 [MainWindow]
-HDMI-A-0 XPosition 1920x1200=600
-HDMI-A-0 YPosition 1920x1200=50
+HDMI-A-0 Height 1920x1200=815
+HDMI-A-0 Width 1920x1200=1190
+HDMI-A-0 XPosition 1920x1200=660
+HDMI-A-0 YPosition 1920x1200=315
 MenuBar=Disabled
 State=AAAA/wAAAAD9AAAAAAAABKYAAAMvAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAA
 StatusBar=Disabled
@@ -29,3 +31,6 @@ History=
 
 [ThumbnailsSettings]
 ThumbnailAlt=true
+
+[UiSettings]
+ColorScheme=Default

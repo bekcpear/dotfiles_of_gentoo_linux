@@ -11,3 +11,9 @@
 # required by @selected
 # required by @world (argument)
 >=virtual/rust-1.53.0-r1 rustfmt
+
+# required by virtual/rust-1.56.1::gentoo
+# required by dev-lang/spidermonkey-78.15.0::gentoo
+# required by sys-auth/polkit-0.119-r2::gentoo
+# required by gnome-extra/polkit-gnome-0.105-r2::gentoo
+>=dev-lang/rust-bin-1.56.1 rustfmt
