@@ -14,4 +14,4 @@ app-i18n/fcitx5-qt
 app-i18n/fcitx5-rime
 x11-libs/xcb-imdkit
 
-app-crypt/gnupg
+app-text/tldr::guru

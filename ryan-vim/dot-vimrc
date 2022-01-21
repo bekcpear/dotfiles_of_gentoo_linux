@@ -251,6 +251,10 @@ if !has('nvim')
   map <M-S-l> :tabm +1<cr>
   execute "set <M-S-h>=\eH"
   map <M-S-h> :tabm -1<cr>
+  execute "set <M-j>=\ej"
+  map <M-j> :bnext<cr>
+  execute "set <M-k>=\ek"
+  map <M-k> :bprevious<cr>
 else
   map <A-l> :tabnext<cr>
   map <A-h> :tabprevious<cr>

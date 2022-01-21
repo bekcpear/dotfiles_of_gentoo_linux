@@ -1,4 +1,5 @@
 # Lines configured by zsh-newuser-install
+setopt extended_history
 HISTFILE=~/.histfile
 HISTSIZE=100000
 SAVEHIST=100000
@@ -73,6 +74,7 @@ alias checkmyebuilds="${HOME}/Programs/Scripts/repomancheckmines.sh"
 . ~/myykid
 alias yk5cnfc="ykman --device ${_YK5CNFC}"
 alias yk5nfc="ykman --device ${_YK5NFC}"
+alias v="vim"
 
 export FCITX_SOCKET=/tmp/fcitx-socket-:0
 

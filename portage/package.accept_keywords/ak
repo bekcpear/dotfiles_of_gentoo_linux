@@ -49,9 +49,9 @@ dev-util/android-studio
 dev-lang/lua
 dev-lua/lgi
 app-eselect/eselect-lua
-app-editors/vim **
-app-editors/vim-core **
-app-editors/gvim **
+app-editors/vim
+app-editors/vim-core
+app-editors/gvim
 media-sound/qqmusic-bin
 net-im/wechat-uos::benzene-overlay
 app-portage/pacvis
@@ -101,21 +101,21 @@ net-libs/nodejs
 www-apps/filebrowser::ryans
 app-crypt/acme-sh
 
-=app-crypt/gnupg-2.3.2
+=app-crypt/gnupg-2.3*
 dev-libs/libgcrypt
 
 #x11-misc/sddm::local **
 
 
-app-emulation/podman
+app-containers/podman
 net-misc/cni-plugins
-app-emulation/conmon
-# required by app-emulation/podman-3.4.0::gentoo[fuse]
+app-containers/conmon
+# required by app-containers/podman-3.4.0::gentoo[fuse]
 # # required by podman (argument)
 =sys-fs/fuse-overlayfs-1.7.1 ~amd64
-# required by app-emulation/podman-3.4.0::gentoo[rootless]
+# required by app-containers/podman-3.4.0::gentoo[rootless]
 # required by podman (argument)
-=app-emulation/slirp4netns-1.1.12 ~amd64
+=app-containers/slirp4netns-1.1.12 ~amd64
 
 games-util/lutris
 
@@ -126,3 +126,8 @@ games-util/lutris
 =games-util/game-device-udev-rules-20201228 ~amd64
 
 dev-vcs/git-filter-repo
+
+app-text/tldr::guru
+
+sys-apps/bat
+sys-apps/duf::ryans

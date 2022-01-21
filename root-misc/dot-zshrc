@@ -43,13 +43,18 @@ RPROMPT="%(?..%F{196}%? %f)%F{238}%* @%D{%f}%f"
 
 #export GOPATH=~/go
 
+function _notify_lr() {
+  print -P '%F{238}${(l:${COLUMNS}::·:):-}%f'
+  print -P '%F{6}=== Done! Run "emerge -vj @live-rebuild" to update live pkgs?%f'
+}
+
 alias ssu='\
 	tmux start-server;\
 	tmux new-session -ds ssu -y -;\
 	tmux split-window -dl3;\
 	tmux split-window -dbl10;\
 	tmux send-keys -tssu:0.0 "htop" C-m;\
-	tmux send-keys -tssu:0.1 "emerge -ajvuDN @world" C-m;\
+	tmux send-keys -tssu:0.1 "emerge -ajvuDN @world && _notify_lr" C-m;\
 	tmux send-keys -tssu:0.2 "watch -n 1 qlop -Htvr" C-m;\
 	tmux attach -tssu'
 
@@ -59,7 +64,7 @@ alias ssuy='\
 	tmux split-window -dl3;\
 	tmux split-window -dbl10;\
 	tmux send-keys -tssuy:0.0 "htop" C-m;\
-	tmux send-keys -tssuy:0.1 "emerge -jvuDN @world" C-m;\
+	tmux send-keys -tssuy:0.1 "emerge -jvuDN @world && _notify_lr" C-m;\
 	tmux send-keys -tssuy:0.2 "watch -n 1 qlop -Htvr" C-m;\
 	tmux attach -tssuy'
 

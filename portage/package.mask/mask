@@ -3,7 +3,7 @@
 #*/*::bobwya
 */*::guru
 =net-im/telegram-desktop-2.4.5
->www-client/chromium-90.0.4430.93
+>www-client/chromium-96.0.4664.110
 =net-misc/nextcloud-client-3.1.2
 
 #~kde-apps/konsole-21.08.0
