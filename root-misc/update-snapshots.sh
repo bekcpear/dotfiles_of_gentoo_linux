@@ -49,14 +49,15 @@ _delete_snapshot() {
     shift
   fi
 
-  local _counts=${_REMAINING_PATHS["${1%.T*}"]}
+  local _key=${1%.T*}
+  local _counts=${_REMAINING_PATHS["${_key}"]}
   if [[ ${_counts} -le 1 && -z ${_force} ]]; then
     return
   fi
   set -- btrfs subvolume delete "${1}"
   _echo "${@}"
   "${@}"
-  _REMAINING_PATHS["${1%.T*}"]=$(( ${_counts} - 1 ))
+  _REMAINING_PATHS["${_key}"]=$(( ${_counts} - 1 ))
 }
 
 for _subvol in ${_SUBVOLS[@]}; do
