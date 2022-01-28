@@ -112,7 +112,7 @@ if [[ -n ${_FROM_CLIPBOARD} ]]; then
     fi
     _NOTIFY_CONTENTS="${_PIPE:0:89}${_REMAINING_NOTICE}"
   else
-    _NOTIFY_CONTENTS="file://${_PATH}"
+    _NOTIFY_CONTENTS="file: ${_PATH}"
   fi
   echo -ne 'The uploading contents are from clipboard,
 
