@@ -14,12 +14,19 @@ _SUBVOLS=(
 #######################################################
 
 if [[ -n ${1} ]]; then
-  if [[ ${1} == "-f" ]]; then
-    _FORCE_UPDATE=1
-  else
-    echo "Only '-f' parameter defined to force update!" >&2
-    exit 1
-  fi
+  case ${1} in
+    -f)
+      _FORCE_UPDATE=1
+      ;;
+    -c)
+      _FORCE_CLEAN=1
+      ;;
+    *)
+      echo "Only '-f' parameter defined to force update," >&2
+      echo "  or '-c' parameter defined to clean snapshots older than today." >&2
+      exit 1
+      ;;
+  esac
 fi
 
 _TIMESTAMP=$(date "+%s")
@@ -94,6 +101,8 @@ for _subvol in ${_SUBVOLS[@]}; do
     _tn=$(date -d "${_DATE%@*} 23:59:59${_ZONE}" "+%s")
     _do() {
       if [[ ${1} == "_S0" && ${_FORCE_UPDATE} == 1 ]]; then
+        _delete_snapshot 1 "${_path}"
+      elif [[ ${1} != "_S0" && ${_FORCE_CLEAN} == 1 ]]; then
         _delete_snapshot 1 "${_path}"
       else
         if [[ ${!1} != 1 ]]; then
