@@ -149,6 +149,19 @@ while read -r _K _V; do
 done <<<"${_R}"
 _R_URL="${PB_URL%/}/${_r_short}${_SUFFIX}"
 
+_bc() {
+  eval "<<<\"scale=2; ${@}\" bc"
+}
+if [[ -n ${_r_size} ]]; then
+  if [[ ${_r_size} -lt 600 ]]; then
+    _r_size="${_r_size}B"
+  elif [[ ${_r_size} -lt 614400 ]]; then
+    _r_size="$(_bc ${_r_size} '/' 1024)KiB"
+  else
+    _r_size="$(_bc ${_r_size} '/' 1024 '/' 1024)MiB"
+  fi
+fi
+
 set +e
 _COPIED="\e[33m<not copied"
 <<<"${_R_URL}" xclip -selection clipboard
@@ -157,8 +170,8 @@ if [[ ${?} == 0 ]]; then
 fi
 
 echo -e "\
-[${_r_status}, size: ${_r_size}]${_r_uuid:+$'\n'UUID: }${_r_uuid}
+[${_r_status}${_r_size:+, size: }${_r_size}]\
+${_r_uuid:+$'\n'UUID: }${_r_uuid}
 \e[1m\e[36m\
 URL: ${_R_URL} \e[0m${_COPIED}!>\
-\e[0m
-"
+\e[0m"
