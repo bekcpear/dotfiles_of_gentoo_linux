@@ -75,6 +75,7 @@ alias checkmyebuilds="${HOME}/Programs/Scripts/repomancheckmines.sh"
 alias yk5cnfc="ykman --device ${_YK5CNFC}"
 alias yk5nfc="ykman --device ${_YK5NFC}"
 alias v="vim"
+alias pb="~/Programs/Scripts/pb.sh"
 
 export FCITX_SOCKET=/tmp/fcitx-socket-:0
 
