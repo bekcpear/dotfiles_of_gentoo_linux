@@ -1,0 +1,45 @@
+This is a patch for Pelican static-site generator
+to make CJK ID for anchors.
+(it also parses a custom plugin for html ruby-tag)
+
+diff --git a/docutils/nodes.py b/docutils/nodes.py
+index 169a4fe..53da300 100644
+--- a/docutils/nodes.py
++++ b/docutils/nodes.py
+@@ -30,6 +30,9 @@ import re
+ import warnings
+ import unicodedata
+
++# cwittlut's patch: for cjk title, may broken others
++import urllib.parse
++
+ if sys.version_info >= (3, 0):
+     unicode = str  # noqa
+     basestring = str  # noqa
+@@ -2257,6 +2260,12 @@ def make_id(string):
+         id = id.decode()
+     id = id.translate(_non_id_translate_digraphs)
+     id = id.translate(_non_id_translate)
++
++    # cwittlut's patch:
++    id = _cwittlut_id_re0.sub('', id)
++    id = _cwittlut_id_re1.sub(' ', id)
++    id = urllib.parse.quote_plus(id)
++
+     # get rid of non-ascii characters.
+     # 'ascii' lowercase to prevent problems with turkish locale.
+     id = unicodedata.normalize('NFKD', id).\
+@@ -2266,7 +2275,12 @@ def make_id(string):
+     id = _non_id_at_ends.sub('', id)
+     return str(id)
+
+-_non_id_chars = re.compile('[^a-z0-9]+')
++# cwittlut's patch:
++# for pelican custom role ruby in plugin "twitter_bootstrap_rst_directives"
++_cwittlut_id_re0 = re.compile('<ruby>|</rt><rp>\)</rp></ruby>')
++_cwittlut_id_re1 = re.compile('<rp>\(</rp><rt>')
++_non_id_chars = re.compile('[^a-zA-Z0-9%+]+')
++#_non_id_chars = re.compile('[^a-z0-9]+')
+ _non_id_at_ends = re.compile('^[-0-9]+|-+$')
+ _non_id_translate = {
+     0x00f8: u'o',       # o with stroke
