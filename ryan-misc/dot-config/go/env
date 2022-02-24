@@ -1,2 +1,1 @@
-GO111MODULE=auto
 GOPROXY=https://goproxy.cn,direct

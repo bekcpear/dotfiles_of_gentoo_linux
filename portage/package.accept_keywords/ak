@@ -131,3 +131,5 @@ app-text/tldr::guru
 
 sys-apps/bat
 sys-apps/duf::ryans
+
+=app-shells/zsh-5.8.1

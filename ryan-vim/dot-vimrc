@@ -118,6 +118,7 @@ Plug 'glench/vim-jinja2-syntax'
 
 Plug 'jonsmithers/vim-html-template-literals'
 Plug 'pangloss/vim-javascript'
+"Plug 'Raimondi/delimitMate'
 
 " Initialize plugin system
 call plug#end()

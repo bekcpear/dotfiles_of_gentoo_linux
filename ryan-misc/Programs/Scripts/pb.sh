@@ -133,7 +133,7 @@ if [[ -n ${_FROM_CLIPBOARD} ]]; then
 fi
 
 : ${_PATH:=-}
-set -- curl -sfL -F "c=@${_PATH}" "${PB_URL}"
+set -- curl -fL -F "c=@${_PATH}" "${PB_URL}"
 if [[ -n ${_PIPE} ]]; then
   echo ">>> <pipe> |" "${@}"
   _R=$(echo "${_PIPE}" | "${@}")

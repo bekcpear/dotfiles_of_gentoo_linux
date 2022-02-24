@@ -33,7 +33,8 @@ activity=00000000-0000-0000-0000-000000000000
 activityrule=3
 decocolor=BreezeForTelegram
 decocolorrule=2
-wmclass=telegramdesktop
+wmclass=telegram-desktop telegramdesktop
+wmclasscomplete=true
 wmclassmatch=1
 
 [12]

@@ -1,0 +1,11 @@
+# required by x11-libs/libXdmcp-1.1.3-r1::gentoo
+# required by dev-util/android-studio-2020.3.1.24::gentoo
+# required by @selected
+# required by @world (argument)
+>=dev-libs/libbsd-0.11.3 abi_x86_32
+# required by dev-libs/libbsd-0.11.3::gentoo
+# required by x11-libs/libXdmcp-1.1.3-r1::gentoo
+# required by dev-util/android-studio-2020.3.1.24::gentoo
+# required by @selected
+# required by @world (argument)
+>=app-crypt/libmd-1.0.4 abi_x86_32
