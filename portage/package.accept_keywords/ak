@@ -120,10 +120,10 @@ app-containers/conmon
 games-util/lutris
 
 # required by steam-launcher (argument)
-=games-util/steam-launcher-1.0.0.72::steam-overlay ~amd64
+games-util/steam-launcher::steam-overlay ~amd64
 # required by games-util/steam-launcher-1.0.0.72::steam-overlay[udev,joystick]
 # required by steam-launcher (argument)
-=games-util/game-device-udev-rules-20201228 ~amd64
+games-util/game-device-udev-rules ~amd64
 
 dev-vcs/git-filter-repo
 
@@ -133,3 +133,14 @@ sys-apps/bat
 sys-apps/duf::ryans
 
 =app-shells/zsh-5.8.1
+
+net-im/zoom
+app-portage/mgorny-dev-scripts
+
+net-im/wechat-uos::gentoo-zh
+
+app-misc/tmate
+
+#net-vpn/tinc
+
+dev-util/catalyst

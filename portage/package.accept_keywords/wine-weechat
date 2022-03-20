@@ -1,0 +1,21 @@
+# required by net-im/deepin-wine-wechat-3.4.0.38::gentoo-zh
+# required by net-im/deepin-wine-wechat (argument)
+=app-emulation/deepin-wine-helper-5.1.27-r1 ~amd64
+# required by net-im/deepin-wine-wechat-3.4.0.38::gentoo-zh
+# required by net-im/deepin-wine-wechat (argument)
+=app-emulation/deepin-wine6-stable-6.0.0.19-r1 ~amd64
+# required by app-emulation/deepin-wine-helper-5.1.27-r1::gentoo-zh
+# required by net-im/deepin-wine-wechat-3.4.0.38::gentoo-zh
+# required by net-im/deepin-wine-wechat (argument)
+=app-emulation/deepin-wine-plugin-5.1.13-r1 ~amd64
+# required by app-emulation/deepin-wine-plugin-5.1.13-r1::gentoo-zh[python_targets_python3_9,virtual-pkg,-python_targets_python3_10,-python_targets_python3_8]
+# required by app-emulation/deepin-wine-helper-5.1.27-r1::gentoo-zh
+# required by net-im/deepin-wine-wechat-3.4.0.38::gentoo-zh
+# required by net-im/deepin-wine-wechat (argument)
+=dev-python/pydbus-0.6.0 ~amd64
+# required by app-emulation/deepin-wine6-stable-6.0.0.19-r1::gentoo-zh
+# required by net-im/deepin-wine-wechat-3.4.0.38::gentoo-zh
+# required by net-im/deepin-wine-wechat (argument)
+=app-emulation/deepin-udis86-1.72-r4 ~amd64
+# required by net-im/deepin-wine-wechat (argument)
+=net-im/deepin-wine-wechat-3.4.0.38 ~amd64

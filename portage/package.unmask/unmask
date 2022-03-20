@@ -1,5 +1,6 @@
 net-news/quiterss
-net-im/wechat-uos::benzene-overlay
+net-im/wechat-uos::gentoo-zh
+
 app-portage/pacvis::guru
 app-forensics/pev::bobwya
 sys-kernel/dkms::guru

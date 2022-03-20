@@ -1,0 +1,21 @@
+# required by net-im/deepin-wine-wechat-3.4.0.38::gentoo-zh
+# required by net-im/deepin-wine-wechat (argument)
+# /etc/portage/package.mask/mask:
+=app-emulation/deepin-wine-helper-5.1.27-r1
+# required by net-im/deepin-wine-wechat-3.4.0.38::gentoo-zh
+# required by net-im/deepin-wine-wechat (argument)
+# /etc/portage/package.mask/mask:
+=app-emulation/deepin-wine6-stable-6.0.0.19-r1
+# required by app-emulation/deepin-wine-helper-5.1.27-r1::gentoo-zh
+# required by net-im/deepin-wine-wechat-3.4.0.38::gentoo-zh
+# required by net-im/deepin-wine-wechat (argument)
+# /etc/portage/package.mask/mask:
+=app-emulation/deepin-wine-plugin-5.1.13-r1
+# required by app-emulation/deepin-wine6-stable-6.0.0.19-r1::gentoo-zh
+# required by net-im/deepin-wine-wechat-3.4.0.38::gentoo-zh
+# required by net-im/deepin-wine-wechat (argument)
+# /etc/portage/package.mask/mask:
+=app-emulation/deepin-udis86-1.72-r4
+# required by net-im/deepin-wine-wechat (argument)
+# /etc/portage/package.mask/mask:
+=net-im/deepin-wine-wechat-3.4.0.38

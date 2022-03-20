@@ -7,7 +7,7 @@ include electron.local
 include globals.local
 
 include disable-common.inc
-include disable-passwdmgr.inc
+#include disable-passwdmgr.inc
 include disable-programs.inc
 
 #whitelist ${DOWNLOADS}

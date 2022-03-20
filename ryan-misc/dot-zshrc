@@ -87,4 +87,7 @@ eaveragetime() {
   equery -Cq g --depth=${2:-1} -lAMU ${1} | cut -d']' -f2 | sed -E '/:$/d;/^[[:space:]]*$/d;s/-[[:digit:]].*//' | xargs qlop -a `<<<"${pkgs}"` | sed -E 's/^(.*):\s+([^ ]*)\s.*/\2 \1/' | awk -v depth=${2:-1} -v pkg=${1} 'BEGIN {tt=0} { if ($1 ~ /′/) { match($1, /([[:digit:]]+)′([[:digit:]]+)″.*/, arr); t=((arr[1] * 60 ) + arr[2] ); print t"s "$2 } else if ($1 ~ /:/) { match($1, /([[:digit:]]+):([[:digit:]]+):([[:digit:]]+)/, arr); t=((arr[1] * 3600) + (arr[2] * 60) + arr[3]); print t"s "$2 } else { match($1, /([[:digit:]]+)s/, arr); t=arr[1]; print $0 } tt+=t } END {s=tt%60; m=(tt-s)%3600/60; h=(tt-m*60-s)/3600; print "=== total: "h":"m":"s" (pkg: "pkg", deps: "NR - 1", depth: "depth") ==="}' | sort -n | awk '{if (NR != 1) print $0; else tip=$0} END {print tip}'
 }
 
-
+alias krv="ekeyword '~riscv'"
+alias chrv="/mnt/gentoo-test/riscv/chroot.sh"
+alias cdrv="/mnt/gentoo-test/riscv/pushDir.sh"
+alias rg="rg --no-ignore"

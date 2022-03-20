@@ -704,7 +704,7 @@ function _print_uniform() {
 
 printf -- "## A personal ebuild repository\n\n"
 printf -- "- Reponame: **\`${REPONAME}\`**\n"
-printf -- "- Maintainer: **[bekcpear](https://github.com/bekcpear)**\n\n"
+printf -- "- Maintainer: **[cwittlut](https://github.com/bekcpear)**\n\n"
 printf -- "can be added to the system by running:\n"
 printf -- '```bash
 eselect repository enable ryans

@@ -82,3 +82,6 @@ alias essu='\
 alias testEbuilds.sh='/home/ryan/Git/testEbuilds/testEbuilds.sh'
 alias cleanAll.sh='/home/ryan/Git/testEbuilds/.tool/cleanAll.sh'
 alias updateBaseSnapshots.sh='/home/ryan/Git/testEbuilds/.tool/updateBaseSnapshots.sh'
+alias crrv="/mnt/gentoo-test/riscv/createRootFS.sh"
+alias chrv="/mnt/gentoo-test/riscv/chroot.sh"
+alias cdrv="/mnt/gentoo-test/riscv/pushDir.sh"

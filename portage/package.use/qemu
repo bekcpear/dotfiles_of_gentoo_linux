@@ -1,4 +1,4 @@
-app-emulation/qemu alsa gtk ncurses opengl sdl spice usb virgl virtfs QEMU_SOFTMMU_TARGETS: arm x86_64 sparc aarch64 QEMU_USER_TARGETS: x86_64 aarch64
+app-emulation/qemu alsa gtk ncurses opengl sdl spice usb virgl virtfs static-user QEMU_SOFTMMU_TARGETS: arm x86_64 sparc aarch64 riscv32 riscv64 QEMU_USER_TARGETS: x86_64 aarch64 riscv32 riscv64
 
 # required by app-emulation/virt-manager-3.2.0::gentoo[gtk]
 # required by virt-manager (argument)
@@ -8,3 +8,20 @@ app-emulation/qemu alsa gtk ncurses opengl sdl spice usb virgl virtfs QEMU_SOFTM
 # required by app-emulation/virt-manager-3.2.0::gentoo
 # required by virt-manager (argument)
 >=net-dns/dnsmasq-2.85 script
+
+
+# for static-user
+
+# required by app-emulation/qemu-6.2.0::gentoo[-static,static-user]
+# required by @selected
+# required by @world (argument)
+>=dev-libs/glib-2.70.4 static-libs
+# required by app-emulation/qemu-6.2.0::gentoo[xattr,-static,static-user]
+# required by @selected
+# required by @world (argument)
+>=sys-apps/attr-2.5.1 static-libs
+# required by dev-libs/glib-2.70.4::gentoo
+# required by app-emulation/qemu-6.2.0::gentoo[-static,static-user]
+# required by @selected
+# required by @world (argument)
+>=dev-libs/libpcre-8.45 static-libs
