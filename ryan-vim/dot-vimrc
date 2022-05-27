@@ -226,6 +226,16 @@ au BufNewFile,BufRead *.php
 \set autoindent
 \set fileformat=unix
 
+" M4
+au BufNewFile,BufRead *.m4
+\set tabstop=4
+\set softtabstop=4
+\set shiftwidth=4
+\set expandtab
+\set autoindent
+\set fileformat=unix
+
+
 augroup VimCSS3Syntax
   autocmd!
   autocmd FileType css setlocal iskeyword+=-

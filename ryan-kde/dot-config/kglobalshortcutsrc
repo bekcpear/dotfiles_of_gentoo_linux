@@ -28,7 +28,6 @@ display=Display\tMeta+Shift+P,Display\tMeta+P,Switch Display
 
 [khotkeys]
 _k_friendly_name=Custom Shortcuts Service
-{43f4a8c9-41b6-4d98-84d6-073b618172a8}=Meta+Return,none,Launch Konsole
 {aa67747e-40c8-458b-9d46-b9c2f31e8a4e}=Meta+Ctrl+Return,none,run superconsole
 {d03619b6-9b3c-48cc-9d9c-a2aadb485550}=none,none,Search
 
@@ -225,11 +224,11 @@ view_zoom_out=Meta+-,Meta+-,Zoom Out
 
 [mediacontrol]
 _k_friendly_name=Media Controller
-mediavolumedown=none,,Media volume down
-mediavolumeup=none,,Media volume up
+mediavolumedown=none,none,Media volume down
+mediavolumeup=none,none,Media volume up
 nextmedia=Media Next,Media Next,Media playback next
 pausemedia=Media Pause,Media Pause,Pause media playback
-playmedia=none,,Play media playback
+playmedia=none,none,Play media playback
 playpausemedia=Media Play,Media Play,Play/Pause media playback
 previousmedia=Media Previous,Media Previous,Media playback previous
 stopmedia=Media Stop,Media Stop,Stop media playback
@@ -237,6 +236,12 @@ stopmedia=Media Stop,Media Stop,Stop media playback
 [org.kde.dolphin.desktop]
 _k_friendly_name=Dolphin
 _launch=Meta+E,Meta+E,Dolphin
+
+[org.kde.konsole.desktop]
+NewTab=none,none,Open a New Tab
+NewWindow=none,none,Open a New Window
+_k_friendly_name=Konsole
+_launch=Meta+Return,none,Konsole
 
 [org.kde.krunner.desktop]
 RunClipboard=none,Alt+Shift+F2,Run command on clipboard contents

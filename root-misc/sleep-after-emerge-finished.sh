@@ -7,7 +7,7 @@ set -e
 #      hibernate
 #       poweroff
 #         reboot
-declare -i TIMEOUT=10800 #seconds, 3 hours
+declare -i TIMEOUT=18000 #seconds, 3 hours
 
 # @FUNCTION: _log
 # @USAGE: [-d|-i|-w|-e] <message>
@@ -225,17 +225,19 @@ function _check_finished_or_not() {
 
 function _do_action() {
   echo
-  echo -n "This computer will ${1} after 10 seconds.. "
-  sleep 1
-  echo -en "\e[13D\e[K   seconds.. "
+  echo -n "This computer will ${1} after 30 seconds.. "
+  eval "su -c 'notify-send -u critical \"sleep-after-emerge-finished.sh\" \"This computer will ${1} after 30 seconds ...\"' - ryan"
   declare -i i
-  for (( i = 9; i > 1; i-- )); do
-    echo -en "\e[12D\e[K${i} seconds.. "
-    sleep 1
+  for (( i = 11; i >= 0; i-- )); do
+    if [[ ${i} -lt 10 ]]; then
+      ii=" "${i}
+    else
+      ii=${i}
+    fi
+    echo -en "\e[13D\e[K${ii} seconds.. "
+    if [[ ${i} != 0 ]]; then sleep 1; fi
   done
-  echo -en "\e[12D\e[K${i} second.. "
-  sleep 1
-  echo -en "\e[G\e[Ksleeping now.. "
+  echo $'\n'"sleeping now.. "
   echo
 
   eval "${CMD} ${1}"

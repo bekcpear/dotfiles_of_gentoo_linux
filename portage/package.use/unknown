@@ -1,0 +1,23 @@
+# required by sys-libs/compiler-rt-sanitizers-13.0.1::gentoo
+# required by sys-devel/clang-runtime-13.0.1::gentoo[sanitize,compiler-rt]
+# required by sys-devel/clang-13.0.1::gentoo
+# required by mail-client/thunderbird-91.6.2::gentoo
+# required by @selected
+# required by @world (argument)
+>=virtual/libcrypt-2 abi_x86_32
+# required by virtual/libcrypt-2::gentoo
+# required by sys-libs/compiler-rt-sanitizers-13.0.1::gentoo
+# required by sys-devel/clang-runtime-13.0.1::gentoo[sanitize,compiler-rt]
+# required by sys-devel/clang-13.0.1::gentoo
+# required by mail-client/thunderbird-91.6.2::gentoo
+# required by @selected
+# required by @world (argument)
+>=sys-libs/libxcrypt-4.4.27 abi_x86_32
+
+# required by media-libs/libsndfile-1.1.0-r1::gentoo[-minimal]
+# required by media-libs/rubberband-2.0.2::gentoo[programs]
+# required by media-libs/mlt-7.4.0::gentoo[rubberband]
+# required by kde-apps/kdenlive-21.12.3::gentoo
+# required by @selected
+# required by @world (argument)
+>=media-sound/lame-3.100-r3 abi_x86_32

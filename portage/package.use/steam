@@ -248,18 +248,4 @@
 # required by @selected
 # required by @world (argument)
 >=app-arch/bzip2-1.0.8-r1 abi_x86_32
-# required by sys-libs/compiler-rt-sanitizers-13.0.1::gentoo
-# required by sys-devel/clang-runtime-13.0.1::gentoo[sanitize,compiler-rt]
-# required by sys-devel/clang-13.0.1::gentoo
-# required by mail-client/thunderbird-91.6.2::gentoo
-# required by @selected
-# required by @world (argument)
->=virtual/libcrypt-2 abi_x86_32
-# required by virtual/libcrypt-2::gentoo
-# required by sys-libs/compiler-rt-sanitizers-13.0.1::gentoo
-# required by sys-devel/clang-runtime-13.0.1::gentoo[sanitize,compiler-rt]
-# required by sys-devel/clang-13.0.1::gentoo
-# required by mail-client/thunderbird-91.6.2::gentoo
-# required by @selected
-# required by @world (argument)
->=sys-libs/libxcrypt-4.4.27 abi_x86_32
+

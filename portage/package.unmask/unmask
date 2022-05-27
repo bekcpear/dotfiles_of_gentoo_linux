@@ -1,5 +1,6 @@
 net-news/quiterss
 net-im/wechat-uos::gentoo-zh
+net-im/wemeet::gentoo-zh
 
 app-portage/pacvis::guru
 app-forensics/pev::bobwya

@@ -6,9 +6,9 @@ kde-apps/*
 # for kde-apps/akregator
 app-crypt/gpgme
 
-#dev-libs/wayland
-#dev-util/wayland-scanner
-#dev-libs/plasma-wayland-protocols
+dev-libs/wayland
+dev-util/wayland-scanner
+dev-libs/plasma-wayland-protocols
 
 #for kde-apps/kdenlive
 media-libs/mlt
@@ -137,10 +137,15 @@ sys-apps/duf::ryans
 net-im/zoom
 app-portage/mgorny-dev-scripts
 
-net-im/wechat-uos::gentoo-zh
+#net-im/wechat-uos::gentoo-zh
+net-im/wemeet::gentoo-zh
+net-im/wemeet::local
 
 app-misc/tmate
 
 #net-vpn/tinc
 
-dev-util/catalyst
+dev-util/catalyst #**
+sys-fs/squashfs-tools-ng **
+
+www-apps/cryptpad::ryans
