@@ -1,4 +1,4 @@
-app-emulation/qemu alsa gtk ncurses opengl sdl spice usb virgl virtfs static-user QEMU_SOFTMMU_TARGETS: arm x86_64 sparc aarch64 riscv32 riscv64 QEMU_USER_TARGETS: x86_64 aarch64 riscv32 riscv64
+app-emulation/qemu -doc alsa gtk ncurses opengl sdl spice usb virgl virtfs static-user QEMU_SOFTMMU_TARGETS: arm x86_64 sparc aarch64 riscv32 riscv64 QEMU_USER_TARGETS: x86_64 aarch64 riscv32 riscv64
 
 # required by app-emulation/virt-manager-3.2.0::gentoo[gtk]
 # required by virt-manager (argument)

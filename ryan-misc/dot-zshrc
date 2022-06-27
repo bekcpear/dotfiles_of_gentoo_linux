@@ -127,8 +127,12 @@ build_cryptpad() {
   cd ~/Git/cryptpad-release
   rm -rf node_modules www
   cp -a ${_P}/{node_modules,www/bower_components} ./
+  mkdir www
+  mv bower_components www
   git status
   )
 }
 
-cd
+if [[ $(pwd) == "/" ]]; then
+  cd
+fi

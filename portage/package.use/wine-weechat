@@ -564,3 +564,17 @@
 # required by net-im/deepin-wine-wechat-3.4.0.38::gentoo-zh
 # required by net-im/deepin-wine-wechat (argument)
 >=dev-libs/ocl-icd-2.3.0 abi_x86_32
+# required by sys-fs/udev-250::gentoo
+# required by virtual/libudev-232-r7::gentoo[-systemd]
+# required by sys-auth/elogind-246.10-r2::gentoo
+# required by sys-process/procps-3.3.17-r1::gentoo[elogind]
+# required by @system
+# required by @world (argument)
+>=sys-apps/systemd-utils-250.6 abi_x86_32
+# required by media-sound/pulseaudio-16.0::gentoo
+# required by dev-qt/qtwebengine-5.15.4_p20220526::gentoo[pulseaudio]
+# required by kde-apps/messagelib-22.04.2::gentoo
+# required by kde-apps/akregator-22.04.2::gentoo
+# required by @selected
+# required by @world (argument)
+>=media-libs/libpulse-16.0 abi_x86_32
