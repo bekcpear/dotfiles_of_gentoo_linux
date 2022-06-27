@@ -85,21 +85,8 @@ plugin=org.kde.plasma.pager
 [Containments][2][Applets][4][Configuration]
 PreloadWeight=42
 
-[Containments][2][Applets][51]
-immutability=1
-plugin=org.kde.plasma.systemmonitor.cpu
-
-[Containments][2][Applets][51][Configuration][Appearance]
-chartFace=org.kde.ksysguard.piechart
-title=Total CPU Use
-
 [Containments][2][Applets][51][Configuration][SensorColors]
 cpu/all/usage=61,174,233
-
-[Containments][2][Applets][51][Configuration][Sensors]
-highPrioritySensorIds=["cpu/all/usage"]
-lowPrioritySensorIds=["cpu/all/cpuCount","cpu/all/coreCount"]
-totalSensors=["cpu/all/usage"]
 
 [Containments][2][Applets][52]
 immutability=1
@@ -141,7 +128,7 @@ DialogWidth=1920
 PreloadWeight=42
 
 [Containments][2][General]
-AppletOrder=51;3;30;4;29;7;52;31;19;20
+AppletOrder=3;30;4;29;7;52;31;19;20
 
 [Containments][39]
 activityId=0545733d-dc2b-40d3-af0a-90918438c63a
