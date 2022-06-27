@@ -1,5 +1,5 @@
 [$Version]
-update_info=kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-effect-to-js,kwin.upd:port-scale-effect-to-js,kwin.upd:port-dimscreen-effect-to-js,kwin.upd:auto-bordersize,kwin.upd:animation-speed,kwin.upd:desktop-grid-click-behavior,kwin.upd:no-swap-encourage,kwin.upd:make-translucency-effect-disabled-by-default,kwin.upd:remove-flip-switch-effect,kwin.upd:remove-cover-switch-effect,kwin.upd:remove-cubeslide-effect,kwin.upd:remove-xrender-backend,kwin.upd:enable-scale-effect-by-default
+update_info=kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-effect-to-js,kwin.upd:port-scale-effect-to-js,kwin.upd:port-dimscreen-effect-to-js,kwin.upd:auto-bordersize,kwin.upd:animation-speed,kwin.upd:desktop-grid-click-behavior,kwin.upd:no-swap-encourage,kwin.upd:make-translucency-effect-disabled-by-default,kwin.upd:remove-flip-switch-effect,kwin.upd:remove-cover-switch-effect,kwin.upd:remove-cubeslide-effect,kwin.upd:remove-xrender-backend,kwin.upd:enable-scale-effect-by-default,kwin.upd:overview-group-plugin-id
 
 [Compositing]
 Backend=OpenGL
@@ -26,9 +26,14 @@ Number=9
 Rows=3
 
 [DrmOutputs][3369a739-0f1f-5d41-8953-db6c86ce0264][3369a739-0f1f-5d41-8953-db6c86ce0264]
+BorderActivate=9
+BorderActivateCylinder=9
+BorderActivateSphere=9
 Mode=1920x1200_59950
 Scale=1
+TabBoxAlternative=true
 Transform=normal
+zPosition=598
 
 [Effect-CoverSwitch]
 TabBoxAlternative=true
@@ -73,6 +78,42 @@ TextPosition=4
 [Effect-Slide]
 Duration=200
 SlideBackground=false
+
+[Effect-desktopgrid]
+Angle=15
+BorderActivate=9
+Duration=100
+XPosition=20
+
+[Effect-glide]
+Duration=100
+
+[Effect-magiclamp]
+AnimationDuration=100
+
+[Effect-mouseclick]
+Color1=128,255,255
+Color2=255,255,128
+Color3=255,128,128
+Font=JetBrains Mono,12,-1,5,50,0,0,0,0,0
+LineWidth=2
+RingCount=1
+RingSize=30
+
+[Effect-presentwindows]
+BorderActivate=9
+BorderActivateAll=9
+BorderActivateClass=9
+
+[Effect-showfps]
+TextPosition=4
+
+[Effect-slide]
+Duration=200
+SlideBackground=false
+
+[Effect-windowview]
+BorderActivateAll=9
 
 [ElectricBorders]
 Bottom=None
