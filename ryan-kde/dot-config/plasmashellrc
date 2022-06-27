@@ -1,0 +1,250 @@
+[ActionsWidget]
+ColumnState=AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdAAAAACAQAAAQAAAAAAAAAAAAAAAGT/////AAAAgQAAAAAAAAACAAAA+gAAAAEAAAAAAAAA1gAAAAEAAAAAAAAD6AAAAABk
+
+[ConfigDialog]
+HDMI-A-0 Height 1200=510
+HDMI-A-0 Width 1920=595
+
+[DownloadDialog Settings]
+Height 1200=494
+Width 1920=700
+
+[General]
+Number of Actions=0
+
+[InteractiveConsole]
+Geometry=\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x03&\x00\x00\x01\x7f\x00\x00\x06\xc6\x00\x00\x04a\x00\x00\x03&\x00\x00\x01\x7f\x00\x00\x06\xc6\x00\x00\x04a\x00\x00\x00\x00\x00\x00\x00\x00\x07\x80\x00\x00\x03&\x00\x00\x01\x7f\x00\x00\x06\xc6\x00\x00\x04a
+SplitterState=\x00\x00\x00\xff\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x07\x08\x00\x00\x01\x10\x01\xff\xff\xff\xff\x01\x00\x00\x00\x02\x00
+
+[KFileDialog Settings]
+Recent Files[$e]=code,file:$HOME/syncthingData/Photos/wallpapers/wallhaven-g8qlkq.jpg,file:///opt/bin/code
+Recent URLs[$e]=file:///opt/bin/,file:$HOME/syncthingData/Photos/wallpapers/
+detailViewIconSize=0
+iconViewIconSize=64
+
+[KPropertiesDialog]
+HDMI-A-0 Height 1920x1200=453
+HDMI-A-0 Width 1920x1200=410
+Height 1200=442
+Width 1920=662
+
+[KTextEditor Document]
+Allow End of Line Detection=true
+BOM=false
+Backup Local=false
+Backup Prefix=
+Backup Remote=false
+Backup Suffix=~
+Encoding=UTF-8
+End of Line=0
+Indent On Backspace=true
+Indent On Tab=true
+Indent On Text Paste=false
+Indentation Mode=normal
+Indentation Width=4
+Keep Extra Spaces=false
+Line Length Limit=10000
+Newline at End of File=true
+On-The-Fly Spellcheck=false
+Overwrite Mode=false
+PageUp/PageDown Moves Cursor=false
+Remove Spaces=0
+ReplaceTabsDyn=true
+Show Spaces=0
+Show Tabs=true
+Smart Home=true
+Swap Directory=
+Swap File Mode=1
+Swap Sync Interval=15
+Tab Handling=2
+Tab Width=4
+Trailing Marker Size=1
+Word Wrap=false
+Word Wrap Column=80
+
+[KTextEditor Editor]
+Encoding Prober Type=1
+Fallback Encoding=ISO 8859-15
+
+[KTextEditor Renderer]
+Animate Bracket Matching=false
+Schema=Normal
+Show Indentation Lines=false
+Show Whole Bracket Expression=false
+Word Wrap Marker=false
+
+[KTextEditor View]
+Allow Mark Menu=true
+Auto Brackets=false
+Auto Center Lines=0
+Auto Completion=true
+Backspace Remove Composed Characters=false
+Bookmark Menu Sorting=0
+Bracket Match Preview=false
+Chars To Enclose Selection=
+Default Mark Type=1
+Dynamic Word Wrap=true
+Dynamic Word Wrap Align Indent=80
+Dynamic Word Wrap At Static Marker=false
+Dynamic Word Wrap Indicators=1
+Dynamic Wrap not at word boundaries=false
+Fold First Line=false
+Folding Bar=true
+Folding Preview=true
+Icon Bar=false
+Input Mode=0
+Keyword Completion=true
+Line Modification=false
+Line Numbers=false
+Maximum Search History Size=100
+Mouse Paste At Cursor Position=false
+Persistent Selection=false
+Scroll Bar Marks=false
+Scroll Bar Mini Map All=true
+Scroll Bar Mini Map Width=60
+Scroll Bar MiniMap=true
+Scroll Bar Preview=true
+Scroll Past End=false
+Search/Replace Flags=140
+Show Line Count=false
+Show Scrollbars=0
+Show Word Count=false
+Smart Copy Cut=false
+Text Drag And Drop=true
+User Sets Of Chars To Enclose Selection=
+Vi Input Mode Steal Keys=false
+Vi Relative Line Numbers=false
+Word Completion=true
+Word Completion Minimal Word Length=3
+Word Completion Remove Tail=true
+
+[Open-with settings]
+CompletionMode=1
+History=ksn,spe,/opt/bin/code
+
+[PlasmaRunnerManager]
+LaunchCounts=1 services_org.kde.konsole.desktop,1 services_telegram-desktop.desktop,1 services_applications:powerdevilactivitiesconfig.desktop,11 services_chromium-browser-chromium.desktop
+pluginWhiteList=desktopsessions,services,places,PowerDevil,calculator,unitconverter,shell,bookmarks,recentdocuments,locations,baloosearch
+
+[PlasmaTransientsConfig]
+PreloadWeight=0
+
+[PlasmaViews][Panel 108]
+panelVisibility=1
+
+[PlasmaViews][Panel 108][Defaults]
+thickness=36
+
+[PlasmaViews][Panel 108][Horizontal1920]
+thickness=36
+
+[PlasmaViews][Panel 136]
+panelVisibility=2
+
+[PlasmaViews][Panel 136][Defaults]
+maxLength=600
+minLength=600
+offset=1013
+thickness=104
+
+[PlasmaViews][Panel 136][Horizontal1920]
+maxLength=600
+minLength=600
+offset=0
+thickness=104
+
+[PlasmaViews][Panel 136][Vertical1200]
+offset=1013
+thickness=180
+
+[PlasmaViews][Panel 144]
+panelVisibility=1
+
+[PlasmaViews][Panel 144][Defaults]
+maxLength=1891
+minLength=1825
+offset=14
+thickness=90
+
+[PlasmaViews][Panel 144][Horizontal1920]
+maxLength=1891
+minLength=1825
+offset=14
+thickness=90
+
+[PlasmaViews][Panel 2][Defaults]
+maxLength=1920
+minLength=1920
+thickness=30
+
+[PlasmaViews][Panel 2][Horizontal1920]
+maxLength=1920
+minLength=1920
+thickness=30
+
+[PlasmaViews][Panel 24][Defaults]
+maxLength=1912
+minLength=1899
+thickness=36
+
+[PlasmaViews][Panel 24][Horizontal1920]
+maxLength=1912
+minLength=1899
+thickness=36
+
+[PlasmaViews][Panel 4][Defaults]
+thickness=27
+
+[PlasmaViews][Panel 4][Horizontal1920]
+thickness=27
+
+[PlasmaViews][Panel 41]
+alignment=1
+panelVisibility=0
+
+[PlasmaViews][Panel 41][Defaults]
+maxLength=1920
+minLength=1920
+offset=0
+thickness=30
+
+[PlasmaViews][Panel 41][Horizontal1920]
+maxLength=1920
+minLength=1920
+offset=0
+thickness=30
+
+[PlasmaViews][Panel 50][Defaults]
+maxLength=845
+minLength=841
+offset=171
+thickness=36
+
+[PlasmaViews][Panel 50][Horizontal1920]
+offset=415
+thickness=36
+
+[PlasmaViews][Panel 50][Vertical1200]
+maxLength=845
+minLength=841
+offset=171
+
+[PlasmaViews][Panel 64][Defaults]
+thickness=36
+
+[PlasmaViews][Panel 64][Horizontal1920]
+thickness=36
+
+[PlasmaViews][Panel 7][Defaults]
+thickness=26
+
+[PlasmaViews][Panel 7][Horizontal1920]
+thickness=26
+
+[ScreenConnectors]
+0=HDMI-A-0
+1=:0.0
+2=VNC-0
+
+[Updates]
+performed=/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/move_desktop_layout_config.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/unlock_widgets.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/obsolete_kickoffrc.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/maintain_existing_desktop_icon_sizes.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/containmentactions_middlebutton.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/systemloadviewer_systemmonitor.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/digitalclock_rename_timezonedisplay_key.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/klipper_clear_config.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/no_middle_click_paste_on_panels.js

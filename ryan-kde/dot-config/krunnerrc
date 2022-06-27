@@ -1,0 +1,40 @@
+[General]
+FreeFloating=true
+history=system se,chrome,kwin_x11 --replace,plasmashell --replace,qq,qb,tele,chg,Tele,ch,cal,gimp,ok,fire,ire,chromium,google-ch,mic,obs,te,th,next,kcal,ink,kate,konv,~/Programs/Scripts/AutoStart.sh,edge,autos,Autos,bian,quit,微信,lib,kca,wps,emac,kdecon,kdec,and,fci,chromium --app="https://mail.google.com/mail/",auto,ete,wire,tee,tete,g,sun,GOOgle-ch
+
+[PlasmaRunnerManager]
+LaunchCounts=1 shell_obs,5 services_applications:autostart.desktop,4 services_applications:chrome-hmjkmjkepdijhoojdojkdfohbdgmmhki-Default.desktop,1 services_applications:wps-office-et.desktop,1 services_applications:xmind-xmind.desktop,1 windows_0_69206051,30 services_applications:firefox.desktop,1 baloosearch_/home/ryan/Downloads/Telegram Desktop/Screenshot_20200914_141749_czbix.telegram.messenger.jpg,1 services_applications:net.sourceforge.liferea.desktop,1 windows_0_88080390,1 baloosearch_/home/ryan/Tmp/4/royuz/Downloads/NCICON/72x72/apps/ownCloud_ok_shared.png,12 services_applications:org.kde.kcalc.desktop,1 windows_0_69206034,2 services_applications:htop.desktop,1 services_applications:wps-office-wps.desktop,1 services_applications:mupdf.desktop,5 shell_code,1 services_applications:kcm_kdeconnect.desktop,1 baloosearch_/home/ryan/go/pkg/mod/github.com/marten-seemann/qtls@v0.10.0,419 services_applications:telegram-desktop.desktop,10 services_applications:com.nextcloud.desktopclient.nextcloud.desktop,1 windows_0_79691782,83 services_applications:org.qbittorrent.qBittorrent.desktop,1 services_telegram-desktop.desktop,20 services_applications:wireshark.desktop,1 baloosearch_/home/ryan/Tmp/bitbili/plugins/ace_editor/static/ace-build/demo/kitchen-sink/docs/asciidoc.asciidoc,3 services_chromium-browser-chromium.desktop,2 services_applications:wechat-uos.desktop,1 shell_akregator proxy,2 baloosearch_/home/ryan/Nextcloud/Documents/Doc/python-3.6.3-docs-pdf-a4/library.pdf,109 services_applications:systemsettings.desktop,1 windows_0_54525995,1 shell_flameshot gui,60 services_applications:google-chrome.desktop,1 services_applications:kcm_activities.desktop,2 shell_chromium --app="https://mail.google.com/mail/",5 services_applications:com.obsproject.Studio.desktop,24 services_applications:microsoft-edge-dev.desktop,1 services_applications:thunderbird-bin.desktop,1 baloosearch_/home/ryan/Programs/VSCode-linux-x64/resources/app/out/vs/workbench/browser/parts/editor/media/letterpress-hc.svg,1 baloosearch_/home/ryan/Downloads/Bian Yi Yuan Li  12089451 - Wei Zhi.pdf,1 baloosearch_/home/ryan/Downloads/av/fsdss-099-C/fsdss-099-C.mp4,3 services_applications:libreoffice-calc.desktop,1 services_applications:powerdevilglobalconfig.desktop,5 shell_~/Programs/Scripts/AutoStart.sh,11 services_applications:org.inkscape.Inkscape.desktop,1695 services_applications:chromium-browser-chromium.desktop,16 shell_gimp,2 windows_0_77594630,3 services_applications:org.kde.kdevelop.desktop,2 services_applications:org.kde.kdeconnect.app.desktop,2 services_applications:android-studio-android-studio.desktop,15 services_applications:quiterss.desktop,1 windows_0_65011717,2 services_applications:org.kde.okular.desktop,1 windows_0_71303629,4 shell_tee,1 services_applications:wps-office-prometheus.desktop,55 services_applications:qqmusic.desktop,27 services_applications:firefox-bin.desktop,1 recentdocuments_file:///home/ryan/Downloads/Addison_Wesley_professional_computing_series_Donovan\\,_Alan_A_A_Kernighan.pdf,2 services_applications:teamviewer-teamviewer.desktop,5 services_applications:zzz-gimp.desktop,1 recentdocuments_file:///home/ryan/Programs/Scripts/AutoStart.sh,1 baloosearch_/home/ryan/Programs/VSCode-linux-x64/resources/app/ThirdPartyNotices.txt,2 services_applications:org.kde.akregator.desktop,6 services_applications:virt-manager.desktop,1 services_com.nextcloud.desktopclient.nextcloud.desktop,1 baloosearch_/home/ryan/Tmp/4/royuz/Downloads/长江证券钢铁行业基础数据库（CJSC）2017.03.31-简.xls,1 baloosearch_/home/ryan/Git/gentoo-zh/eclass/xelatex-package.eclass,1 services_applications:org.kde.kate.desktop,2 windows_0_69206567,9 services_applications:telegramdesktop.desktop,1 shell_wps,1 windows_0_85983238,2 services_applications:chrome.desktop,1 shell_kwin_x11 --replac,1 shell_chromium,7 services_applications:thunderbird.desktop,2 org.kde.windowedwidgets_org.kde.plasma.timer,1 services_applications:org.kde.kdeconnect.sms.desktop,2 services_applications:org.kde.gwenview.desktop,1 services_applications:vlc.desktop,2 services_applications:com.github.rssguard.desktop,3 services_applications:fcitx.desktop,1 services_applications:kcm_fonts.desktop,3 services_applications:sunlogin.desktop,1 baloosearch_/home/ryan/Videos/【中國風】極抒情中國風音樂 —— 細膩地撫摸你的耳膜 _ The Most Emotional Chinese Music In The World-DZQrYqC3NPo.mp4,3 services_applications:org.kde.konversation.desktop,1 shell_plasmashell --replace,1 baloosearch_/home/ryan/Tmp/4/royuz/Documents/i.ume.ink/output/theme/images/fa/edge.svg,2 services_applications:emacs.desktop,7 services_applications:org.kde.ksysguard.desktop,1 shell_urxvt
+migrated=true
+
+[Plugins]
+CharacterRunnerEnabled=true
+DictionaryEnabled=true
+Kill RunnerEnabled=true
+PowerDevilEnabled=true
+Spell CheckerEnabled=false
+baloosearchEnabled=true
+bookmarksEnabled=true
+browserhistoryEnabled=true
+browsertabsEnabled=true
+calculatorEnabled=true
+desktopsessionsEnabled=true
+katesessionsEnabled=true
+kdevelopsessionsEnabled=true
+konsoleprofilesEnabled=true
+kwinEnabled=true
+locationsEnabled=true
+org.kde.activitiesEnabled=true
+org.kde.datetimeEnabled=true
+org.kde.windowedwidgetsEnabled=true
+placesEnabled=true
+plasma-desktopEnabled=true
+recentdocumentsEnabled=true
+servicesEnabled=true
+shellEnabled=true
+unitconverterEnabled=true
+webshortcutsEnabled=true
+windowsEnabled=true
+
+[Runners][Pass]
+showAdditionalActions=false
+showFullFileContentAction=false

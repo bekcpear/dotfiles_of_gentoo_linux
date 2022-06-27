@@ -1,0 +1,206 @@
+[Desktop Entry]
+DefaultProfile=Default.profile
+
+[External Scripts]
+firstUse=false
+
+[External Scripts][Google Selection]
+command=xdg-open "https://www.google.com/search?q=%s"
+errorMode=0
+filterMode=0
+inputMode=0
+name=Google Selection
+outputMode=0
+saveMode=0
+shortcuts=
+showOutput=false
+
+[External Scripts][Paste to Hastebin]
+command=a=$(cat); curl -X POST -s -d "$a" https://hastebin.com/documents | awk -F '"' '{print "https://hastebin.com/"$4}' | xargs xdg-open ;
+errorMode=0
+filterMode=0
+inputMode=2
+name=Paste to Hastebin
+outputMode=0
+saveMode=0
+shortcuts=
+showOutput=false
+
+[External Scripts][Quick Compile]
+command=g++ -o %b %f && ./%b
+errorMode=0
+filterMode=0
+inputMode=0
+name=Quick Compile
+outputMode=0
+saveMode=0
+shortcuts=
+showOutput=true
+
+[External Scripts][Sort Selection]
+command=sort
+errorMode=0
+filterMode=0
+inputMode=2
+name=Sort Selection
+outputMode=3
+saveMode=0
+shortcuts=
+showOutput=false
+
+[Favorite Profiles]
+Favorites=
+
+[KTextEditor Document]
+Allow End of Line Detection=true
+BOM=false
+Backup Local=false
+Backup Prefix=
+Backup Remote=false
+Backup Suffix=~
+Encoding=UTF-8
+End of Line=0
+Indent On Backspace=true
+Indent On Tab=true
+Indent On Text Paste=false
+Indentation Mode=normal
+Indentation Width=4
+Keep Extra Spaces=false
+Line Length Limit=10000
+Newline at End of File=true
+On-The-Fly Spellcheck=false
+Overwrite Mode=false
+PageUp/PageDown Moves Cursor=false
+Remove Spaces=0
+ReplaceTabsDyn=true
+Show Spaces=0
+Show Tabs=true
+Smart Home=true
+Swap Directory=
+Swap File Mode=1
+Swap Sync Interval=15
+Tab Handling=2
+Tab Width=4
+Trailing Marker Size=1
+Word Wrap=false
+Word Wrap Column=80
+
+[KTextEditor Editor]
+Encoding Prober Type=1
+Fallback Encoding=ISO 8859-15
+
+[KTextEditor Renderer]
+Animate Bracket Matching=false
+Schema=Normal
+Show Indentation Lines=false
+Show Whole Bracket Expression=false
+Word Wrap Marker=false
+
+[KTextEditor View]
+Allow Mark Menu=true
+Auto Brackets=false
+Auto Center Lines=0
+Auto Completion=true
+Backspace Remove Composed Characters=false
+Bookmark Menu Sorting=0
+Bracket Match Preview=false
+Chars To Enclose Selection=
+Default Mark Type=1
+Dynamic Word Wrap=true
+Dynamic Word Wrap Align Indent=80
+Dynamic Word Wrap At Static Marker=false
+Dynamic Word Wrap Indicators=1
+Dynamic Wrap not at word boundaries=false
+Fold First Line=false
+Folding Bar=true
+Folding Preview=true
+Icon Bar=false
+Input Mode=0
+Keyword Completion=true
+Line Modification=false
+Line Numbers=false
+Maximum Search History Size=100
+Mouse Paste At Cursor Position=false
+Persistent Selection=false
+Scroll Bar Marks=false
+Scroll Bar Mini Map All=true
+Scroll Bar Mini Map Width=60
+Scroll Bar MiniMap=true
+Scroll Bar Preview=true
+Scroll Past End=false
+Search/Replace Flags=140
+Show Line Count=false
+Show Scrollbars=0
+Show Word Count=false
+Smart Copy Cut=false
+Text Drag And Drop=true
+User Sets Of Chars To Enclose Selection=
+Vi Input Mode Steal Keys=false
+Vi Relative Line Numbers=false
+Word Completion=true
+Word Completion Minimal Word Length=3
+Word Completion Remove Tail=true
+
+[Main Window]
+Desktop 1920 1200=352,147,1422,934
+
+[MainWindow]
+HDMI-A-0 Height 1200=934
+HDMI-A-0 Width 1920=1422
+HDMI-A-0 XPosition=352
+HDMI-A-0 YPosition=147
+State=AAAA/wAAAAD9AAAAAQAAAAAAAAEgAAADP/wCAAAABfsAAAAcAEQAbwBjAHUAbQBlAG4AdABzAF8AYwBvAGQAZQEAAABEAAAApAAAAHkBAAAD+wAAAB4AUwBjAHIAYQB0AGMAaABwAGEAZABfAGMAbwBkAGUBAAAA6QAAAL8AAAC/AQAAA/sAAAAYAEMAbABhAHMAcwBlAHMAXwBjAG8AZABlAQAAAakAAACjAAAAnwEAAAP7AAAAIABGAGkAbABlACAAUwB5AHMAdABlAG0AXwBjAG8AZABlAQAAAEQAAAM/AAAAAAAAAAD7AAAAGgBQAHIAbwBqAGUAYwB0AHMAXwBjAG8AZABlAQAAAk0AAAE2AAABNgEAAAMAAAQxAAADPwAAAAQAAAAEAAAAAQAAAAL8AAAABAAAAAAAAAABAAAAHgBMAGUAZgB0ACAAQgB1AHQAdABvAG4AIABCAGEAcgMAAAAA/////wAAAAAAAAAAAAAAAQAAAAEAAAAgAFIAaQBnAGgAdAAgAEIAdQB0AHQAbwBuACAAQgBhAHIDAAAAAP////8AAAAAAAAAAAAAAAIAAAAEAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAAAAABgAZABlAGIAdQBnAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACAAcQB1AGkAYwBrAE8AcABlAG4AVABvAG8AbABCAGEAcgEAAAMr/////wAAAAAAAAAAAAAALABLAEQAZQB2AEMAbwBkAGUAYgByAG8AdwBzAGUAcgBUAG8AbwBsAEIAYQByAQAABBP/////AAAAAAAAAAAAAAADAAAAAQAAACIAQgBvAHQAdABvAG0AIABCAHUAdAB0AG8AbgAgAEIAYQByAQAAAAD/////AAAAAAAAAAA=
+ToolBarsMovable=Disabled
+
+[MainWindow_code]
+(1) Tool Views Order=org.kdevelop.ProjectsView,org.kdevelop.DocumentsView,org.kdevelop.ScratchpadView,org.kdevelop.ClassBrowserView,org.kdevelop.FileManagerView
+(2) Tool Views Order=org.kdevelop.ExternalScriptView
+(8) Tool Views Order=org.kdevelop.ContextBrowser,org.kdevelop.ProblemReporterView,org.kdevelop.KonsoleView
+HDMI-A-0 Height 1200=934
+HDMI-A-0 Width 1920=1422
+HDMI-A-0 XPosition=352
+HDMI-A-0 YPosition=147
+State=AAAA/wAAAAD9AAAAAQAAAAAAAAEgAAADP/wCAAAABfsAAAAcAEQAbwBjAHUAbQBlAG4AdABzAF8AYwBvAGQAZQEAAABEAAAApAAAAHkBAAAD+wAAAB4AUwBjAHIAYQB0AGMAaABwAGEAZABfAGMAbwBkAGUBAAAA6QAAAL8AAAC/AQAAA/sAAAAYAEMAbABhAHMAcwBlAHMAXwBjAG8AZABlAQAAAakAAACjAAAAnwEAAAP7AAAAIABGAGkAbABlACAAUwB5AHMAdABlAG0AXwBjAG8AZABlAQAAAEQAAAM/AAAAAAAAAAD7AAAAGgBQAHIAbwBqAGUAYwB0AHMAXwBjAG8AZABlAQAAAk0AAAE2AAABNgEAAAMAAAQxAAADPwAAAAQAAAAEAAAAAQAAAAL8AAAABAAAAAAAAAABAAAAHgBMAGUAZgB0ACAAQgB1AHQAdABvAG4AIABCAGEAcgMAAAAA/////wAAAAAAAAAAAAAAAQAAAAEAAAAgAFIAaQBnAGgAdAAgAEIAdQB0AHQAbwBuACAAQgBhAHIDAAAAAP////8AAAAAAAAAAAAAAAIAAAAEAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAAAAABgAZABlAGIAdQBnAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAACAAcQB1AGkAYwBrAE8AcABlAG4AVABvAG8AbABCAGEAcgEAAAMr/////wAAAAAAAAAAAAAALABLAEQAZQB2AEMAbwBkAGUAYgByAG8AdwBzAGUAcgBUAG8AbwBsAEIAYQByAQAABBP/////AAAAAAAAAAAAAAADAAAAAQAAACIAQgBvAHQAdABvAG0AIABCAHUAdAB0AG8AbgAgAEIAYQByAQAAAAD/////AAAAAAAAAAA=
+ToolBarsMovable=Disabled
+debugToolBarVisibility=false
+
+[Sessions]
+Active Session ID={1a21cffd-2007-4627-9769-e976bd2d7667}
+
+[UiSettings]
+ShowTextEditorStatusBar=false
+
+[UiSettings/Docks/ToolbarEnabled]
+File System_code=true
+Projects_code=true
+Scratchpad_code=true
+
+[User Interface]
+Main Windows Count=1
+
+[User Interface][Main Window 0][Area code]
+desired views=org.kdevelop.ClassBrowserView:1,org.kdevelop.ContextBrowser:8,org.kdevelop.DocumentsView:1,org.kdevelop.ExternalScriptView:2,org.kdevelop.FileManagerView:1,org.kdevelop.KonsoleView:8,org.kdevelop.OutputView:8,org.kdevelop.ProblemReporterView:8,org.kdevelop.ProjectsView:1,org.kdevelop.ScratchpadView:1,org.kdevelop.SnippetView:2
+id=code
+view on bottom=
+view on left=org.kdevelop.ProjectsView
+view on right=
+view on top=
+working set=
+
+[User Interface][Main Window 0][Area debug]
+desired views=org.kdevelop.FileManagerView:1,org.kdevelop.KonsoleView:8,org.kdevelop.debugger.BreakpointsView:8,org.kdevelop.debugger.ConsoleView:8,org.kdevelop.debugger.StackView:8,org.kdevelop.debugger.VariablesView:1
+id=debug
+view on bottom=
+view on left=
+view on right=
+view on top=
+working set=
+
+[User Interface][Main Window 0][Area review]
+desired views=org.kdevelop.FileManagerView:1,org.kdevelop.PatchReview:8,org.kdevelop.ProjectsView:1
+id=review
+view on bottom=
+view on left=
+view on right=
+view on top=
+working set=
