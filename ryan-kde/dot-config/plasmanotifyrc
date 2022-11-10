@@ -4,6 +4,12 @@ Seen=true
 [Applications][com.nextcloud.desktopclient.nextcloud]
 Seen=true
 
+[Applications][google-chrome]
+Seen=true
+
+[Applications][im.riot.Riot]
+Seen=true
+
 [Applications][org.qbittorrent.qBittorrent]
 Seen=true
 

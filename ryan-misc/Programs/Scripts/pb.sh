@@ -164,7 +164,7 @@ fi
 
 set +e
 _COPIED="\e[33m<not copied"
-<<<"${_R_URL}" xclip -selection clipboard
+echo -n "${_R_URL}" | xclip -selection clipboard
 if [[ ${?} == 0 ]]; then
   _COPIED="\e[32m<copied"
 fi

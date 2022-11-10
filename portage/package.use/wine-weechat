@@ -578,3 +578,14 @@
 # required by @selected
 # required by @world (argument)
 >=media-libs/libpulse-16.0 abi_x86_32
+# required by media-libs/libgphoto2-2.5.30::gentoo
+# required by app-emulation/deepin-wine6-stable-6.0.0.19-r1::gentoo-zh
+# required by net-im/deepin-wine-wechat-3.4.0.38::gentoo-zh
+# required by @selected
+# required by @world (argument)
+>=net-misc/curl-7.84.0 abi_x86_32
+# required by net-misc/curl-7.84.0::gentoo[http2]
+# required by www-client/microsoft-edge-dev-106.0.1349.1::gentoo
+# required by @selected
+# required by @world (argument)
+>=net-libs/nghttp2-1.47.0 abi_x86_32

@@ -43,7 +43,7 @@ UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /home/ryan/Downloads/v   btrfs   def
 
 # tmpfs
 tmpfs       /tmp                tmpfs    rw,size=8G,nosuid,nodev,noatime,mode=1777 0 0
-tmpfs       /var/tmp            tmpfs    rw,size=32G,mode=775,nosuid,nodev,noatime 0 0
+tmpfs       /var/tmp            tmpfs    rw,size=32G,mode=1777,nosuid,nodev,noatime 0 0
 tmpfs       /var/tmp/portage    tmpfs    rw,size=32G,uid=portage,gid=portage,mode=775,x-mount.mkdir=775,nosuid,nodev,noatime 0 0
 tmpfs       /usr/riscv64-unknown-linux-gnu/tmp    tmpfs    rw,size=32G,uid=portage,gid=portage,mode=775,x-mount.mkdir=775,nosuid,nodev,noatime 0 0
 

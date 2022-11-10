@@ -3,7 +3,9 @@ ColumnState=AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdAAAAACAQAAAQAA
 
 [ConfigDialog]
 HDMI-A-0 Height 1200=510
+HDMI-A-0 Height 1920x1200 HDMI-A-0=510
 HDMI-A-0 Width 1920=595
+HDMI-A-0 Width 1920x1200 HDMI-A-0=784
 
 [DownloadDialog Settings]
 Height 1200=494
@@ -17,8 +19,8 @@ Geometry=\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x03&\x00\x00\x01\x7f\x00\x00\x
 SplitterState=\x00\x00\x00\xff\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x07\x08\x00\x00\x01\x10\x01\xff\xff\xff\xff\x01\x00\x00\x00\x02\x00
 
 [KFileDialog Settings]
-Recent Files[$e]=code,file:$HOME/syncthingData/Photos/wallpapers/wallhaven-g8qlkq.jpg,file:///opt/bin/code
-Recent URLs[$e]=file:///opt/bin/,file:$HOME/syncthingData/Photos/wallpapers/
+Recent Files[$e]=code,file:$HOME/syncthingData/Photos/wallpapers/wallhaven-g7olle.png,file:$HOME/syncthingData/Photos/wallpapers/wallhaven-g8qlkq.jpg,file:///opt/bin/code
+Recent URLs[$e]=file:///opt/bin/,file:$HOME/syncthingData/Photos/wallpapers/,file:$HOME/syncthingData/Photos/
 detailViewIconSize=0
 iconViewIconSize=64
 
@@ -126,9 +128,6 @@ History=ksn,spe,/opt/bin/code
 LaunchCounts=1 services_org.kde.konsole.desktop,1 services_telegram-desktop.desktop,1 services_applications:powerdevilactivitiesconfig.desktop,11 services_chromium-browser-chromium.desktop
 pluginWhiteList=desktopsessions,services,places,PowerDevil,calculator,unitconverter,shell,bookmarks,recentdocuments,locations,baloosearch
 
-[PlasmaTransientsConfig]
-PreloadWeight=0
-
 [PlasmaViews][Panel 108]
 panelVisibility=1
 
@@ -173,14 +172,23 @@ offset=14
 thickness=90
 
 [PlasmaViews][Panel 2][Defaults]
-maxLength=1920
-minLength=1920
+maxLength=3840
+minLength=3840
 thickness=30
 
 [PlasmaViews][Panel 2][Horizontal1920]
 maxLength=1920
 minLength=1920
 thickness=30
+
+[PlasmaViews][Panel 2][Horizontal2560]
+maxLength=2560
+minLength=2560
+
+[PlasmaViews][Panel 2][Horizontal3840]
+maxLength=3840
+minLength=3840
+thickness=40
 
 [PlasmaViews][Panel 24][Defaults]
 maxLength=1912
@@ -229,6 +237,12 @@ maxLength=845
 minLength=841
 offset=171
 
+[PlasmaViews][Panel 59][Defaults]
+thickness=27
+
+[PlasmaViews][Panel 59][Horizontal1920]
+thickness=27
+
 [PlasmaViews][Panel 64][Defaults]
 thickness=36
 
@@ -245,6 +259,7 @@ thickness=26
 0=HDMI-A-0
 1=:0.0
 2=VNC-0
+3=DisplayPort-0
 
 [Updates]
-performed=/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/move_desktop_layout_config.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/unlock_widgets.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/obsolete_kickoffrc.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/maintain_existing_desktop_icon_sizes.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/containmentactions_middlebutton.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/systemloadviewer_systemmonitor.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/digitalclock_rename_timezonedisplay_key.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/klipper_clear_config.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/no_middle_click_paste_on_panels.js
+performed=/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/move_desktop_layout_config.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/unlock_widgets.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/obsolete_kickoffrc.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/maintain_existing_desktop_icon_sizes.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/containmentactions_middlebutton.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/systemloadviewer_systemmonitor.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/digitalclock_rename_timezonedisplay_key.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/klipper_clear_config.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/no_middle_click_paste_on_panels.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/keyboardlayout_remove_shortcut.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/keyboardlayout_migrateiconsetting.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/digitalclock_migrate_font_settings.js

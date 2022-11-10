@@ -1,14 +1,13 @@
 # For KDE
 kde-plasma/*
 kde-frameworks/*
+dev-libs/wayland
+dev-util/wayland-scanner
+dev-libs/plasma-wayland-protocols
 
 kde-apps/*
 # for kde-apps/akregator
 app-crypt/gpgme
-
-dev-libs/wayland
-dev-util/wayland-scanner
-dev-libs/plasma-wayland-protocols
 
 #for kde-apps/kdenlive
 media-libs/mlt
@@ -36,13 +35,13 @@ www-client/microsoft-edge-dev
 net-news/rssguard
 net-news/quiterss
 www-client/firefox
-x11-libs/libva
+# move x11-libs/libva media-libs/libva
+media-libs/libva
 media-video/libva-utils
 app-office/wps-office
 net-misc/teamviewer
 media-fonts/jetbrains-mono
 x11-terms/alacritty
-app-editors/neovim
 app-text/pelican
 net-misc/youtube-dl
 dev-util/android-studio
@@ -57,6 +56,12 @@ net-im/wechat-uos::benzene-overlay
 app-portage/pacvis
 app-forensics/pev
 app-shells/zsh-autosuggestions
+
+# telegram-desktop
+net-im/telegram-desktop
+media-libs/libtgvoip
+media-libs/tg_owt
+
 net-im/telegram-desktop-bin
 net-misc/you-get
 app-admin/z16 **
@@ -69,7 +74,7 @@ dev-util/github-cli
 #x11-libs/lain
 #sys-apps/pkgcore **
 #dev-util/pkgcheck **
-dev-python/snakeoil **
+#dev-python/snakeoil **
 app-misc/broot
 
 sys-kernel/dkms::guru
@@ -84,6 +89,7 @@ x11-misc/screenkey
 
 net-im/linuxqq-bin
 www-client/google-chrome-beta
+www-client/chromium
 games-action/minecraft-launcher
 games-action/multimc
 
@@ -108,7 +114,9 @@ dev-libs/libgcrypt
 
 
 app-containers/podman
-net-misc/cni-plugins
+# net-misc/cni-plugins
+# move net-misc/cni-plugins app-containers/cni-plugins
+app-containers/cni-plugins
 app-containers/conmon
 # required by app-containers/podman-3.4.0::gentoo[fuse]
 # # required by podman (argument)
@@ -131,6 +139,7 @@ app-text/tldr::guru
 
 sys-apps/bat
 sys-apps/duf::ryans
+media-gfx/weasis-bin::ryans
 
 =app-shells/zsh-5.8.1
 
@@ -149,3 +158,42 @@ dev-util/catalyst #**
 sys-fs/squashfs-tools-ng **
 
 www-apps/cryptpad::ryans
+
+app-text/pandoc-bin
+
+net-vpn/tailscale::ryans
+
+net-im/element-desktop-bin
+
+app-editors/neovim
+dev-lua/luv
+dev-libs/libvterm
+
+<sys-kernel/gentoo-sources-6.0
+
+dev-util/rust-analyzer::guru
+dev-util/bash-language-server::guru
+
+net-im/nheko::guru
+
+# for neochat
+net-im/neochat
+dev-libs/qcoro5
+media-libs/kquickimageeditor
+net-libs/libquotient
+
+# for awscli
+app-admin/awscli
+dev-python/botocore
+
+gui-apps/wtype::guru
+
+dev-qt/qtbase:6
+
+# for telegram-desktop qt6
+dev-qt/qtdeclarative:6
+dev-qt/qtshadertools:6
+dev-qt/qt5compat:6
+dev-qt/qtwayland:6
+dev-qt/qtimageformats:6
+dev-qt/qtsvg:6

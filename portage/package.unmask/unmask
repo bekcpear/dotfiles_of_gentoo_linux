@@ -7,6 +7,8 @@ app-forensics/pev::bobwya
 sys-kernel/dkms::guru
 x11-misc/ksnip::guru
 app-misc/broot::guru
+dev-util/rust-analyzer::guru
+dev-util/bash-language-server::guru
 
 ##::gentoo-zh fcitx5
 app-i18n/fcitx5
@@ -17,3 +19,14 @@ app-i18n/fcitx5-rime
 x11-libs/xcb-imdkit
 
 app-text/tldr::guru
+net-im/nheko::guru
+gui-apps/wtype::guru
+
+# for telegram desktop qt6
+# bug #838970.
+dev-qt/qtdeclarative:6
+dev-qt/qtshadertools:6
+dev-qt/qt5compat:6
+dev-qt/qtwayland:6
+dev-qt/qtimageformats:6
+dev-qt/qtsvg:6

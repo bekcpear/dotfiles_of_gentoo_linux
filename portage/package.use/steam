@@ -86,7 +86,8 @@
 # required by virtual/opengl-7.0-r2::gentoo
 # required by games-util/steam-launcher-1.0.0.72::steam-overlay[steamruntime]
 # required by steam-launcher (argument)
->=x11-libs/libva-2.13.0-r1 abi_x86_32
+# move x11-libs/libva media-libs/libva
+>=media-libs/libva-2.13.0-r1 abi_x86_32
 # required by media-libs/mesa-21.2.5::gentoo[wayland]
 # required by virtual/opengl-7.0-r2::gentoo
 # required by x11-libs/libva-2.13.0-r1::gentoo[opengl]

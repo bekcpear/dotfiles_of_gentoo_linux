@@ -34,6 +34,7 @@ Xterm*saveLines: 10000
 !primary&clipboard
 XTerm*VT100.translations: #override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
 !XTerm*VT100.geometry: 175x50+526+400
+XTerm*VT100.allowWindowOps: true
 
 ! Molokai theme
 !*xterm*background: #101010

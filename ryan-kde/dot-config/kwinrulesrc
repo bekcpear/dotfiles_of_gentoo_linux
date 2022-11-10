@@ -2,7 +2,7 @@
 update_info=kwinrules.upd:replace-placement-string-to-enum,kwinrules.upd:use-virtual-desktop-ids
 
 [1]
-Description=Window settings for google-chrome
+Description=trello rule for google-chrome
 activity=b01f026f-ffac-41ff-80a1-390874a19042,0545733d-dc2b-40d3-af0a-90918438c63a
 activityrule=3
 clientmachine=localhost
@@ -10,9 +10,9 @@ desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
 desktopsrule=3
 noborder=true
 noborderrule=3
-position=1152,30
+position=1216,334
 positionrule=3
-size=768,1170
+size=704,866
 sizerule=3
 skiptaskbar=true
 skiptaskbarrule=3
@@ -30,7 +30,6 @@ decocolor=BreezeDarkForKonsole
 decocolorrule=2
 maximizehorizrule=3
 maximizevertrule=3
-noborder=true
 position=660,315
 positionrule=3
 size=1190,815
@@ -41,43 +40,63 @@ wmclasscomplete=true
 wmclassmatch=1
 
 [11]
+Description=wayland konsole rule
+decocolor=BreezeDarkForKonsole
+decocolorrule=2
+maximizehorizrule=3
+maximizevertrule=3
+noborder=true
+position=660,315
+positionrule=3
+size=1190,815
+sizerule=3
+windowrole=browser
+wmclass=konsole org.kde.konsole
+wmclasscomplete=true
+wmclassmatch=1
+
+[12]
 Description=Chromium rule
 activity=00000000-0000-0000-0000-000000000000
 decocolor=BreezeForChromium
 decocolorrule=2
 noborder=true
-noborderrule=3
-position=353,30
+noborderrule=2
+position=480,30
 positionrule=3
-size=1567,1170
+size=1440,1170
 sizerule=3
 windowrole=browser
 windowrolematch=1
-wmclass=chromium-browser-chromium
-wmclassmatch=1
-
-[12]
-Description=Telegram rule
-activity=00000000-0000-0000-0000-000000000000
-activityrule=3
-decocolor=BreezeForTelegram
-decocolorrule=2
-noborder=true
-position=600,50
-size=1290,1110
-wmclass=telegram-desktop telegramdesktop
+wmclass=chromium-browser-chromium chromium-browser-chromium
 wmclasscomplete=true
 wmclassmatch=1
 
 [13]
+Description=Telegram rule
+activity=00000000-0000-0000-0000-000000000000
+activityrule=3
+decocolor=BreezeDarkForTelegram
+decocolorrule=2
+desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
+noborder=true
+position=660,69
+size=1190,1101
+skiptaskbar=true
+windowrole=browser
+wmclass=telegram-desktop telegramdesktop
+wmclasscomplete=true
+wmclassmatch=1
+
+[14]
 Description=superkonsole rule
 activity=00000000-0000-0000-0000-000000000000
 desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
 noborder=true
 noborderrule=2
-position=600,50
+position=660,69
 positionrule=3
-size=1290,1110
+size=1190,1101
 sizerule=3
 skiptaskbar=true
 types=1
@@ -85,7 +104,7 @@ wmclass=superkonsole konsole
 wmclasscomplete=true
 wmclassmatch=1
 
-[14]
+[15]
 Description=chrome app for Gmail rule
 activity=00000000-0000-0000-0000-000000000000
 activityrule=2
@@ -94,9 +113,9 @@ desktopsrule=2
 minimizerule=2
 noborder=true
 noborderrule=3
-position=0,480
+position=0,334
 positionrule=3
-size=1152,720
+size=1216,866
 sizerule=3
 skiptaskbar=true
 skiptaskbarrule=2
@@ -104,7 +123,26 @@ wmclass=mail.google.com__mail google-chrome
 wmclasscomplete=true
 wmclassmatch=1
 
-[15]
+[16]
+Description=chromium app for Gmail rule
+activity=00000000-0000-0000-0000-000000000000
+activityrule=2
+desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
+desktopsrule=2
+minimizerule=2
+noborder=true
+noborderrule=3
+position=0,334
+positionrule=3
+size=1216,866
+sizerule=3
+skiptaskbar=true
+skiptaskbarrule=2
+wmclass=mail.google.com__mail chromium-browser-chromium
+wmclasscomplete=true
+wmclassmatch=1
+
+[17]
 Description=google-chrome rule
 noborder=true
 noborderrule=2
@@ -117,7 +155,7 @@ wmclass=google-chrome google-chrome
 wmclasscomplete=true
 wmclassmatch=1
 
-[16]
+[18]
 Description=Rules for linuxqq-bin
 skiptaskbar=true
 skiptaskbarrule=3
@@ -127,7 +165,31 @@ wmclasscomplete=true
 wmclassmatch=1
 
 [2]
+Description=trello rule for chromium
+activity=b01f026f-ffac-41ff-80a1-390874a19042,0545733d-dc2b-40d3-af0a-90918438c63a
+activityrule=3
+clientmachine=localhost
+desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
+desktopsrule=3
+noborder=true
+noborderrule=3
+position=1216,334
+positionrule=3
+size=704,866
+sizerule=3
+skiptaskbar=true
+skiptaskbarrule=3
+title=RISC-V | Trello
+types=1
+windowrole=pop-up
+windowrolematch=1
+wmclass=trello.com__b_p8v6a98n_risc-v chromium-browser-chromium
+wmclasscomplete=true
+wmclassmatch=1
+
+[3]
 Description=Window settings for qemu-system-x86_64
+activity=00000000-0000-0000-0000-000000000000
 noborder=true
 position=0,30
 positionrule=3
@@ -138,43 +200,29 @@ wmclass=qemu qemu-system-x86_64
 wmclasscomplete=true
 wmclassmatch=1
 
-[3]
+[4]
 Description=Application settings for firefox
 activity=00000000-0000-0000-0000-000000000000
+desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
 noborder=true
 noborderrule=3
+position=0,30
+size=1152,450
+skiptaskbar=true
 wmclass=navigator firefox
 wmclasscomplete=true
 wmclassmatch=1
 
-[4]
+[5]
 Description=Application settings for quiterss
 activity=00000000-0000-0000-0000-000000000000
 activityrule=2
 desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
 noborder=true
 position=0,30
-size=1152,450
+size=1152,479
 skiptaskbar=true
 wmclass=quiterss
-wmclassmatch=1
-
-[5]
-Description=Thunderbird rule
-activity=00000000-0000-0000-0000-000000000000
-activityrule=2
-desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
-desktopsrule=2
-noborder=true
-noborderrule=3
-position=0,30
-positionrule=3
-size=1152,479
-sizerule=3
-skiptaskbar=true
-skiptaskbarrule=3
-wmclass=mail thunderbird
-wmclasscomplete=true
 wmclassmatch=1
 
 [59ea5b21-5e82-4142-a54e-e7e344b99edb]
@@ -193,9 +241,29 @@ wmclasscomplete=true
 wmclassmatch=1
 
 [6]
+Description=Thunderbird rule
+activity=00000000-0000-0000-0000-000000000000
+activityrule=2
+desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
+desktopsrule=2
+ignoregeometry=true
+noborder=true
+noborderrule=3
+position=0,30
+positionrule=3
+size=1216,496
+sizerule=3
+skiptaskbar=true
+skiptaskbarrule=3
+wmclass=mail thunderbird
+wmclasscomplete=true
+wmclassmatch=1
+
+[7]
 Description=Application settings for qbittorrent
 activity=0acb0a7e-b74c-4eef-8bc5-1f601d27ef41
 activityrule=2
+decocolor=BreezeDarkForGoogleKeep
 desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
 ignoregeometry=true
 noborder=true
@@ -205,23 +273,18 @@ skiptaskbar=true
 wmclass=qbittorrent
 wmclassmatch=1
 
-[7]
-Description=chromium app for Gmail rule
-decocolor=BreezeDarkForGoogleKeep
-desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
-desktopsrule=2
-ignoregeometry=true
-ignoregeometryrule=2
-minimizerule=2
-noborder=true
-noborderrule=3
-position=0,509
+[733b00dc-039f-4585-b4ca-28f77d701e18]
+Description=wayland konsole rule
+decocolor=BreezeDarkForKonsole
+decocolorrule=2
+maximizehorizrule=3
+maximizevertrule=3
+position=660,315
 positionrule=3
-size=1152,691
+size=1190,815
 sizerule=3
-skiptaskbar=true
-skiptaskbarrule=2
-wmclass=mail.google.com__mail google-chrome
+windowrole=browser
+wmclass=konsole org.kde.konsole
 wmclasscomplete=true
 wmclassmatch=1
 
@@ -229,22 +292,89 @@ wmclassmatch=1
 Description=Google keep rule
 decocolor=BreezeDarkForGoogleKeep
 decocolorrule=2
-position=560,60
-size=860,1100
 wmclass=crx_hmjkmjkepdijhoojdojkdfohbdgmmhki chromium-browser-chromium
 wmclasscomplete=true
 wmclassmatch=1
 
 [9]
 Description=Gvim rule
-decocolor=BreezeDarkForKonsole
+decocolor=BreezeDarkForGoogleKeep
 position=560,60
 positionrule=3
 size=860,1100
 sizerule=3
+windowrole=browser
 wmclass=gvim
 wmclassmatch=1
 
+[916fa23c-3982-45b9-a3b4-45297261f9c7]
+Description=Chromium rule
+activity=00000000-0000-0000-0000-000000000000
+decocolor=BreezeForChromium
+decocolorrule=2
+noborder=true
+noborderrule=3
+position=353,30
+positionrule=3
+size=1567,1170
+sizerule=3
+windowrole=browser
+windowrolematch=1
+wmclass=chromium-browser-chromium
+wmclassmatch=1
+
 [General]
-count=16
-rules=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16
+count=18
+rules=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18
+
+[dc7fa86a-dd4d-420c-8fd2-a7b8195a4f9a]
+Description=trello rule for chromium
+activity=b01f026f-ffac-41ff-80a1-390874a19042,0545733d-dc2b-40d3-af0a-90918438c63a
+activityrule=3
+clientmachine=localhost
+desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
+desktopsrule=3
+noborder=true
+noborderrule=3
+position=1152,30
+positionrule=3
+size=768,1170
+sizerule=3
+skiptaskbar=true
+skiptaskbarrule=3
+title=RISC-V | Trello
+types=1
+windowrole=pop-up
+windowrolematch=1
+wmclass=trello.com__b_p8v6a98n_risc-v chromium-browser-chromium
+wmclasscomplete=true
+wmclassmatch=1
+
+[ebaeeeb0-a7fe-4614-bde2-845b1b2af207]
+Description=chromium app for Gmail rule
+activity=00000000-0000-0000-0000-000000000000
+activityrule=2
+desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
+desktopsrule=2
+minimizerule=2
+noborder=true
+noborderrule=3
+position=0,480
+positionrule=3
+size=1152,720
+sizerule=3
+skiptaskbar=true
+skiptaskbarrule=2
+wmclass=mail.google.com__mail chromium-browser-chromium
+wmclasscomplete=true
+wmclassmatch=1
+
+[f912e24a-1fd4-410f-88f7-f3cdcbc78dfa]
+Description=Window settings for firefox
+noborder=true
+noborderrule=2
+title=设置 — Mozilla Firefox
+types=1
+wmclass=firefox-bin firefox
+wmclasscomplete=true
+wmclassmatch=1

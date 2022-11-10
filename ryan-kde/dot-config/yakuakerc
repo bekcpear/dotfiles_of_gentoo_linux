@@ -1,8 +1,11 @@
 [Animation]
 Frames=10
 
+[Appearance]
+BackgroundColorOpacity=20
+
 [Desktop Entry]
-DefaultProfile=Mine.profile
+DefaultProfile=Yakuake.profile
 
 [Dialogs]
 FirstRun=false

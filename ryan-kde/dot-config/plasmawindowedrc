@@ -3,7 +3,7 @@ immutability=1
 plugin=org.kde.plasma.timer
 
 [Applets][3][Configuration]
-PreloadWeight=18
+PreloadWeight=10
 geometry=1293,119,604,209
 
 [Applets][3][Configuration][ConfigDialog]
@@ -11,4 +11,4 @@ DialogHeight=540
 DialogWidth=720
 
 [Applets][3][Configuration][General]
-savedAt=2022,2,13,18,43,2.089
+savedAt=2022,8,17,9,51,9.489

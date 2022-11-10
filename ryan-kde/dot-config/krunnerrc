@@ -10,6 +10,7 @@ migrated=true
 CharacterRunnerEnabled=true
 DictionaryEnabled=true
 Kill RunnerEnabled=true
+PIM Contacts Search RunnerEnabled=false
 PowerDevilEnabled=true
 Spell CheckerEnabled=false
 baloosearchEnabled=true

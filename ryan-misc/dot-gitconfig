@@ -1,8 +1,10 @@
 [user]
 	name = Ryan Qian
 	email = i@bitbili.net
-	signingkey = 0x510A72801905CE16
+	signingkey = 0x1E100000FA95E6B5
 [commit]
 	gpgsign = true
 [gpg]
 	program = /usr/bin/gpg
+[http]
+	proxy = 

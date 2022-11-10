@@ -1,1 +1,2 @@
-#dev-qt/qtwebengine ccache.conf
+dev-qt/qtwebengine ccache.conf
+www-client/chromium ccache.conf chromium-keys.conf

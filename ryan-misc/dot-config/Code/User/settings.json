@@ -1,0 +1,23 @@
+{
+    "files.associations": {
+        "*.rst": "restructuredtext"
+    },
+    "editor.tabSize": 2, 
+    "editor.fontFamily": "'DejaVu Sans Mono', 'Noto Sans Mono CJK TC', monospace, 'Droid Sans Fallback'",
+    "editor.fontSize": 16,
+    "editor.cursorStyle": "line",
+    "editor.cursorBlinking": "solid",
+    "editor.autoClosingBrackets": "never",
+    "workbench.colorTheme":"GitHub Light",
+    "editor.minimap.enabled": false,
+    "[restructuredtext]":  {
+      "editor.parameterHints.enabled": false,
+      "editor.quickSuggestions": {
+        "other": false,
+        "comments": false,
+        "strings": false
+      }, 
+      "editor.wordWrap": "on"
+    },
+    "workbench.startupEditor": "none"
+}

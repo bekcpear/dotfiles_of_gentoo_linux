@@ -8,10 +8,10 @@ registerShortcut("customResizeWindow", "Move window to right bottom", "Meta+Ctrl
   if (client.moveable && client.resizeable && (client.width < maxArea.width || client.height < maxArea.height)) {
     if (client.resourceName == "superkonsole") {
       client.geometry = {
-        x: 600 + maxArea.x,
-        y: 20 + maxArea.y,
-        width: 1290,
-        height: 1110
+        x: 660 + maxArea.x,
+        y: 39 + maxArea.y,
+        width: 1190,
+        height: 1101
       };
     } else {
       client.geometry = {

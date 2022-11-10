@@ -1,21 +1,37 @@
 # Lines configured by zsh-newuser-install
 setopt extended_history
 HISTFILE=~/.histfile
-HISTSIZE=100000
+HISTSIZE=1000000
 SAVEHIST=100000
 bindkey -v
 KEYTIMEOUT=1
 # End of lines configured by zsh-newuser-install
 
-zstyle :compinstall filename '/home/ryan/.zshrc'
+LS_COLORS=$( cat ~/.local/share/LS_COLORS/snazzy.txt )
+export LS_COLORS
 
-autoload -Uz compinit promptinit vcs_info
-compinit
-promptinit; prompt gentoo
-
-zstyle ':completion::complete:*' use-cache 1
+zstyle ':completion:*' completer _complete _ignored _approximate
+zstyle ':completion:*' expand prefix
+zstyle ':completion:*' format 'Completing %d'
 zstyle ':completion:*:descriptions' format '%U%d%b%u'
 zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' ignore-parents parent pwd
+zstyle ':completion:*' insert-unambiguous true
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-prompt '%SAt %p: Hit TAB for more, or the character to insert%s'
+zstyle ':completion:*' list-suffixes true
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}'
+zstyle ':completion:*' max-errors 0 not-numeric
+zstyle ':completion:*' original true
+zstyle ':completion:*' preserve-prefix '//[^/]##/'
+zstyle ':completion:*' squeeze-slashes true
+zstyle :compinstall filename '~/.zshrc'
+
+# End of lines added by compinstall
+autoload -Uz compinit promptinit vcs_info
+compinit
+promptinit
 
 bindkey "^R" history-incremental-search-backward
 
@@ -45,6 +61,26 @@ zstyle ':vcs_info:*' stagedstr "*"
 zstyle ':vcs_info:*' actionformats '%K{233} ᚠ %b%F{2}%c%f %k%K{3} %F{233}%a%f %k'
 zstyle ':vcs_info:*' formats '%K{233} ᚠ %b%F{2}%c%f %k'
 precmd () {
+  local _last_ret=$?
+  # show last run status
+  local _color=209
+  if [[ ${_last_ret} != 0 ]]; then
+    case ${_last_ret} in
+      130)
+        _last_ret="^C" # ⌃ for Mac
+        _color=212
+        ;;
+      *)
+        ;;
+    esac
+    # printf "\x1b[38;5;%dm\x1b[0m" ${_color}
+    # printf "\x1b[48;5;%dm  ⇑↑⇑⇡☝︎⬆︎⇧⇪⥣↟↾↿⥔⥘⥜⥠⟰⤊↥⇫⇬⇭⇮⇯⇈⤉⇞⤒⥉⇱↸⤴︎ ⤤⤻➚%s  \x1b[0m" ${_color} ${_last_ret}
+    printf "\x1b[48;5;%dm  ⤒%s   \x1b[0m" ${_color} ${_last_ret}
+    printf "\n"
+    # printf "\x1b[38;5;%dm\x1b[0m\n" ${_color}
+  fi
+
+  # prepare vcs info
   vcs_info
   if [[ -n ${vcs_info_msg_0_} ]]; then
     RPROMPT="${vcs_info_msg_0_} ${D_RPROMPT}"
@@ -52,18 +88,19 @@ precmd () {
     RPROMPT="${D_RPROMPT}"
   fi
 }
-
 setopt prompt_subst
 PROMPT='%F{238}${(l:${COLUMNS}::·:):-}%f\
- %F{227}%~%f %B%(?.%F{123}›%f.%F{196}›%f) %b'
-D_RPROMPT=" %(?..%F{196}%? %f)%F{238}%* @%D{%f}%f"
+ %F{227}%~%f %B%F{123}›%f %b'
+D_RPROMPT=" %F{238}%* @%D{%f}%f"
 
 export GOPATH=~/go
-export PATH=$PATH":/home/ryan/go/bin"
+export PATH=$PATH":/home/ryan/go/bin:/home/ryan/.local/bin"
 
 export GPG_TTY="$(tty)"
+#if [[ -z ${SSH_CLIENT} ]]; then
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 gpg-connect-agent updatestartuptty /bye >/dev/null
+#fi
 #gpgconf --launch gpg-agent
 
 alias yd=ydcv-rs
@@ -112,6 +149,12 @@ run() {
   ./$f
   )
 }
+clrun() {
+  local CC CXX
+  export CC="clang"
+  export CXX="clang++"
+  run "$@"
+}
 
 build_cryptpad() {
   (
@@ -136,3 +179,12 @@ build_cryptpad() {
 if [[ $(pwd) == "/" ]]; then
   cd
 fi
+
+alias nct="~/Git/network-connectivity-test/nct"
+alias vgen="~/Git/vendor-for-go/gen.sh"
+alias go="https_proxy='socks5://127.0.0.1:1080' go"
+alias golic="https_proxy='socks5://127.0.0.1:1080' ~/Git/go-licenses-for-gentoo/golic.sh"
+alias govenball="https_proxy='socks5://127.0.0.1:1080' ~/Git/vendor-for-go/.do/do.sh ~/Git/gopkg-vendors"
+alias ls="ls --color"
+alias vim="nvim"
+alias insfunc="~/Git/bash-funcs/ins.sh"

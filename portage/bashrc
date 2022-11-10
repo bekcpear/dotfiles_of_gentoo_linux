@@ -34,9 +34,9 @@ if [[ ${EBUILD_PHASE} == "setup" ]]; then
 	fi
 fi
 
-function pre_pkg_preinst() {
+function pre_src_install() {
     # This hook signs any out-of-tree kernel modules.
-    if [[ "$(type -t linux-mod_pkg_preinst)" != "function" ]]; then
+    if [[ "$(type -t linux-mod_src_install)" != "function" ]]; then
         # The package does not seem to install any kernel modules.
         return
     fi
@@ -60,6 +60,6 @@ function pre_pkg_preinst() {
 				ewarn "${5##*/} sign failed, CMD: ${1} '${2}' '${3}' '${4}' '${5}'"
 		}
 		export -f __sign_mod
-    find "${ED}" -name "*.ko" -exec bash -c \
+    find "${S}" -name "*.ko" -exec bash -c \
 			"__sign_mod '${KERNEL_DIR}/scripts/sign-file' '${module_sig_hash}' '${key_path}' '${cert_path}' '{}'" \;
 }

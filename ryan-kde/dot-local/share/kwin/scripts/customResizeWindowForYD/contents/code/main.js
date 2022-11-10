@@ -9,8 +9,8 @@ registerShortcut("customResizeWindowForYD", "Move window to right and resize", "
     client.geometry = {
       x: maxArea.x,
       y: maxArea.y,
-      width: 353,
-      height: 1170
+      width: maxArea.width / 4,
+      height: maxArea.height
     };
   }
 });

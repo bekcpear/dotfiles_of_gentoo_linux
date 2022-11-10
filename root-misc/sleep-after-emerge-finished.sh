@@ -7,7 +7,8 @@ set -e
 #      hibernate
 #       poweroff
 #         reboot
-declare -i TIMEOUT=18000 #seconds, 3 hours
+#declare -i TIMEOUT=10800 #seconds, 3 hours
+declare -i TIMEOUT=36000
 
 # @FUNCTION: _log
 # @USAGE: [-d|-i|-w|-e] <message>
@@ -212,7 +213,7 @@ function _check_finished_or_not() {
         _log -w "emerge already terminated."
         return 1
       else
-        _do_action
+        _do_action ${action}
       fi
     elif [[ ${_last_emerge_state} == unset ]]; then
       _last_emerge_state=running

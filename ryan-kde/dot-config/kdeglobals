@@ -137,12 +137,13 @@ ForegroundVisited=155,89,182
 
 [DirSelect Dialog]
 DirSelectDialog Size=858,598
-History Items[$e]=file:$HOME/syncthingData/Photos/wallpapers,file:///tmp/tmp.b1GMrPJmov/znc,file:$HOME/Videos,file:$HOME/.local/,file:$HOME/Downloads/Bluetooth,file:$HOME/Tmp/KdenliveProj/timer/out_png,file:$HOME/Tmp/KdenliveProj/timer/00000000,file:$HOME/Tmp/KdenliveProj/timer/00005788,file:$HOME/Tmp/KdenliveProj/timer/00000000,file:$HOME/Tmp/KdenliveProj/timer,file:$HOME/Tmp/KdenliveProj/timer,file:$HOME/Tmp/KdenliveProj,file:$HOME/syncthingData/Photos/wallpapers,file:$HOME/syncthingData/Photos/wallpapers,file:$HOME/syncthingData/Photos,file:$HOME/syncthingData/Photos,file:$HOME/Documents/password-store,file:$HOME/Documents/BKS,file:$HOME/Documents/AccountRecoveryCode,file:$HOME/Documents/NTKS,file:$HOME/Git,file:$HOME/bitbili,file:$HOME/.cache/,file:$HOME/.local/,file:$HOME/bitbili/content/Tech,file:$HOME/Nextcloud/Photos/wallpapers,file:$HOME/Nextcloud/Photos/wallpapers,file:///var,file:///usr,file:///tmp,file:///sys,file:///sbin,file:///run,file:///proc,file:///opt,file:///mnt,file:///media,file:///lib64,file:///lib,file:///etc,file:///dev,file:///boot,file:///,file:$HOME/Pictures/wallpapers,file:$HOME/Nextcloud,file:$HOME/.config/awesome/themes/my/wall_dir/,file:$HOME/.config/awesome,file:$HOME/.config/
+History Items[$e]=file:$HOME/Documents/KMail-Archives,file:$HOME/syncthingData/Photos/wallpapers/girls,file:$HOME/syncthingData/Photos/wallpapers/girls,file:$HOME/syncthingData/Photos/wallpapers,file:///tmp/tmp.b1GMrPJmov/znc,file:$HOME/Videos,file:$HOME/.local/,file:$HOME/Downloads/Bluetooth,file:$HOME/Tmp/KdenliveProj/timer/out_png,file:$HOME/Tmp/KdenliveProj/timer/00000000,file:$HOME/Tmp/KdenliveProj/timer/00005788,file:$HOME/Tmp/KdenliveProj/timer/00000000,file:$HOME/Tmp/KdenliveProj/timer,file:$HOME/Tmp/KdenliveProj/timer,file:$HOME/Tmp/KdenliveProj,file:$HOME/syncthingData/Photos/wallpapers,file:$HOME/syncthingData/Photos/wallpapers,file:$HOME/syncthingData/Photos,file:$HOME/syncthingData/Photos,file:$HOME/Documents/password-store,file:$HOME/Documents/BKS,file:$HOME/Documents/AccountRecoveryCode,file:$HOME/Documents/NTKS,file:$HOME/Git,file:$HOME/bitbili,file:$HOME/.cache/,file:$HOME/.local/,file:$HOME/bitbili/content/Tech,file:$HOME/Nextcloud/Photos/wallpapers,file:$HOME/Nextcloud/Photos/wallpapers,file:///var,file:///usr,file:///tmp,file:///sys,file:///sbin,file:///run,file:///proc,file:///opt,file:///mnt,file:///media,file:///lib64,file:///lib,file:///etc,file:///dev,file:///boot,file:///,file:$HOME/Pictures/wallpapers,file:$HOME/Nextcloud,file:$HOME/.config/awesome/themes/my/wall_dir/,file:$HOME/.config/awesome
 
 [General]
-BrowserApplication=google-chrome.desktop
-ColorSchemeHash=d0b3d2da363261958945ede41bfed4e1744dd286
+BrowserApplication=chromium-browser-chromium.desktop
+ColorSchemeHash=78952f1103f6f2c59b78c6ed5fa382c3f5ec18e7
 Name=Breeze Dark
+XftAntialias=true
 XftHintStyle=hintslight
 XftSubPixel=rgb
 fixed=Noto Mono for Powerline,10,-1,5,50,0,0,0,0,0
@@ -150,11 +151,12 @@ shadeSortColumn=true
 widgetStyle=Breeze
 
 [KDE]
-AnimationDurationFactor=0
+AnimationDurationFactor=0.125
 ColorScheme=Breeze
 LookAndFeelPackage=org.kde.breezedark.desktop
 ShowDeleteCommand=false
 contrast=4
+widgetStyle=Breeze
 
 [KFileDialog Settings]
 Allow Expansion=false
@@ -178,7 +180,8 @@ View Style=Simple
 
 [KScreen]
 ScaleFactor=1
-ScreenScaleFactors=DisplayPort-0=1;DisplayPort-1=1;DisplayPort-2=1;HDMI-A-0=1;
+ScreenScaleFactors=Dell Inc. DELL U2412M/N57X959Q1RCL=1;
+XwaylandClientsScale=false
 
 [KShortcutsDialog Settings]
 Dialog Size=1190,815

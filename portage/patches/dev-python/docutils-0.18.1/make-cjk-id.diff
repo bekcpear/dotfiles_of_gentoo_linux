@@ -1,19 +1,19 @@
 diff --git a/docutils/nodes.py b/docutils/nodes.py
-index 3a62309..19f7afa 100644
+index c5f4789..3c9257f 100644
 --- a/docutils/nodes.py
 +++ b/docutils/nodes.py
-@@ -32,6 +32,9 @@ import unicodedata
- 
- # import docutils.transforms # -> conditional import in document.__init__()
+@@ -31,6 +31,9 @@ import warnings
+ import unicodedata
+ # import xml.dom.minidom as dom # -> conditional import in Node.asdom()
  
 +# cwittlut's patch: for cjk title, may broken others
 +import urllib.parse
 +
- 
- # ==============================
- #  Functional Node Base Classes
-@@ -2230,6 +2233,12 @@ def make_id(string):
-     id = string.lower()
+ if sys.version_info >= (3, 0):
+     unicode = str  # noqa
+     basestring = str  # noqa
+@@ -2269,6 +2272,12 @@ def make_id(string):
+         id = id.decode()
      id = id.translate(_non_id_translate_digraphs)
      id = id.translate(_non_id_translate)
 +
@@ -24,10 +24,10 @@ index 3a62309..19f7afa 100644
 +
      # get rid of non-ascii characters.
      # 'ascii' lowercase to prevent problems with turkish locale.
-     id = unicodedata.normalize(
-@@ -2240,7 +2249,12 @@ def make_id(string):
+     id = unicodedata.normalize('NFKD', id).\
+@@ -2278,7 +2287,12 @@ def make_id(string):
+     id = _non_id_at_ends.sub('', id)
      return str(id)
- 
  
 -_non_id_chars = re.compile('[^a-z0-9]+')
 +# cwittlut's patch:
@@ -38,4 +38,4 @@ index 3a62309..19f7afa 100644
 +#_non_id_chars = re.compile('[^a-z0-9]+')
  _non_id_at_ends = re.compile('^[-0-9]+|-+$')
  _non_id_translate = {
-     0x00f8: 'o',       # o with stroke
+     0x00f8: u'o',       # o with stroke
