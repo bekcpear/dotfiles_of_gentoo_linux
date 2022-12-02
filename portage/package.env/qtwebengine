@@ -1,2 +1,2 @@
 dev-qt/qtwebengine ccache.conf
-www-client/chromium ccache.conf chromium-keys.conf
+www-client/chromium ccache.conf chromium-keys.conf less-j-for-makeopts.conf

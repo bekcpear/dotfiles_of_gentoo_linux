@@ -148,12 +148,51 @@ highPrioritySensorIds=["cpu/all/usage"]
 lowPrioritySensorIds=["cpu/all/cpuCount","cpu/all/coreCount"]
 totalSensors=["cpu/all/usage"]
 
+[Containments][2][Applets][59]
+immutability=1
+plugin=org.kde.plasma.systemmonitor
+
+[Containments][2][Applets][59][Configuration]
+PreloadWeight=44
+
+[Containments][2][Applets][59][Configuration][Appearance]
+chartFace=org.kde.ksysguard.linechart
+title=Total MEM Use
+
+[Containments][2][Applets][59][Configuration][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
+
+[Containments][2][Applets][59][Configuration][FaceGrid][Appearance]
+chartFace=org.kde.ksysguard.linechart
+showTitle=false
+
+[Containments][2][Applets][59][Configuration][FaceGrid][SensorColors]
+cpu/all/usage=61,174,233
+memory/physical/usedPercent=224,233,61
+
+[Containments][2][Applets][59][Configuration][FaceGrid][Sensors]
+highPrioritySensorIds=["memory/physical/usedPercent"]
+
+[Containments][2][Applets][59][Configuration][SensorColors]
+cpu/all/usage=61,174,233
+memory/physical/used=120,226,255
+memory/physical/usedPercent=255,249,181
+
+[Containments][2][Applets][59][Configuration][Sensors]
+highPrioritySensorIds=["memory/physical/used"]
+lowPrioritySensorIds=[]
+totalSensors=["memory/physical/usedPercent"]
+
+[Containments][2][Applets][59][Configuration][org.kde.ksysguard.linechart][General]
+lineChartFillOpacity=30
+
 [Containments][2][Applets][7]
 immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][2][Applets][7][Configuration]
-PreloadWeight=96
+PreloadWeight=84
 SystrayContainmentId=8
 
 [Containments][2][ConfigDialog]
@@ -164,7 +203,7 @@ DialogWidth=1920
 PreloadWeight=0
 
 [Containments][2][General]
-AppletOrder=3;30;4;29;7;52;31;19;20
+AppletOrder=3;30;4;29;7;52;59;31;19;20
 
 [Containments][39]
 activityId=0545733d-dc2b-40d3-af0a-90918438c63a
@@ -263,7 +302,7 @@ SlidePaths=/usr/share/wallpapers
 
 [Containments][42][Wallpaper][org.kde.slideshow][General]
 Blur=true
-Image=file:///home/ryan/syncthingData/Photos/wallpapers/girls/wallhaven-dplme3.jpg
+Image=/home/ryan/syncthingData/Photos/wallpapers/girls/wallhaven-v9w635.jpg
 SlidePaths=/home/ryan/syncthingData/Photos/wallpapers/girls
 UncheckedSlides=file:///home/ryan/syncthingData/Photos/wallpapers/1.png,file:///home/ryan/syncthingData/Photos/wallpapers/2020-12-17-@00-27-39-scrot.png,file:///home/ryan/syncthingData/Photos/wallpapers/1719875_p0.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/5290131_p0.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/8431682_p0.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/8913281_p0.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/13461444_p0.png,file:///home/ryan/syncthingData/Photos/wallpapers/13962598_p0.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/15520441_p0.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/38862330_p0.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/47621790_p0.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/53344723_p0.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/53344723_p8.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/55647411_p0.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/56884826_p0.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/60141148_p0.png,file:///home/ryan/syncthingData/Photos/wallpapers/62843266_p0.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/64952352_p0_master1200.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/66269143_p0.png,file:///home/ryan/syncthingData/Photos/wallpapers/68296699_p0.png,file:///home/ryan/syncthingData/Photos/wallpapers/70133000_p0.png,file:///home/ryan/syncthingData/Photos/wallpapers/73820674_p0.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/73828622_p3.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/73838417_p0.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/73852275_p0.png,file:///home/ryan/syncthingData/Photos/wallpapers/73875300_p0.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/bing/AlanTuringNotebook_EN-AU7743633207_1920x1080.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/bing/AlaskaEagle_ZH-CN9957205086_1920x1080.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/bing/AugustBears_ZH-CN8159736622_1920x1080.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/bing/BailysBeads_ZH-CN5728297739_1920x1080.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/BingWallpaper-1642930395.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/BingWallpaper-1643371075.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/bing/CommonLoon_ZH-CN5437917206_1920x1080.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/bing/CuracaoTurtle_ZH-CN5468901173_1920x1080.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/dragon_ball.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/gentoo161.png,file:///home/ryan/syncthingData/Photos/wallpapers/bing/HCABooks_ZH-CN3645291678_1920x1080.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/bing/LeatherbackTT_ZH-CN5495532728_1920x1080.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/bing/MagdalenCave_ZH-CN6279630125_1920x1080.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/bing/MaraRiverCrossing_ZH-CN6598585392_1920x1080.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/bing/PantheraLeoDad_ZH-CN9580668524_1920x1080.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/bing/PolarBearDay_ZH-CN5185516722_1920x1080.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/bing/SardiniaHawkMoth_ZH-CN3672906054_1920x1080.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/bing/SquirrelHeather_ZH-CN1683129884_1920x1080.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/bing/ToothWalkingSeahorse_ZH-CN5089043566_1920x1080.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/bing/VulpesVulpes_ZH-CN5650159325_1920x1080.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/wallhaven-4ooy19.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/wallhaven-941.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/wallhaven-3601.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/wallhaven-852.png,file:///home/ryan/syncthingData/Photos/wallpapers/wallhaven-5601.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/wallhaven-11706.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/wallhaven-13684.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/wallhaven-13686.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/wallhaven-103929.png,file:///home/ryan/syncthingData/Photos/wallpapers/wallhaven-369924.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/wallhaven-426244.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/wallhaven-639039.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/wallhaven-634132.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/wallhaven-470315.png,file:///home/ryan/syncthingData/Photos/wallpapers/wallhaven-625519.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/wallhaven-k9d9k1.jpg,file:///home/ryan/syncthingData/Photos/wallpapers/wallhaven-4159.png
 
@@ -355,7 +394,7 @@ immutability=1
 plugin=org.kde.plasma.notifications
 
 [Containments][8][Applets][11][Configuration]
-PreloadWeight=64
+PreloadWeight=83
 
 [Containments][8][Applets][12]
 immutability=1
@@ -376,7 +415,7 @@ immutability=1
 plugin=org.kde.plasma.volume
 
 [Containments][8][Applets][14][Configuration]
-PreloadWeight=5
+PreloadWeight=0
 
 [Containments][8][Applets][14][Configuration][General]
 currentTab=streams
@@ -428,14 +467,14 @@ immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][8][Applets][23][Configuration]
-PreloadWeight=5
+PreloadWeight=0
 
 [Containments][8][Applets][26]
 immutability=1
 plugin=org.kde.plasma.mediacontroller
 
 [Containments][8][Applets][26][Configuration]
-PreloadWeight=5
+PreloadWeight=0
 
 [Containments][8][Applets][9]
 immutability=1

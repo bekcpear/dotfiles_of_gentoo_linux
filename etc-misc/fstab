@@ -29,20 +29,27 @@ UUID=A5C5-5CA5    /boot     vfat      rw,relatime,fmask=0022,dmask=0022,codepage
 # /dev/sda2
 UUID=9050-86B8    /boot/efi vfat      rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 2
 
-# /dev/mapper/ct0
+# /dev/mapper/root
 UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /       btrfs   defaults,noatime,ssd,discard,subvolid=258,subvol=/subvol_root 0 1
-UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /home   btrfs   defaults,noatime,ssd,discard,subvolid=259,subvol=/subvol_home 0 2
+UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /mnt/root btrfs   defaults,noauto,noatime,ssd,discard,subvolid=5 0 2
 UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /var/cache/distfiles   btrfs   defaults,noatime,ssd,discard,subvolid=462,subvol=/subvol_distfiles 0 2
 UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /.sss   btrfs   defaults,noatime,ssd,discard,subvolid=260,subvol=/subvol_snapshots 0 2
 UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /srv/var/lib/docker   btrfs   defaults,noatime,ssd,discard,subvolid=472,subvol=/docker 0 2
 UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /var/lib/containers/storage   btrfs   defaults,noatime,ssd,discard,subvolid=2563,subvol=/subvol_nocow 0 2
-UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /home/ryan/.local/share/containers/storage   btrfs   defaults,noatime,ssd,discard,subvolid=2564,subvol=/subvol_nocow_for_ryan 0 2
-UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /home/ryan/VMs   btrfs   defaults,noatime,ssd,discard,subvolid=2683,subvol=/subvol_vms_for_ryan 0 2
-UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /home/ryan/.local/share/sddm   btrfs   defaults,noatime,ssd,discard,subvolid=2758,subvol=/subvol_sddm_for_ryan 0 2
+
+# /dev/mapper/crypt-ss0 + /dev/mapper/crypt-zt0 -> raid1
+UUID=c6eeec38-8f98-430e-b188-ecb55e36b051   /mnt/btrfs-raid1-20221203 btrfs defaults,noauto,noatime,ssd,discard,compress=zstd:1,subvolid=5 0 2
+UUID=c6eeec38-8f98-430e-b188-ecb55e36b051   /home   btrfs   defaults,noatime,ssd,discard,compress=zstd:1,subvolid=258,subvol=/@home 0 2
+UUID=c6eeec38-8f98-430e-b188-ecb55e36b051   /home/.sss   btrfs   defaults,noatime,ssd,discard,subvolid=262,subvol=/@snapshots 0 2
+UUID=c6eeec38-8f98-430e-b188-ecb55e36b051   /home/ryan/VMs   btrfs   defaults,noatime,ssd,discard,nodatacow,subvolid=260,subvol=/@vm 0 2
+
+# /dev/mapper/root
 UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /home/ryan/Downloads/v   btrfs   defaults,noatime,ssd,discard,subvolid=2759,subvol=/subvol_v_for_ryan 0 2
+UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /home/ryan/.local/share/sddm   btrfs   defaults,noatime,ssd,discard,subvolid=2758,subvol=/subvol_sddm_for_ryan 0 2
+UUID=4c70a18f-81de-4fcb-b84d-1392a2d9f1d6   /home/ryan/.local/share/containers/storage   btrfs   defaults,noatime,ssd,discard,nodatacow,subvolid=3312,subvol=/subvol_nocow_for_ryan 0 2
 
 # tmpfs
-tmpfs       /tmp                tmpfs    rw,size=8G,nosuid,nodev,noatime,mode=1777 0 0
+tmpfs       /tmp                tmpfs    rw,size=16G,nosuid,nodev,noatime,mode=1777 0 0
 tmpfs       /var/tmp            tmpfs    rw,size=32G,mode=1777,nosuid,nodev,noatime 0 0
 tmpfs       /var/tmp/portage    tmpfs    rw,size=32G,uid=portage,gid=portage,mode=775,x-mount.mkdir=775,nosuid,nodev,noatime 0 0
 tmpfs       /usr/riscv64-unknown-linux-gnu/tmp    tmpfs    rw,size=32G,uid=portage,gid=portage,mode=775,x-mount.mkdir=775,nosuid,nodev,noatime 0 0

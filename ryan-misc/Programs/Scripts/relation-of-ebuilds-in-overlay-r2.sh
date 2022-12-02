@@ -146,6 +146,15 @@ function _show_process() {
 
 export LC_ALL=C
 cd ${REPOPATH}
+if git status &>/dev/null; then
+  REAL_REPOPATH=$(mktemp -d)
+  git clone --depth 1 "file://$(pwd)" ${REAL_REPOPATH}
+  pushd ${REAL_REPOPATH} >/dev/null
+  trap '
+    popd >/dev/null
+    env rm -rf ${REAL_REPOPATH}
+  ' EXIT
+fi
 [[ -f profiles/repo_name ]] || _fatal "should be run under a portage repository."
 
 # 1: last recorded val (date +%s%N)

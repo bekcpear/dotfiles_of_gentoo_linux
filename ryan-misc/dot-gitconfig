@@ -6,5 +6,5 @@
 	gpgsign = true
 [gpg]
 	program = /usr/bin/gpg
-[http]
-	proxy = 
+[safe]
+	directory = /var/db/repos/gentoo.git/gentoo

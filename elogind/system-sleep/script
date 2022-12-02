@@ -3,13 +3,13 @@ case $1/$2 in
   pre/*)
     # Put here any commands you want to be run when suspending or hibernating.
     /sbin/rc-service bluetoothd stop
-    /sbin/rc-service pcscd stop
+    #/sbin/rc-service pcscd stop
 		/usr/sbin/rfkill block bluetooth
     ;;
   post/*)
     # Put here any commands you want to be run when resuming from suspension or thawing from hibernation.
 		/usr/sbin/rfkill unblock bluetooth
-    /sbin/rc-service pcscd start
+    #/sbin/rc-service pcscd start
     /sbin/rc-service bluetoothd start
     ;;
 esac

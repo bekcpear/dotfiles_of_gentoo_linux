@@ -1,1 +1,4 @@
 dev-qt/qtbase:6::gentoo
+
+dev-qt/qtmultimedia:6::gentoo
+dev-qt/qtwebsockets:6::gentoo

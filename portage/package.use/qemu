@@ -25,3 +25,4 @@ app-emulation/qemu -doc alsa gtk ncurses opengl sdl spice usb virgl virtfs stati
 # required by @selected
 # required by @world (argument)
 >=dev-libs/libpcre-8.45 static-libs
+dev-libs/libpcre2 static-libs

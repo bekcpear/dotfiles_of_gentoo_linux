@@ -562,8 +562,9 @@
 >=virtual/libiconv-0-r2 abi_x86_32
 # required by app-emulation/deepin-wine6-stable-6.0.0.19-r1::gentoo-zh
 # required by net-im/deepin-wine-wechat-3.4.0.38::gentoo-zh
-# required by net-im/deepin-wine-wechat (argument)
->=dev-libs/ocl-icd-2.3.0 abi_x86_32
+# required by @selected
+# required by @world (argument)
+>=dev-libs/opencl-icd-loader-2022.01.04 abi_x86_32
 # required by sys-fs/udev-250::gentoo
 # required by virtual/libudev-232-r7::gentoo[-systemd]
 # required by sys-auth/elogind-246.10-r2::gentoo
@@ -589,3 +590,14 @@
 # required by @selected
 # required by @world (argument)
 >=net-libs/nghttp2-1.47.0 abi_x86_32
+# required by dev-libs/glib-2.74.1-r1::gentoo
+# required by gnome-extra/gucharmap-15.0.1::gentoo
+# required by @selected
+# required by @world (argument)
+>=dev-libs/libpcre2-10.40 abi_x86_32
+# required by net-misc/curl-7.85.0-r2::gentoo[adns]
+# required by sys-apps/fwupd-1.8.5::gentoo
+# required by kde-plasma/discover-5.26.3::gentoo[firmware]
+# required by @selected
+# required by @world (argument)
+>=net-dns/c-ares-1.18.1 abi_x86_32
