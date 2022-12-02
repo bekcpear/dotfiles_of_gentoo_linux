@@ -2,10 +2,12 @@
 #
 set -e
 
-_SNAPSHOTS_DIR="/.sss"
-_SUBVOLS=(
-  "/"
-  "/home"
+# [key]=value
+# key is the subvol mount point which need to be snapshot
+# value is the directory that store the snapshots
+declare -A _SUBVOLS=(
+  [/]="/.sss"
+  [/home]="/home/.sss"
 ) # absolute paths
 
 
@@ -67,7 +69,8 @@ _delete_snapshot() {
   _REMAINING_PATHS["${_key}"]=$(( ${_counts} - 1 ))
 }
 
-for _subvol in ${_SUBVOLS[@]}; do
+for _subvol in "${!_SUBVOLS[@]}"; do
+  _snapshot_store_dir="${_SUBVOLS[${_subvol}]}"
   _snapshot="${_subvol/#\//root:}"
   _snapshot="${_snapshot//\//:}"
   _snapshot="${_snapshot%:}.SNAPSHOT.R"
@@ -81,9 +84,9 @@ for _subvol in ${_SUBVOLS[@]}; do
   #                           (at least keep one)
   OLDIFS=${IFS}
   IFS=$'\n'
-  _PATHS=( $(ls -1d ${_SNAPSHOTS_DIR}/${_snapshot}.* || true) )
+  _PATHS=( $(ls -1d ${_snapshot_store_dir}/${_snapshot}.* || true) )
   IFS=${OLDIFS}
-  _REMAINING_PATHS["${_SNAPSHOTS_DIR}/${_snapshot}"]=${#_PATHS[@]}
+  _REMAINING_PATHS["${_snapshot_store_dir}/${_snapshot}"]=${#_PATHS[@]}
   declare -a _PATHS_TS
   declare -A _PATHS_TS_R
   for (( i = 0; i < ${#_PATHS[@]}; ++i  )); do
@@ -139,7 +142,7 @@ for _subvol in ${_SUBVOLS[@]}; do
 
   # make a new readonly snapshot when has not been created today
   if [[ ${_S0} != 1 ]]; then
-    set -- btrfs subvolume snapshot -r "${_subvol}" "${_SNAPSHOTS_DIR}/${_snapshot}.T${_DATE}"
+    set -- btrfs subvolume snapshot -r "${_subvol}" "${_snapshot_store_dir}/${_snapshot}.T${_DATE}"
     _echo "${@}"
     "${@}"
   else
