@@ -2,7 +2,11 @@
 #
 # Author: cwittlut <i@bitbili.net>
 #
+# identity UUID, please don't remove it:
+# 252075b9-149e-49fd-925d-f0ccccde7825
+#
 # TODO port to wayland clipboard
+#
 
 set -e
 
@@ -12,17 +16,20 @@ INFO_CMD="emerge --info"
 function _show_help(){
   echo "
 Usage:
-    1. pb.sh [-i] [-p] [<PATH>...]
-         post files or contents from clipboard (X11) if the file is not provided
-    2. pb.sh [-i] -c <COMMAND-AND-OPTIONAL-ARGS>
+    1. pb [-i] [-p] [<PATH>...]
+         post files or contents from clipboard (X11, by xclip) if no file provided
+    2. pb [-i] -c <COMMAND-AND-OPTIONAL-ARGS>
          execute the command and post stdout and stderr
          it will prepend the command and arguments to the contents
-    3. <some output command> | pb.sh [-i]
+    3. <some output command> | pb [-i]
          post stdin from pipe
 
    -p      prevent reading contents from clipboard
    -i      also append the stdout of command \`${INFO_CMD}\` to the contents
+   -u      fetch the latest version of this script
    -h      show this help
+
+   All uploaded histories are recorded in the \${HOME}/.cache/pb.sh/_histories file.
 "
 }
 
@@ -34,6 +41,10 @@ while :; do
     -h)
       _show_help
       exit 0
+      ;;
+    -u)
+      MODE="UPGRADE"
+      break
       ;;
     -p)
       PREVENT_CLIPBOARD=1
@@ -57,7 +68,7 @@ while :; do
       shift
       break
       ;;
-    -+([pich]))
+    -+([pichu]))
       _tmp_arg=${1:1}
       declare -a _tmp_args
       shift
@@ -86,7 +97,7 @@ shopt -u extglob
 set -- "${args[@]}" "${@}"
 if [[ ! -t 0 ]]; then
   if [[ -n ${MODE} ]]; then
-    echo "PIPE mode, ignore '-c' option" >&2
+    echo "PIPE mode, ignore other mode options" >&2
   fi
   MODE="PIPE"
 fi
@@ -128,6 +139,20 @@ if [[ ${EUID} == 0 ]]; then
   PS1="# "
 fi
 case ${MODE} in
+  UPGRADE)
+    TMPEXE=$(mktemp -u)
+    trap 'rm -f ${TMPEXE}' EXIT
+    EXEURL="https://d0a.io/pb"
+    if command -v curl &>/dev/null; then
+      set -- curl -Lfo ${TMPEXE} "${EXEURL}"
+    else
+      set -- wget -O ${TMPEXE} "${EXEURL}"
+    fi
+    "${@}"
+    chmod +x ${TMPEXE}
+    eval "${TMPEXE}"
+    exit
+    ;;
   PIPE)
     # Get contents from stdin
     _PIPE="$(</dev/stdin)"
@@ -200,12 +225,7 @@ else
   _MIME_TYPE=$(<<<"${_PIPE:-0}" file -b --mime-type -)
 fi
 
-if [[ ${_MIME_TYPE} == "application/octet-stream" ]]; then
-  echo "error: unsupported type: ${_MIME_TYPE}" >&2
-  exit 1
-fi
-
-_CACHE_DIR="${HOME}/.cache/pb.sh"
+_CACHE_DIR="${HOME}${HOME:+/}.cache/pb.sh"
 _KNOWN_SUFFIXES=
 mkdir -p ${_CACHE_DIR}
 _KNOWN_SUFFIXES_CACHE_FILE="${_CACHE_DIR}/_known_suffixes"
@@ -222,7 +242,7 @@ if [[ ! $(declare -p _KNOWN_SUFFIXES) =~ declare\ -a ]]; then
   _EXT_BASE_URL="https://gitlab.com/-/snippets/2473947"
   _EXT_REV_HASH="main"
   _EXT_NAME="_known_suffixes.sh"
-  echo "Getting _known_suffixes file from web ..."
+  echo "Getting _known_suffixes file from gitlab ..."
   if command -v curl &>/dev/null; then
     set -- curl -Lfo ${_KNOWN_SUFFIXES_CACHE_FILE} "${_EXT_BASE_URL}/raw/${_EXT_REV_HASH}/${_EXT_NAME}"
   else
@@ -265,7 +285,8 @@ if [[ -n ${_FROM_CLIPBOARD} ]]; then
   else
     _NOTIFY_CONTENTS="file: ${_PATH}"
   fi
-  echo -ne 'The uploading contents are from clipboard,
+  echo -ne '
+The uploading contents are from clipboard,
 
 \e[36mContents:\e[0m\n'
   echo -e "${_NOTIFY_CONTENTS}"

@@ -104,7 +104,7 @@ gpg-connect-agent updatestartuptty /bye >/dev/null
 #gpgconf --launch gpg-agent
 
 alias yd=ydcv-rs
-alias pb=~/Nextcloud/Documents/Linux/Scripts/uGtCustomScripts/vimcnpaste.sh
+#alias pb=~/Nextcloud/Documents/Linux/Scripts/uGtCustomScripts/vimcnpaste.sh
 alias myscreenkey="screenkey --opacity 0.6 -t0.5 --bak-mode normal -M -p fixed -g \$(slop -n -f '%g')"
 alias gh="proxychains -q gh"
 alias checkmyebuilds="${HOME}/Programs/Scripts/repomancheckmines.sh"
@@ -112,7 +112,7 @@ alias checkmyebuilds="${HOME}/Programs/Scripts/repomancheckmines.sh"
 alias yk5cnfc="ykman --device ${_YK5CNFC}"
 alias yk5nfc="ykman --device ${_YK5NFC}"
 alias v="vim"
-alias pb="~/Programs/Scripts/pb.sh"
+#alias pb="~/Programs/Scripts/pb.sh"
 
 export FCITX_SOCKET=/tmp/fcitx-socket-:0
 
