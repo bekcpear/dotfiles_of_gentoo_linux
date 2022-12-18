@@ -30,6 +30,8 @@ Usage:
    -h      show this help
 
    All uploaded histories are recorded in the \${HOME}/.cache/pb.sh/_histories file.
+
+   Version: 20221218.1
 "
 }
 
