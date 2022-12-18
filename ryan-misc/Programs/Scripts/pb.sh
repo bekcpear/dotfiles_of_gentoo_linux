@@ -15,24 +15,24 @@ INFO_CMD="emerge --info"
 
 function _show_help(){
   echo "
-Usage:
-    1. pb [-i] [-p] [<PATH>...]
-         post files or contents from clipboard (X11, by xclip) if no file provided
-    2. pb [-i] -c <COMMAND-AND-OPTIONAL-ARGS>
-         execute the command and post stdout and stderr
-         it will prepend the command and arguments to the contents
-    3. <some output command> | pb [-i]
-         post stdin from pipe
+  Usage:
 
-   -p      prevent reading contents from clipboard
-   -i      also append the stdout of command \`${INFO_CMD}\` to the contents
-   -u      fetch the latest version of this script
-   -h      show this help
+     1. pb [-i] [-p] [<PATH>...]
+          post files or contents from clipboard (X11, by xclip) if no file provided
+     2. pb [-i] -c <COMMAND-AND-OPTIONAL-ARGS>
+          execute the command and post stdout and stderr
+          it will prepend the command and arguments to the contents
+     3. <some output command> | pb [-i]
+          post stdin from pipe
 
-   All uploaded histories are recorded in the \${HOME}/.cache/pb.sh/_histories file.
+    -p      prevent reading contents from clipboard
+    -i      also append the stdout of command \`${INFO_CMD}\` to the contents
+    -u      fetch the latest version of this script
+    -h      show this help
 
-   Version: 20221218.1
-"
+    All histories are recorded in the '\${HOME}/.cache/pb.sh/_histories' file.
+
+    Version: 20221218.1"
 }
 
 # parse args --start--
