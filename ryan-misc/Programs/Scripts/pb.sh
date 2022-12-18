@@ -225,6 +225,11 @@ else
   _MIME_TYPE=$(<<<"${_PIPE:-0}" file -b --mime-type -)
 fi
 
+if [[ ${_MIME_TYPE} == "application/octet-stream" ]]; then
+  echo "error: unsupported type: ${_MIME_TYPE}" >&2
+  exit 1
+fi
+
 _CACHE_DIR="${HOME}${HOME:+/}.cache/pb.sh"
 _KNOWN_SUFFIXES=
 mkdir -p ${_CACHE_DIR}
