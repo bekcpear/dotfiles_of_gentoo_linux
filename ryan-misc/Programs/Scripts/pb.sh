@@ -7,6 +7,7 @@
 set -e
 
 PB_URL="https://fars.ee/"
+INFO_CMD="emerge --info"
 
 function _show_help(){
   echo "
@@ -20,7 +21,7 @@ Usage:
          post stdin from pipe
 
    -p      prevent reading contents from clipboard
-   -i      also append the stdout of command \`emerge --info\` to the contents
+   -i      also append the stdout of command \`${INFO_CMD}\` to the contents
    -h      show this help
 "
 }
@@ -281,20 +282,20 @@ if [[ -n ${_FROM_CLIPBOARD} ]]; then
   done
 fi
 
-# append emerge info
+# append info of INFO_CMD
 if [[ -n ${APPEND_INFO} ]]; then
   if [[ -n ${_PATH} ]] && _is_binary ${_PATH}; then
-    echo "warning: cannot append emerge informations to binary file, ignore '-i' option" >&2
-  elif command -v emerge &>/dev/null; then
-    echo -e "\x1b[32m\x1b[1m>>>\x1b[0m" "emerge --info"
-    INFO=$(emerge --info 2>&1)
+    echo "warning: cannot append informations to binary file, ignore '-i' option" >&2
+  elif command -v ${INFO_CMD% *} &>/dev/null; then
+    echo -e "\x1b[32m\x1b[1m>>>\x1b[0m" "${INFO_CMD}"
+    INFO=$(eval ${INFO_CMD} 2>&1)
     if [[ -n ${_PATH} ]]; then
       _PIPE="$(<${_PATH})"
       unset _PATH
     fi
-    _PIPE="${_PIPE}"${_PIPE:+$'\n\n'}"${PS1}emerge --info"$'\n'"${INFO}"
+    _PIPE="${_PIPE}"${_PIPE:+$'\n\n'}"${PS1}${INFO_CMD}"$'\n'"${INFO}"
   else
-    echo "warning: command 'emerge' does not exist, ignore '-i' option" >&2
+    echo "warning: command '${INFO_CMD% *}' does not exist, ignore '-i' option" >&2
   fi
 fi
 
