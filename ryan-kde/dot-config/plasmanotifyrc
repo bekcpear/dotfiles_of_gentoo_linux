@@ -10,6 +10,9 @@ Seen=true
 [Applications][im.riot.Riot]
 Seen=true
 
+[Applications][nheko]
+Seen=true
+
 [Applications][org.qbittorrent.qBittorrent]
 Seen=true
 

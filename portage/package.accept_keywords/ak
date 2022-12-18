@@ -169,7 +169,7 @@ app-editors/neovim
 dev-lua/luv
 dev-libs/libvterm
 
-sys-kernel/gentoo-sources
+#sys-kernel/gentoo-sources
 
 dev-util/rust-analyzer::guru
 dev-util/bash-language-server::guru
@@ -178,6 +178,7 @@ net-im/nheko::guru
 
 # for neochat
 net-im/neochat
+dev-libs/kirigami-addons
 dev-libs/qcoro5
 media-libs/kquickimageeditor
 net-libs/libquotient
@@ -201,3 +202,7 @@ dev-qt/qtsvg:6
 # for Lith
 dev-qt/qtmultimedia:6
 dev-qt/qtwebsockets:6
+
+net-analyzer/goaccess
+
+net-irc/weechat

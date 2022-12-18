@@ -26,6 +26,8 @@ set novisualbell
 set hlsearch
 set backspace=start,indent,eol
 
+set mouse=
+
 map <M-l> :tabnext<CR>
 map <M-h> :tabprevious<CR>
 map <M-j> :bnext<CR>
@@ -64,9 +66,9 @@ map <C-j> :cnext<CR>
 map <C-k> :cprevious<CR>
 autocmd FileType go nmap <leader>c :cclose<CR>
 
-map <M-j> :lnext<CR>
-map <M-k> :lprevious<CR>
-autocmd FileType go nmap <leader>l :lclose<CR>
+"map <M-j> :lnext<CR>
+"map <M-k> :lprevious<CR>
+"autocmd FileType go nmap <leader>l :lclose<CR>
 " run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
   let l:file = expand('%')
@@ -104,6 +106,10 @@ autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
 " vim-go ======= END ====
 
 call plug#end()
+
+lua require('plugins')
+
+set sessionoptions+=winpos,terminal,folds
 
 " restore last position
 if has("autocmd")

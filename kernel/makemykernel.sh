@@ -3,6 +3,8 @@
 
 set -e
 
+make oldconfig
+
 make clean
 make -j30
 make modules_install

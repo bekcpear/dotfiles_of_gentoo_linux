@@ -10,29 +10,161 @@ PB_URL="https://fars.ee/"
 
 function _show_help(){
   echo "
-Usage:  pb.sh [<PATH>]
-        <some output> | pb.sh
+Usage:
+    1. pb.sh [-i] [-p] [<PATH>...]
+         post files or contents from clipboard (X11) if the file is not provided
+    2. pb.sh [-i] -c <COMMAND-AND-OPTIONAL-ARGS>
+         execute the command and post stdout and stderr
+         it will prepend the command and arguments to the contents
+    3. <some output command> | pb.sh [-i]
+         post stdin from pipe
 
-    -h  show this help
-
-This script will upload the clipboard contents if the argument is omitted (under X11).
+   -p      prevent reading contents from clipboard
+   -i      also append the stdout of command \`emerge --info\` to the contents
+   -h      show this help
 "
 }
 
-if [[ ${1} == "-h" ]]; then
-  _show_help
-  exit 0
-elif [[ -e ${1} ]]; then
-  _PATH=${1}
-elif [[ -n ${1} ]]; then
-  echo "Wrong parameter or non-existent file!" >&2
-  _show_help
-  exit 1
+# parse args --start--
+declare -a args
+shopt -s extglob
+while :; do
+  case "${1}" in
+    -h)
+      _show_help
+      exit 0
+      ;;
+    -p)
+      PREVENT_CLIPBOARD=1
+      shift
+      ;;
+    -i)
+      APPEND_INFO=1
+      shift
+      ;;
+    -c)
+      MODE="COMMAND"
+      shift
+      if [[ ${1} == '-i' ]] && [[ -z ${APPEND_INFO} ]]; then
+        APPEND_INFO=1
+        shift
+      else
+        break
+      fi
+      ;;
+    --)
+      shift
+      break
+      ;;
+    -+([pich]))
+      _tmp_arg=${1:1}
+      declare -a _tmp_args
+      shift
+      while [[ ${_tmp_arg:0:1} != "" ]]; do
+        _tmp_args+=( "-${_tmp_arg:0:1}" )
+        _tmp_arg=${_tmp_arg:1}
+      done
+      set -- "${_tmp_args[@]}" "${@}"
+      unset _tmp_arg _tmp_args
+      ;;
+    -*)
+      echo "unknown argument: '${1}'" >&2
+      _show_help
+      exit 1
+      ;;
+    "")
+      break
+      ;;
+    *)
+      args+=( "${1}" )
+      shift
+      ;;
+  esac
+done
+shopt -u extglob
+set -- "${args[@]}" "${@}"
+if [[ ! -t 0 ]]; then
+  if [[ -n ${MODE} ]]; then
+    echo "PIPE mode, ignore '-c' option" >&2
+  fi
+  MODE="PIPE"
 fi
+if [[ -z ${MODE} ]]; then
+  if [[ -n ${1} ]]; then
+    if [[ -f ${1} ]]; then
+      MODE="FILE"
+    elif command -v ${1} &>/dev/null; then
+      echo "warning: file '${1}' does not exist, but it's a command, fallback to COMMAND mode .." >&2
+      MODE="COMMAND"
+    else
+      echo "error: file '${1}' does not exist, exit .." >&2
+      exit 1
+    fi
+  elif [[ -z ${PREVENT_CLIPBOARD} ]]; then
+    MODE="CLIP"
+  elif [[ -n ${APPEND_INFO} ]]; then
+    MODE="INFO"
+  else
+    echo "error: no mode detected, exit ..." >&2
+    exit 1
+  fi
+fi
+# parse args --end--
 
-if [[ -t 0 ]]; then
-  if [[ -z ${_PATH} ]]; then
+PS1="\$ "
+_is_binary() {
+  if [[ ! -e ${1} ]]; then
+    echo "error: file '${1}' does not exist, exit ..." >&2
+    exit 1
+  fi
+  if [[ $(file -b --mime-encoding ${1}) == binary ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+if [[ ${EUID} == 0 ]]; then
+  PS1="# "
+fi
+case ${MODE} in
+  PIPE)
+    # Get contents from stdin
+    _PIPE="$(</dev/stdin)"
+    ;;
+  FILE)
+    _PATH=${1}
+    shift
+    if [[ -f "${1}" ]]; then
+      _binary_exit() {
+        echo "error: '${1}' is a binary file, cannot concat to other files, exit ..." >&2
+        exit 1
+      }
+      if _is_binary ${_PATH}; then
+        _binary_exit ${_PATH}
+      else
+        _file_block_start() {
+          echo "================================================================="
+          echo "=== FILE: ${1}"
+          echo "================================================================="
+        }
+        _PIPE="$(_file_block_start ${_PATH})"$'\n'"$(<${_PATH})"$'\n'
+        unset _PATH
+        while [[ -f "${1}" ]]; do
+          if _is_binary ${1}; then
+            _binary_exit ${1}
+          fi
+          _PIPE="${_PIPE}"$'\n'"$(_file_block_start ${1})"$'\n'"$(<${1})"$'\n'
+          shift
+        done
+      fi
+    fi
+    ;;
+  CLIP)
     # Get contents from clipboard
+    if ! command -v xclip &>/dev/null; then
+      echo "error: xclip command not found, cannot copy from clipboard, exit ..." >&2
+      exit 1
+    fi
     _TMP="$(xclip -selection clipboard -o)"
     if [[ $(<<<"${_TMP}" wc -l) == 1 && ${_TMP} =~ ^file:// ]]; then
       _PATH=${_TMP#file://}
@@ -41,20 +173,34 @@ if [[ -t 0 ]]; then
     fi
     unset _TMP
     _FROM_CLIPBOARD=1
-  fi
-else
-  # Get contents from stdin
-  _PIPE="$(</dev/stdin)"
-fi
+    ;;
+  COMMAND)
+    if [[ ${#} -lt 1 ]]; then
+      echo "error: no command provided, exit ..." >&2
+      exit 1
+    fi
+    _prompt="${PS1}${*//\"/\\\"}"$'\n'
+    echo -e "\x1b[32m\x1b[1m>>>\x1b[0m" "${@}"
+    _PIPE="${_prompt}"$("${@}" 2>&1) || ret=$?
+    if [[ ${ret} == "127" ]]; then
+      echo "error: command '${@}' not found, exit ..." >&2
+      exit 1
+    fi
+    unset _prompt
+    ;;
+  INFO)
+    _PIPE=""
+    ;;
+esac
 
 if [[ -n ${_PATH} ]]; then
-  read -r _ _MIME_TYPE <<<"$(file --mime-type ${_PATH})"
+  _MIME_TYPE=$(file -b --mime-type ${_PATH})
 else
-  read -r _ _MIME_TYPE <<<"$(<<<"${_PIPE}" file --mime-type -)"
+  _MIME_TYPE=$(<<<"${_PIPE:-0}" file -b --mime-type -)
 fi
 
 if [[ ${_MIME_TYPE} == "application/octet-stream" ]]; then
-  echo "Unsupported type: ${_MIME_TYPE}" >&2
+  echo "error: unsupported type: ${_MIME_TYPE}" >&2
   exit 1
 fi
 
@@ -64,21 +210,25 @@ mkdir -p ${_CACHE_DIR}
 _KNOWN_SUFFIXES_CACHE_FILE="${_CACHE_DIR}/_known_suffixes"
 [[ -e "${_KNOWN_SUFFIXES_CACHE_FILE}" ]] && . "${_KNOWN_SUFFIXES_CACHE_FILE}"
 if [[ ! $(declare -p _KNOWN_SUFFIXES) =~ declare\ -a ]]; then
-  # https://gist.github.com/ppisarczyk/43962d06686722d26d176fad46879d41
-  _EXT_BASE_URL="https://gist.githubusercontent.com/ppisarczyk/43962d06686722d26d176fad46879d41"
-  _EXT_REV_HASH="211547723b4621a622fc56978d74aa416cbd1729"
-  _EXT_NAME="Programming_Languages_Extensions.json"
-  _CACHE_FILE="${_CACHE_DIR}/${_EXT_NAME}"
-  if [[ ! $(file --mime-type ${_CACHE_FILE} | cut -d" " -f2) == "application/json" ]]; then
-    set -- curl -Lfo ${_CACHE_FILE} "${_EXT_BASE_URL}/raw/${_EXT_REV_HASH}/${_EXT_NAME}"
-    echo ">>> " "${@}"
-    "${@}"
+  # parsed from https://gist.github.com/ppisarczyk/43962d06686722d26d176fad46879d41
+  # _KNOWN_SUFFIXES=(
+  #   ".bmp" ".eps" ".gif" ".ico" ".jpeg" ".jpg" ".pdf" ".png" ".tif" ".tiff" ".webp"
+  #   $(jq -r '.[] | select(.extensions) .extensions[]' "Programming_Languages_Extensions.json")
+  # )
+  #_EXT_BASE_URL="https://gist.githubusercontent.com/bekcpear/5e6248e94b07600944cc14d57b7e2b55"
+  #_EXT_REV_HASH="fb25c0f8921ec2396f7f537416c44b68e3d58dc0"
+  #_EXT_NAME="_known_suffixes"
+  _EXT_BASE_URL="https://gitlab.com/-/snippets/2473947"
+  _EXT_REV_HASH="main"
+  _EXT_NAME="_known_suffixes.sh"
+  echo "Getting _known_suffixes file from web ..."
+  if command -v curl &>/dev/null; then
+    set -- curl -Lfo ${_KNOWN_SUFFIXES_CACHE_FILE} "${_EXT_BASE_URL}/raw/${_EXT_REV_HASH}/${_EXT_NAME}"
+  else
+    set -- wget -O ${_KNOWN_SUFFIXES_CACHE_FILE} "${_EXT_BASE_URL}/raw/${_EXT_REV_HASH}/${_EXT_NAME}"
   fi
-  _KNOWN_SUFFIXES=(
-    ".bmp" ".eps" ".gif" ".ico" ".jpeg" ".jpg" ".pdf" ".png" ".tif" ".tiff" ".webp"
-    $(jq -r '.[] | select(.extensions) .extensions[]' "${_CACHE_FILE}")
-  )
-  declare -p _KNOWN_SUFFIXES >"${_KNOWN_SUFFIXES_CACHE_FILE}"
+  echo -e "\x1b[32m\x1b[1m>>>\x1b[0m" "${@}"
+  "${@}"
 fi
 
 if [[ -n ${_PATH} ]]; then
@@ -118,8 +268,7 @@ if [[ -n ${_FROM_CLIPBOARD} ]]; then
 
 \e[36mContents:\e[0m\n'
   echo -e "${_NOTIFY_CONTENTS}"
-  echo -ne "\n\e[1m\e[33mUpload? [y/N]\e[0m "
-  while read -n 1 -re _param; do
+  while read -p $'\n\e[1m\e[33mUpload? [y/N]\e[0m ' -n 1 -re _param; do
     case ${_param} in
       [yY])
         break
@@ -132,13 +281,52 @@ if [[ -n ${_FROM_CLIPBOARD} ]]; then
   done
 fi
 
+# append emerge info
+if [[ -n ${APPEND_INFO} ]]; then
+  if [[ -n ${_PATH} ]] && _is_binary ${_PATH}; then
+    echo "warning: cannot append emerge informations to binary file, ignore '-i' option" >&2
+  elif command -v emerge &>/dev/null; then
+    echo -e "\x1b[32m\x1b[1m>>>\x1b[0m" "emerge --info"
+    INFO=$(emerge --info 2>&1)
+    if [[ -n ${_PATH} ]]; then
+      _PIPE="$(<${_PATH})"
+      unset _PATH
+    fi
+    _PIPE="${_PIPE}"${_PIPE:+$'\n\n'}"${PS1}emerge --info"$'\n'"${INFO}"
+  else
+    echo "warning: command 'emerge' does not exist, ignore '-i' option" >&2
+  fi
+fi
+
 : ${_PATH:=-}
-set -- curl -fL -F "c=@${_PATH}" "${PB_URL}"
+if command -v curl &>/dev/null; then
+  set -- curl -fL -F "c=@${_PATH}" "${PB_URL}"
+else
+  if [[ -z ${_PIPE} ]]; then
+    if _is_binary ${_PATH}; then
+      echo "I don't known how to upload binary file by 'wget', please use 'curl' instead, exit ..." >&2
+      exit 1
+    fi
+    _PIPE=$(<${_PATH})
+  fi
+  _WGET_TMP=$(mktemp)
+  _WGET_HEADER="Content-Type: multipart/form-data; boundary=------------------------7742583d48a00ce6"
+  echo "--------------------------7742583d48a00ce6
+Content-Disposition: form-data; name=\"c\"; filename=\"-\"
+Content-Type: application/octet-stream
+
+${_PIPE}
+--------------------------7742583d48a00ce6--
+" >${_WGET_TMP}
+  unset _PIPE
+  set -- wget -O - --header="${_WGET_HEADER}" --post-file="${_WGET_TMP}" "${PB_URL}"
+  trap 'rm -f ${_WGET_TMP}' EXIT
+fi
 if [[ -n ${_PIPE} ]]; then
-  echo ">>> <pipe> |" "${@}"
+  echo -e "\x1b[32m\x1b[1m>>>\x1b[0m <pipe> |" "${@}"
   _R=$(echo "${_PIPE}" | "${@}")
 else
-  echo ">>>" "${@}"
+  echo -e "\x1b[32m\x1b[1m>>>\x1b[0m" "${@}"
   _R=$("${@}")
 fi
 echo $'\n'"${_R}" >>"${_CACHE_DIR}/_histories"
@@ -155,18 +343,22 @@ _bc() {
 if [[ -n ${_r_size} ]]; then
   if [[ ${_r_size} -lt 600 ]]; then
     _r_size="${_r_size}B"
-  elif [[ ${_r_size} -lt 614400 ]]; then
-    _r_size="$(_bc ${_r_size} '/' 1024)KiB"
-  else
-    _r_size="$(_bc ${_r_size} '/' 1024 '/' 1024)MiB"
+  elif command -v bc &>/dev/null; then
+    if [[ ${_r_size} -lt 614400 ]]; then
+      _r_size="$(_bc ${_r_size} '/' 1024)KiB"
+    else
+      _r_size="$(_bc ${_r_size} '/' 1024 '/' 1024)MiB"
+    fi
   fi
 fi
 
 set +e
 _COPIED="\e[33m<not copied"
-echo -n "${_R_URL}" | xclip -selection clipboard
-if [[ ${?} == 0 ]]; then
-  _COPIED="\e[32m<copied"
+if command -v xclip &>/dev/null; then
+  echo -n "${_R_URL}" | xclip -selection clipboard
+  if [[ ${?} == 0 ]]; then
+    _COPIED="\e[32m<copied"
+  fi
 fi
 
 echo -e "\
