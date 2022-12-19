@@ -32,7 +32,7 @@ function _show_help(){
 
     All histories are recorded in the '\${HOME}/.cache/pb.sh/_histories' file.
 
-    Version: 20221218.1"
+    Version: 20221219.1"
 }
 
 # parse args --start--
@@ -97,12 +97,24 @@ while :; do
 done
 shopt -u extglob
 set -- "${args[@]}" "${@}"
+# parse args --end--
+
 if [[ ! -t 0 ]]; then
   if [[ -n ${MODE} ]]; then
     echo "PIPE mode, ignore other mode options" >&2
   fi
   MODE="PIPE"
 fi
+
+cliptool_ready() {
+  # TODO: wayland detected and tool
+  if command -v xclip &>/dev/null; then
+    return 0
+  else
+    return 1
+  fi
+}
+
 if [[ -z ${MODE} ]]; then
   if [[ -n ${1} ]]; then
     if [[ -f ${1} ]]; then
@@ -114,7 +126,7 @@ if [[ -z ${MODE} ]]; then
       echo "error: file '${1}' does not exist, exit .." >&2
       exit 1
     fi
-  elif [[ -z ${PREVENT_CLIPBOARD} ]]; then
+  elif [[ -z ${PREVENT_CLIPBOARD} ]] && cliptool_ready; then
     MODE="CLIP"
   elif [[ -n ${APPEND_INFO} ]]; then
     MODE="INFO"
@@ -123,9 +135,7 @@ if [[ -z ${MODE} ]]; then
     exit 1
   fi
 fi
-# parse args --end--
 
-PS1="\$ "
 _is_binary() {
   if [[ ! -e ${1} ]]; then
     echo "error: file '${1}' does not exist, exit ..." >&2
@@ -137,9 +147,12 @@ _is_binary() {
     return 1
   fi
 }
+
+PS1="\$ "
 if [[ ${EUID} == 0 ]]; then
   PS1="# "
 fi
+
 case ${MODE} in
   UPGRADE)
     TMPEXE=$(mktemp -u)
@@ -189,10 +202,6 @@ case ${MODE} in
     ;;
   CLIP)
     # Get contents from clipboard
-    if ! command -v xclip &>/dev/null; then
-      echo "error: xclip command not found, cannot copy from clipboard, exit ..." >&2
-      exit 1
-    fi
     _TMP="$(xclip -selection clipboard -o)"
     if [[ $(<<<"${_TMP}" wc -l) == 1 && ${_TMP} =~ ^file:// ]]; then
       _PATH=${_TMP#file://}
@@ -383,7 +392,7 @@ fi
 
 set +e
 _COPIED="\e[33m<not copied"
-if command -v xclip &>/dev/null; then
+if cliptool_ready; then
   echo -n "${_R_URL}" | xclip -selection clipboard
   if [[ ${?} == 0 ]]; then
     _COPIED="\e[32m<copied"
