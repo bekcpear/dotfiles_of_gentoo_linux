@@ -35,7 +35,7 @@ function _show_help(){
 
     All histories are recorded in the '\${HOME}/.cache/pb.sh/_histories' file.
 
-    Version: 20221220.2"
+    Version: 20221220.3"
 }
 
 # parse args --start--
@@ -502,8 +502,8 @@ else
 
   _dbus_version=$(dbus-daemon --version | head -1)
   _dbus_version=${_dbus_version##* }
-  _dbus_version_minor=${_dbus_version#${_dbus_version%%.*}}
-  _dbus_version_minor=${_dbus_version%.*}
+  _dbus_version_minor=${_dbus_version#${_dbus_version%%.*}.}
+  _dbus_version_minor=${_dbus_version_minor%.*}
   if [[ ${_dbus_version%%.*} -le 1 ]] && [[ ${_dbus_version_minor} -lt 15 ]]; then
     # <1.15.0 dbus-send does not support variant type:
     # https://gitlab.freedesktop.org/dbus/dbus/-/merge_requests/206
@@ -511,7 +511,7 @@ else
       --dest org.freedesktop.portal.Desktop \
       --object-path /org/freedesktop/portal/desktop \
       --method org.freedesktop.portal.FileChooser.OpenFile \
-      "" "pb" {"multiple": <true>}
+      "" "pb" '{"multiple": <true>}'
     _extra_result_parsing=1
   else
     set -- dbus-send --print-reply=literal --type=method_call \
