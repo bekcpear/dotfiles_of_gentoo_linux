@@ -7,7 +7,7 @@ URL="https://gitlab.com/cwittlut/dotfiles_of_gentoo_linux/-/raw/"
 # Commit ID:
 URL+="@@COMMIT-HASH@@"
 # Path:
-URL+="/ryan-misc/Programs/Scripts/pb.sh"
+URL+="/ryan-misc/Programs/Scripts/pb.sh/pb"
 SUM="@@SHA256-SUM@@"
 
 if [[ $EUID == 0 ]]; then
