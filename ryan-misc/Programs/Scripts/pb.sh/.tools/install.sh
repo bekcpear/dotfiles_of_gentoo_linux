@@ -68,6 +68,7 @@ while [[ -e ${DST} ]]; do
     set -o pipefail
     if head ${DST} | grep 252075b9-149e-49fd-925d-f0ccccde7825 &>/dev/null; then
       echo "Refreshing '${DST}' to the latest version ..."
+      MODE="U"
       break
     fi
   fi
@@ -112,30 +113,34 @@ if [[ ${SUM} != ${_SUM} ]]; then
 fi
 _do chmod +x "${DST}"
 
-NOTINPATH=1
-OIFS=$IFS
-IFS=":"
-PATHS=( ${PATH} )
-IFS=$OIFS
-for p in "${PATHS[@]}"; do
-  _DST="${p%/}/$(basename ${DST})"
-  if [[ -e ${_DST} ]]; then
-    _SUM=$(sha256sum ${_DST})
-    _SUM=${_SUM%% *}
-    if [[ ${SUM} == ${_SUM} ]]; then
-      NOTINPATH=0
-      break
+if [[ ${MODE} == "U" ]]; then
+  echo "Done refreshing to the latest version."
+else
+  NOTINPATH=1
+  OIFS=$IFS
+  IFS=":"
+  PATHS=( ${PATH} )
+  IFS=$OIFS
+  for p in "${PATHS[@]}"; do
+    _DST="${p%/}/$(basename ${DST})"
+    if [[ -e ${_DST} ]]; then
+      _SUM=$(sha256sum ${_DST})
+      _SUM=${_SUM%% *}
+      if [[ ${SUM} == ${_SUM} ]]; then
+        NOTINPATH=0
+        break
+      fi
     fi
-  fi
-done
+  done
 
-if [[ ${NOTINPATH} == 1 ]]; then
-  echo -e "\x1b[33m" >&2
-  echo "  The '$(dirname ${DST})' path is not in the PATH variable," >&2
-  echo "  please add" >&2
-  echo -e "    \x1b[1m\x1b[3mexport PATH=\$PATH:$(dirname ${DST})\x1b[0m\x1b[33m" >&2
-  echo -e "  to your env file to make the '$(basename ${DST})' command available.\x1b[0m" >&2
+  if [[ ${NOTINPATH} == 1 ]]; then
+    echo -e "\x1b[33m" >&2
+    echo "  The '$(dirname ${DST})' path is not in the PATH variable," >&2
+    echo "  please add" >&2
+    echo -e "    \x1b[1m\x1b[3mexport PATH=\$PATH:$(dirname ${DST})\x1b[0m\x1b[33m" >&2
+    echo -e "  to your env file to make the '$(basename ${DST})' command available.\x1b[0m" >&2
+  fi
+  echo
+  echo "    Enter '$(basename ${DST}) -h' for help."
+  echo
 fi
-echo
-echo "    Enter '$(basename ${DST}) -h' for help."
-echo

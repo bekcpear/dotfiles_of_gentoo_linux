@@ -35,7 +35,7 @@ function _show_help(){
 
     All histories are recorded in the '\${HOME}/.cache/pb.sh/_histories' file.
 
-    Version: 20221220.3"
+    Version: 20221221.1"
 }
 
 # parse args --start--
@@ -166,7 +166,7 @@ main() {
     UPGRADE)
       TMPEXE=$(mktemp -u)
       trap 'rm -f ${TMPEXE}' EXIT
-      EXEURL="https://d0a.io/pb"
+      EXEURL="https://gitlab.com/-/snippets/2473971/raw/main/pb-install.sh"
       if command -v curl &>/dev/null; then
         set -- curl -Lfo ${TMPEXE} "${EXEURL}"
       else
