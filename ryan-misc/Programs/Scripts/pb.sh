@@ -26,6 +26,7 @@ function _show_help(){
           post stdin from pipe
      4. pb [-i] -o
           try to open a file picker through DBus, and post selected files
+          (require xdg-desktop-portal implementation)
 
     -p      prevent reading contents from clipboard
     -i      also append the stdout of command \`${INFO_CMD}\` to the contents
@@ -34,7 +35,7 @@ function _show_help(){
 
     All histories are recorded in the '\${HOME}/.cache/pb.sh/_histories' file.
 
-    Version: 20221220.1"
+    Version: 20221220.2"
 }
 
 # parse args --start--
@@ -433,6 +434,9 @@ else
   fi
 
   _handle_portal() {
+    # the name of the sender will lost due to dbus-send is a standalone
+    # program and will not keep it's state, so I have to query the side
+    # effect result of dbus
     local -a log
     local -i i
     local serial
@@ -496,12 +500,32 @@ else
   eval "dbus-monitor 'interface=org.freedesktop.impl.portal.FileChooser,member=OpenFile' >&${MONITOR} &"
   _monitor_1_pid=$!
 
-  res=$(dbus-send --print-reply=literal --type=method_call \
-    --dest="org.freedesktop.portal.Desktop" \
-    /org/freedesktop/portal/desktop \
-    org.freedesktop.portal.FileChooser.OpenFile \
-    string: string:pb dict:string:variant:multiple,boolean:true)
+  _dbus_version=$(dbus-daemon --version | head -1)
+  _dbus_version=${_dbus_version##* }
+  _dbus_version_minor=${_dbus_version#${_dbus_version%%.*}}
+  _dbus_version_minor=${_dbus_version%.*}
+  if [[ ${_dbus_version%%.*} -le 1 ]] && [[ ${_dbus_version_minor} -lt 15 ]]; then
+    # <1.15.0 dbus-send does not support variant type:
+    # https://gitlab.freedesktop.org/dbus/dbus/-/merge_requests/206
+    set -- gdbus call --session \
+      --dest org.freedesktop.portal.Desktop \
+      --object-path /org/freedesktop/portal/desktop \
+      --method org.freedesktop.portal.FileChooser.OpenFile \
+      "" "pb" {"multiple": <true>}
+    _extra_result_parsing=1
+  else
+    set -- dbus-send --print-reply=literal --type=method_call \
+      --dest="org.freedesktop.portal.Desktop" \
+      /org/freedesktop/portal/desktop \
+      org.freedesktop.portal.FileChooser.OpenFile \
+      string: string:pb dict:string:variant:multiple,boolean:true
+  fi
 
+  res=$( "${@}" )
+  if [[ -n ${_extra_result_parsing} ]]; then
+    res=${res#*\'}
+    res=${res%\'*}
+  fi
   kill -s TERM ${_monitor_1_pid}
   eval "echo \"res: ${res}\" >&${MONITOR}"
 
