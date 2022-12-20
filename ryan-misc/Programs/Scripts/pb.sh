@@ -500,7 +500,7 @@ else
     --dest="org.freedesktop.portal.Desktop" \
     /org/freedesktop/portal/desktop \
     org.freedesktop.portal.FileChooser.OpenFile \
-    string: string:B dict:string:variant:multiple,boolean:true)
+    string: string:pb dict:string:variant:multiple,boolean:true)
 
   kill -s TERM ${_monitor_1_pid}
   eval "echo \"res: ${res}\" >&${MONITOR}"
