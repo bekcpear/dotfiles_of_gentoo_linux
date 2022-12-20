@@ -26,7 +26,7 @@ function _show_help(){
           post stdin from pipe
      4. pb [-i] -o
           try to open a file picker through DBus, and post selected files
-          (require xdg-desktop-portal implementation)
+          (require a xdg-desktop-portal implementation)
 
     -p      prevent reading contents from clipboard
     -i      also append the stdout of command \`${INFO_CMD}\` to the contents
@@ -160,6 +160,7 @@ if [[ ${EUID} == 0 ]]; then
   PS1="# "
 fi
 
+MAIN_PID=$$
 main() {
   case ${MODE} in
     UPGRADE)
@@ -411,6 +412,8 @@ main() {
 [${_r_status}${_r_size:+, size: }${_r_size}]\
 ${_r_uuid:+$'\n'UUID: }${_r_uuid}
 \e[1m\e[36mURL: ${_R_URL} \e[0m${_COPIED}!>\\e[0m"
+
+  eval "pkill -P ${MAIN_PID} &>/dev/null || true"
 }
 
 if [[ ${MODE} != "PORTAL" ]]; then
@@ -489,14 +492,13 @@ else
       main "${_files[@]}"
     }
 
-    export APPEND_INFO INFO_CMD PB_URL PS1
+    export APPEND_INFO INFO_CMD PB_URL PS1 MAIN_PID
     exec {_GET_FILES_FD}> >(_get_files)
     eval "dbus-monitor >&${_GET_FILES_FD}"
   }
 
-  export APPEND_INFO INFO_CMD PB_URL PS1
+  export APPEND_INFO INFO_CMD PB_URL PS1 MAIN_PID
   exec {MONITOR}> >(_handle_portal)
-  _files_process_pid=$!
   eval "dbus-monitor 'interface=org.freedesktop.impl.portal.FileChooser,member=OpenFile' >&${MONITOR} &"
   _monitor_1_pid=$!
 
