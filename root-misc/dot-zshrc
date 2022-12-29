@@ -87,3 +87,5 @@ alias rvrm="/mnt/gentoo-test/riscv/deleteRootFS.sh"
 alias rvlo="/mnt/gentoo-test/riscv/chroot.sh"
 alias rvcd="/mnt/gentoo-test/riscv/pushDir.sh"
 alias rvpa="/mnt/gentoo-test/riscv/doPatch.sh"
+
+alias tf="tail -f"

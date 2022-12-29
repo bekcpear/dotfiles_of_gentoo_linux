@@ -206,3 +206,5 @@ dev-qt/qtwebsockets:6
 net-analyzer/goaccess
 
 net-irc/weechat
+
+dev-util/v2ray-geoip-generator::ryans **
