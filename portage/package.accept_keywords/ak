@@ -208,3 +208,6 @@ net-analyzer/goaccess
 net-irc/weechat
 
 dev-util/v2ray-geoip-generator::ryans **
+
+*/*::ryans
+net-misc/ip7::ryans **

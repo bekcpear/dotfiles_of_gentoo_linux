@@ -197,6 +197,7 @@ alias insfunc="~/Git/bash-funcs/ins.sh"
 alias tf="tail -f"
 alias po="pb -o"
 alias gitc="git checkout"
+alias gitcp="git cherry-pick"
 
 . $HOME/walletinfo
 gh_last_tag() {
@@ -276,3 +277,5 @@ update_v2_libs() {
   fi
   _do popd
 }
+
+alias ip7="ip7 -u -c ~/.config/ip7/config.json"

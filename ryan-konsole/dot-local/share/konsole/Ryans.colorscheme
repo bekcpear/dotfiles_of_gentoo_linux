@@ -108,4 +108,5 @@ Description=Ryans
 FillStyle=Tile
 Opacity=0.8
 Wallpaper=
+WallpaperFlipType=NoFlip
 WallpaperOpacity=1
