@@ -30,3 +30,10 @@ dev-qt/qtimageformats:6
 dev-qt/qtsvg:6
 
 net-wireless/bluez-hcidump
+
+# for waydroid
+app-containers/waydroid::guru
+dev-libs/libglibutil::guru
+dev-libs/gbinder::guru
+dev-python/pyclip::guru
+dev-python/gbinder::guru

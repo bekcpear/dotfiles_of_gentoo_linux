@@ -242,6 +242,7 @@ function _do_action() {
   echo
 
   eval "${CMD} ${1}"
+  exit
 }
 
 _countdown ${TIMEOUT} "\

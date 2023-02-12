@@ -15,7 +15,7 @@ media-libs/mlt
 # Misc
 x11-wm/awesome
 x11-misc/picom
-dev-lang/go
+dev-lang/go::ryans
 
 # v2ray
 net-proxy/v2ray-core::ryans
@@ -171,6 +171,8 @@ dev-libs/libvterm
 
 #sys-kernel/gentoo-sources
 
+virtual/rust
+dev-lang/rust-bin
 dev-util/rust-analyzer::guru
 dev-util/bash-language-server::guru
 
@@ -211,3 +213,12 @@ dev-util/v2ray-geoip-generator::ryans **
 
 */*::ryans
 net-misc/ip7::ryans **
+
+#app-text/goldendict::local
+
+# for waydroid
+app-containers/waydroid::guru
+dev-libs/libglibutil::guru
+dev-libs/gbinder::guru
+dev-python/pyclip::guru
+dev-python/gbinder::guru

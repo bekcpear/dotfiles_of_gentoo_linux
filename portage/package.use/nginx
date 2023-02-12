@@ -1,1 +1,5 @@
 www-servers/nginx rtmp
+# required by www-servers/nginx-1.23.2-r3::gentoo
+# required by @selected
+# required by @world (argument)
+>=app-misc/mime-types-2.1.53 nginx

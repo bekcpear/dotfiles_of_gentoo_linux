@@ -46,3 +46,17 @@ if has("autocmd")
   augroup END
 
 endif
+
+set ttimeoutlen=0
+execute "set <M-l>=\el"
+map <M-l> :tabnext<cr>
+execute "set <M-h>=\eh"
+map <M-h> :tabprevious<cr>
+execute "set <M-S-l>=\eL"
+map <M-S-l> :tabm +1<cr>
+execute "set <M-S-h>=\eH"
+map <M-S-h> :tabm -1<cr>
+"execute "set <M-j>=\ej"
+"map <M-j> :bnext<cr>
+"execute "set <M-k>=\ek"
+"map <M-k> :bprevious<cr>

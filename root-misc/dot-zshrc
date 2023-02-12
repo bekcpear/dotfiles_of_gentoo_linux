@@ -39,7 +39,7 @@ source /usr/share/zsh/site-functions/zsh-autosuggestions.zsh
 setopt prompt_subst
 PROMPT='%F{238}${(l:${COLUMNS}::·:):-}%f\
  %B%F{11}%~%f %# %(?.%F{154}»%f%F{190}»%f%F{226}»%f.%F{124}»%f%F{160}»%f%F{196}»%f) %b'
-RPROMPT="%(?..%F{196}%? %f)%F{238}%* @%D{%f}%f"
+RPROMPT=" %F{238}%* @%D{%f}%f"
 
 #export GOPATH=~/go
 
@@ -89,3 +89,63 @@ alias rvcd="/mnt/gentoo-test/riscv/pushDir.sh"
 alias rvpa="/mnt/gentoo-test/riscv/doPatch.sh"
 
 alias tf="tail -f"
+
+precmd() {
+  local _last_ret=$? extra_info
+  local tts=$(date '+%s.%N')
+
+  # show last run status
+  local _color=209
+  if [[ ${_last_ret} != 0 ]]; then
+    case ${_last_ret} in
+      130)
+        _last_ret="^C" # ⌃ for Mac
+        _color=212
+        ;;
+      *)
+        ;;
+    esac
+    # printf "\x1b[38;5;%dm\x1b[0m" ${_color}
+    # printf "\x1b[48;5;%dm  ⇑↑⇑⇡☝︎⬆︎⇧⇪⥣↟↾↿⥔⥘⥜⥠⟰⤊↥⇫⇬⇭⇮⇯⇈⤉⇞⤒⥉⇱↸⤴︎ ⤤⤻➚%s  \x1b[0m" ${_color} ${_last_ret}
+    printf -v extra_info "\x1b[48;5;%dm  ⤒%s   \x1b[0m" ${_color} ${_last_ret}
+    # printf "\x1b[38;5;%dm\x1b[0m\n" ${_color}
+  fi
+
+  # show consumption time
+  if [[ -n $ltts ]]; then
+    local -i hour min sec nano
+    sec=$(( ${tts%.*} - ${ltts%.*} ))
+    nano=$(( ${tts#*.} - ${ltts#*.} ))
+    ltts=
+    if (( $nano < 0 )); then
+      (( sec=$sec - 1 ))
+      (( nano=$nano + 1000000000 ))
+    fi
+    if (( $sec > 60 )); then
+      min=$(( sec / 60 ))
+      sec=$(( sec % 60 ))
+      if (( $min > 60 )); then
+        hour=$(( min / 60 ))
+        min=$(( min % 60 ))
+      fi
+    fi
+    local i t=$nano
+    for (( i=0; i < $(( 9 - ${#nano} )); i++ )); do
+      t="0"$t
+    done
+    t=.${t:0:6}
+    (( $sec  > 0 )) && t="${sec}\" ${t}"
+    (( $min  > 0 )) && t="${min}' ${t}"
+    (( $hour > 0 )) && t="${hour}hr ${t}"
+    printf -v extra_info "\x1b[48;2;251m\x1b[48;5;233m\x1b[3m  %s  \x1b[0m%s" "$t" "$extra_info"
+  fi
+
+  if [[ -n $extra_info ]]; then
+    printf "%s\n" "$extra_info"
+  fi
+}
+typeset -g ltts
+preexec() {
+  ltts=$(date '+%s.%N')
+}
+

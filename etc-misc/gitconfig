@@ -4,5 +4,4 @@
 	directory = /var/db/repos/ryans
 	directory = /var/db/repos/steam-overlay
 	directory = /var/db/repos/guru
-	directory = /var/db/repos/gentoo-zh
 	directory = /var/db/repos/riscv

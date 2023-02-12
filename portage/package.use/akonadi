@@ -1,1 +1,4 @@
-kde-apps/akonadi -mysql sqlite
+kde-apps/akonadi -mysql sqlite postgres
+# required by kde-apps/akonadi-22.12.2::gentoo
+# required by kde-apps/akonadi (argument)
+>=dev-qt/qtsql-5.15.8 postgres

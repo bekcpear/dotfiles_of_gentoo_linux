@@ -60,8 +60,10 @@ zstyle ':vcs_info:*' check-for-staged-changes true
 zstyle ':vcs_info:*' stagedstr "*"
 zstyle ':vcs_info:*' actionformats '%K{233} ᚠ %b%F{2}%c%f %k%K{3} %F{233}%a%f %k'
 zstyle ':vcs_info:*' formats '%K{233} ᚠ %b%F{2}%c%f %k'
-precmd () {
-  local _last_ret=$?
+precmd() {
+  local _last_ret=$? extra_info
+  local tts=$(date '+%s.%N')
+
   # show last run status
   local _color=209
   if [[ ${_last_ret} != 0 ]]; then
@@ -75,9 +77,41 @@ precmd () {
     esac
     # printf "\x1b[38;5;%dm\x1b[0m" ${_color}
     # printf "\x1b[48;5;%dm  ⇑↑⇑⇡☝︎⬆︎⇧⇪⥣↟↾↿⥔⥘⥜⥠⟰⤊↥⇫⇬⇭⇮⇯⇈⤉⇞⤒⥉⇱↸⤴︎ ⤤⤻➚%s  \x1b[0m" ${_color} ${_last_ret}
-    printf "\x1b[48;5;%dm  ⤒%s   \x1b[0m" ${_color} ${_last_ret}
-    printf "\n"
+    printf -v extra_info "\x1b[48;5;%dm  ⤒%s   \x1b[0m" ${_color} ${_last_ret}
     # printf "\x1b[38;5;%dm\x1b[0m\n" ${_color}
+  fi
+
+  # show consumption time
+  if [[ -n $ltts ]]; then
+    local -i hour min sec nano
+    sec=$(( ${tts%.*} - ${ltts%.*} ))
+    nano=$(( ${tts#*.} - ${ltts#*.} ))
+    ltts=
+    if (( $nano < 0 )); then
+      (( sec=$sec - 1 ))
+      (( nano=$nano + 1000000000 ))
+    fi
+    if (( $sec > 60 )); then
+      min=$(( sec / 60 ))
+      sec=$(( sec % 60 ))
+      if (( $min > 60 )); then
+        hour=$(( min / 60 ))
+        min=$(( min % 60 ))
+      fi
+    fi
+    local i t=$nano
+    for (( i=0; i < $(( 9 - ${#nano} )); i++ )); do
+      t="0"$t
+    done
+    t=.${t:0:6}
+    (( $sec  > 0 )) && t="${sec}\" ${t}"
+    (( $min  > 0 )) && t="${min}' ${t}"
+    (( $hour > 0 )) && t="${hour}hr ${t}"
+    printf -v extra_info "\x1b[48;2;251m\x1b[48;5;233m\x1b[3m  %s  \x1b[0m%s" "$t" "$extra_info"
+  fi
+
+  if [[ -n $extra_info ]]; then
+    printf "%s\n" "$extra_info"
   fi
 
   # prepare vcs info
@@ -88,13 +122,17 @@ precmd () {
     RPROMPT="${D_RPROMPT}"
   fi
 }
+typeset -g ltts
+preexec() {
+  ltts=$(date '+%s.%N')
+}
 setopt prompt_subst
 PROMPT='%F{238}${(l:${COLUMNS}::·:):-}%f\
  %F{227}%~%f %B%F{123}›%f %b'
 D_RPROMPT=" %F{238}%* @%D{%f}%f"
 
 export GOPATH=~/go
-export PATH=$PATH":/home/ryan/go/bin:/home/ryan/.local/bin"
+export PATH=$PATH":/home/ryan/go/bin:/home/ryan/.local/bin:/home/ryan/.cargo/bin"
 
 export GPG_TTY="$(tty)"
 #if [[ -z ${SSH_CLIENT} ]]; then
@@ -186,6 +224,8 @@ if [[ $(pwd) == "/" ]]; then
   cd
 fi
 
+#export https_proxy='socks5h://127.0.0.1:1080'
+
 alias nct="~/Git/network-connectivity-test/nct"
 alias vgen="~/Git/vendor-for-go/gen.sh"
 alias go="https_proxy='socks5://127.0.0.1:1080' go"
@@ -217,7 +257,7 @@ gh_last_tag() {
 
 update_v2_libs() {
   local repo_path='/home/ryan/Git/ryans-repos' \
-        branch='main' p
+        branch='dev' p
 
   _do pushd ${repo_path}/dev-libs
   local last_branch=$(git branch --show-current)
@@ -266,7 +306,8 @@ update_v2_libs() {
     eval "_do sed -Ei 's@(>=dev-lang/go-).*@\\1${go_ver}\"@' '$dlc_nef'"
     _do git add .
     _do git --no-pager diff HEAD .
-    _do cp ${tmpdir}/*/go.sum files/
+    _do rm files/go.sum*
+    _do cp ${tmpdir}/*/go.sum files/go.sum.5.${dlcv}
     _do ebuild $dlc_nef manifest
     _add_and_commit
     _do popd

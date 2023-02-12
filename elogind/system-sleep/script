@@ -10,6 +10,6 @@ case $1/$2 in
     # Put here any commands you want to be run when resuming from suspension or thawing from hibernation.
 		/usr/sbin/rfkill unblock bluetooth
     #/sbin/rc-service pcscd start
-    /sbin/rc-service bluetoothd restart
+    /root/reload-bt.sh
     ;;
 esac
