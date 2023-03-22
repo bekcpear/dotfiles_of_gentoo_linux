@@ -127,3 +127,5 @@ autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
 
 " fcitx
 "let g:fcitx5_rime = 1
+
+set tw=0

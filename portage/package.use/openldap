@@ -1,0 +1,11 @@
+net-nds/openldap -minimal debug perl sasl overlays
+
+# required by virtual/httpd-php-8.2::gentoo
+# required by net-nds/phpldapadmin-1.2.6.3::gentoo
+# required by net-nds/phpldapadmin (argument)
+>=dev-lang/php-8.2.3 ldap fpm
+# required by dev-lang/php-8.2.3::gentoo
+# required by virtual/httpd-php-8.2::gentoo
+# required by net-nds/phpldapadmin-1.2.6.3::gentoo
+# required by net-nds/phpldapadmin (argument)
+>=app-eselect/eselect-php-0.9.8 fpm

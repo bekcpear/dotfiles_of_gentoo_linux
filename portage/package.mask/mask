@@ -11,3 +11,4 @@
 #=kde-apps/yakuake-21.08.0
 
 dev-lang/go::gentoo
+>sys-kernel/gentoo-sources-5.19

@@ -60,13 +60,54 @@ zstyle ':vcs_info:*' check-for-staged-changes true
 zstyle ':vcs_info:*' stagedstr "*"
 zstyle ':vcs_info:*' actionformats '%K{233} ᚠ %b%F{2}%c%f %k%K{3} %F{233}%a%f %k'
 zstyle ':vcs_info:*' formats '%K{233} ᚠ %b%F{2}%c%f %k'
+
+# $1: last time
+# $2: current time
+# $3: date consumpted time
+_dtime() {
+  local ltts="$1"
+  local rtts="$2"
+  local -i dtts="${3%us}" hour min sec nano
+  sec=$(( ${rtts%.*} - ${ltts%.*} ))
+  nano=$(( ${rtts#*.} - ${ltts#*.} ))
+  if (( $nano < 0 )); then
+    (( sec=$sec - 1 ))
+    (( nano=$nano + 1000000000 ))
+  fi
+  if (( $sec > 60 )); then
+    min=$(( sec / 60 ))
+    sec=$(( sec % 60 ))
+    if (( $min > 60 )); then
+      hour=$(( min / 60 ))
+      min=$(( min % 60 ))
+    fi
+  fi
+  nano=${nano:0:-3}
+  # remove the time consumpted by date cmd
+  # (should take no more than one second)
+  (( nano=$nano - $dtts ))
+
+  local t=$nano
+  local -i i p
+  for (( i=0; i < $(( 6 - ${#nano} )); i++ )); do
+    t="0"$t
+  done
+  t=.${t}
+  (( $sec  > 0 )) && t="${sec}\" ${t}"
+  (( $min  > 0 )) && t="${min}' ${t}"
+  (( $hour > 0 )) && t="${hour}hr ${t}"
+  (( $sec  > 0 && $sec < 10 )) && p+=1
+  (( $min  > 0 && $min < 10 )) && p+=1
+  echo -n "$p $t"
+}
 precmd() {
-  local _last_ret=$? extra_info TIMEFMT="%uE"
+  local _last_ret=$? noerr=1 extra_info TIMEFMT="%uE"
   local -a tts=( $(exec 2>&1; time date '+%s.%N') )
 
   # show last run status
   local _color=209
   if [[ ${_last_ret} != 0 ]]; then
+    noerr=
     case ${_last_ret} in
       130)
         _last_ret="^C" # ⌃ for Mac
@@ -82,42 +123,16 @@ precmd() {
   fi
 
   # show consumption time
+  local -i p
+  local pp= t=
   if [[ -n $ltts ]]; then
-    local rtts=${tts[1]}
-    local -i dtts=${tts[2]%us} hour min sec nano
-    sec=$(( ${rtts%.*} - ${ltts%.*} ))
-    nano=$(( ${rtts#*.} - ${ltts#*.} ))
-    ltts=
-    if (( $nano < 0 )); then
-      (( sec=$sec - 1 ))
-      (( nano=$nano + 1000000000 ))
+    read -r p t <<<$(_dtime "$ltts" "${tts[1]}" "${tts[2]}")
+    ltts="${tts[1]}"
+    if (( $p > 0 )); then
+      pp+=" "
+      (( p-- ))
     fi
-    if (( $sec > 60 )); then
-      min=$(( sec / 60 ))
-      sec=$(( sec % 60 ))
-      if (( $min > 60 )); then
-        hour=$(( min / 60 ))
-        min=$(( min % 60 ))
-      fi
-    fi
-    nano=${nano:0:-3}
-    # remove the time consumpted by date cmd
-    # (should take no more than one second)
-    (( nano=$nano - $dtts ))
-
-    local i t=$nano
-    for (( i=0; i < $(( 6 - ${#nano} )); i++ )); do
-      t="0"$t
-    done
-    t=.${t}
-    (( $sec  > 0 )) && t="${sec}\" ${t}"
-    (( $min  > 0 )) && t="${min}' ${t}"
-    (( $hour > 0 )) && t="${hour}hr ${t}"
-    printf -v extra_info "\x1b[38;5;242m\x1b[48;5;236m\x1b[3m  %s  \x1b[0m%s" "$t" "$extra_info"
-  fi
-
-  if [[ -n $extra_info ]]; then
-    printf "%s\n" "$extra_info"
+    printf -v extra_info "\x1b[38;5;242m\x1b[48;5;236m\x1b[3m  %s  %s\x1b[0m%s" "$t" "${extra_info:+$pp}" "$extra_info"
   fi
 
   # prepare vcs info
@@ -126,6 +141,20 @@ precmd() {
     RPROMPT="${vcs_info_msg_0_} ${D_RPROMPT}"
   else
     RPROMPT="${D_RPROMPT}"
+  fi
+
+  # consumpted time by vcs_info and other logics
+  tts=( $(exec 2>&1; time date '+%s.%N') )
+  if [[ -n $ltts ]]; then
+    read -r _ t <<<$(_dtime "$ltts" "${tts[1]}" "${tts[2]}")
+    ltts=
+    if [[ ${t#*.} != ${t#.} ]] || (( ${t#*.} > 9999 )); then
+      printf -v extra_info "%s\x1b[38;5;242m\x1b[48;5;236m\x1b[3m ${noerr:+\x1b[2D}+%s ${noerr:+ }\x1b[0m" "$extra_info" "${t:0:-3}"
+    fi
+  fi
+
+  if [[ -n $extra_info ]]; then
+    printf "%s\n" "$extra_info"
   fi
 }
 typeset -g ltts
@@ -327,3 +356,9 @@ update_v2_libs() {
 }
 
 alias ip7="ip7 -u -c ~/.config/ip7/config.json"
+
+for riscv_elf_gnu in /home/ryan/Programs/riscv/bin/riscv64-unknown-elf-*; do
+  eval "alias ${riscv_elf_gnu##*/}='$riscv_elf_gnu'"
+done
+
+alias mountdolphin="sshfs dolphin:/home/ryan/public_html /home/ryan/dolphin-pub/"

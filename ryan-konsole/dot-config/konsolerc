@@ -24,6 +24,10 @@ RememberWindowSize=false
 ShowMenuBarByDefault=false
 
 [MainWindow]
+1920x1200 screen: Height=815
+1920x1200 screen: Width=1190
+1920x1200 screen: XPosition=660
+1920x1200 screen: YPosition=315
 DP-1 HDMI-A-1 Height 1200x1920=1891
 DP-1 HDMI-A-1 Height 2560x1440=672
 DP-1 HDMI-A-1 Height 2560x1707=672
@@ -87,7 +91,7 @@ HDMI-A-0 Width 1920x1200 HDMI-A-0=1440
 HDMI-A-0 Width 800x1280=800
 HDMI-A-0 Window-Maximized 1920x1200=true
 HDMI-A-0 XPosition 1920x1200=480
-HDMI-A-0 XPosition 1920x1200 HDMI-A-0=480
+HDMI-A-0 XPosition 1920x1200 HDMI-A-0=660
 HDMI-A-0 YPosition 1920x1200=30
 HDMI-A-0 YPosition 1920x1200 HDMI-A-0=315
 HDMI-A-1 Height 1920x1200 HDMI-A-1=786

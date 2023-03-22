@@ -1,0 +1,7 @@
+sys-auth/sssd sudo
+# required by sys-auth/sssd-2.5.2-r3::gentoo
+# required by sys-auth/sssd (argument)
+>=net-dns/bind-tools-9.16.37-r1 gssapi
+# required by sys-auth/sssd-2.5.2-r3::gentoo
+# required by sys-auth/sssd (argument)
+>=sys-libs/glibc-2.36-r5 nscd

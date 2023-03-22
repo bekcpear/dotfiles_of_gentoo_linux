@@ -1,0 +1,11 @@
+# required by sci-electronics/kicad-6.0.9::gentoo[python_single_target_python3_10]
+# required by sci-electronics/kicad-symbols-6.0.9::gentoo
+# required by sci-electronics/kicad-meta-6.0.9::gentoo
+# required by sci-electronics/kicad-meta (argument)
+>=dev-libs/boost-1.81.0-r1 context python
+# required by dev-python/wxpython-4.0.7-r4::gentoo
+# required by sci-electronics/kicad-6.0.9::gentoo[python_single_target_python3_10]
+# required by sci-electronics/kicad-symbols-6.0.9::gentoo
+# required by sci-electronics/kicad-meta-6.0.9::gentoo
+# required by sci-electronics/kicad-meta (argument)
+>=x11-libs/wxGTK-3.0.5.1-r1 gstreamer

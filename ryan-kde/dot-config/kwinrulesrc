@@ -324,8 +324,29 @@ wmclass=chromium-browser-chromium
 wmclassmatch=1
 
 [General]
-count=18
-rules=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18
+count=19
+rules=1,a8b5d0a3-5d33-4de2-a190-9828f36a8677,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18
+
+[a8b5d0a3-5d33-4de2-a190-9828f36a8677]
+Description=clickup rule for google-chrome
+activity=b01f026f-ffac-41ff-80a1-390874a19042,0545733d-dc2b-40d3-af0a-90918438c63a
+activityrule=3
+clientmachine=localhost
+desktops=1ad4393b-2c3a-492c-b976-3d826a80b75a
+desktopsrule=3
+noborder=true
+noborderrule=2
+position=588,30
+positionrule=3
+size=1332,1170
+sizerule=3
+title=RISC-V | Trello
+types=1
+windowrole=pop-up
+windowrolematch=1
+wmclass=app.clickup.com__9009089463_v_l_4-90090178235-1 google-chrome
+wmclasscomplete=true
+wmclassmatch=1
 
 [dc7fa86a-dd4d-420c-8fd2-a7b8195a4f9a]
 Description=trello rule for chromium

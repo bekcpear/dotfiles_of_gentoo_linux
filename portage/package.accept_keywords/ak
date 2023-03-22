@@ -171,8 +171,8 @@ dev-libs/libvterm
 
 #sys-kernel/gentoo-sources
 
-virtual/rust
-dev-lang/rust-bin
+#virtual/rust
+#dev-lang/rust-bin
 dev-util/rust-analyzer::guru
 dev-util/bash-language-server::guru
 
@@ -222,3 +222,37 @@ dev-libs/libglibutil::guru
 dev-libs/gbinder::guru
 dev-python/pyclip::guru
 dev-python/gbinder::guru
+
+# (dependency required by "kde-plasma/kwin-5.27.0::gentoo" [ebuild])
+# (dependency required by "kde-plasma/libkworkspace-5.27.0::gentoo" [ebuild])
+# (dependency required by "kde-plasma/kde-cli-tools-5.27.0::gentoo" [ebuild])
+# (dependency required by "kde-apps/kaccounts-integration-22.12.2::gentoo" [installed])
+# (dependency required by "kde-frameworks/purpose-5.103.0::gentoo[kaccounts]" [installed])
+# (dependency required by "net-im/neochat-22.11-r2::gentoo" [installed])
+x11-libs/libxkbcommon::gentoo
+
+# for kicad
+sci-electronics/kicad
+sci-electronics/kicad-footprints
+sci-electronics/kicad-meta
+sci-electronics/kicad-packages3d
+sci-electronics/kicad-symbols
+sci-electronics/kicad-templates
+dev-python/wxpython
+x11-libs/wxGTK
+
+# for test
+dev-lang/python
+
+
+# for 389
+net-nds/389-ds-base
+dev-python/argparse-manpage
+
+# for openldap
+net-nds/openldap
+dev-db/lmdb
+
+app-misc/zellij
+
+app-office/onlyoffice-bin
