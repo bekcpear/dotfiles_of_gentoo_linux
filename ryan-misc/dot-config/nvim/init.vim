@@ -6,11 +6,12 @@ set fileencoding=utf-8
 set backupdir=~/.cache/nvim/backup
 
 set noexpandtab
-set smarttab
 "set expandtab
+"set sts=0
 set ts=4
 set sw=4
 set autoindent
+set smarttab
 set smartindent
 
 "set lbr
@@ -109,11 +110,11 @@ autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
 " vim-go ======= END ====
 
 Plug 'Thyrum/vim-stabs'
-let g:stabs_maps = 'boO='
+let g:stabs_maps = ''
 
 Plug 'easymotion/vim-easymotion'
 
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+"Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
@@ -143,7 +144,7 @@ autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
 lua require('init')
 
 " for nvim-tree
-noremap <C-n> :NvimTreeToggle<CR>
+noremap <C-p> :NvimTreeToggle<CR>
 
 function! SwitchSpaces2Tabs(sz)
   exe '%s/^ \{'.a:sz.'\}/\t/'

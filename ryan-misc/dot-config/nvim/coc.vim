@@ -16,6 +16,7 @@ set signcolumn=yes
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 "      \ CheckBackspace() ? "\<Tab>" :
+"      \ CheckBackspace() ? StabsTab() :
 inoremap <silent><expr> <TAB>
       \ coc#pum#visible() ? coc#pum#next(1) :
       \ CheckBackspace() ? StabsTab() :
