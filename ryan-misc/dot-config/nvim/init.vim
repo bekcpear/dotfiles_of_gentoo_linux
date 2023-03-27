@@ -5,10 +5,11 @@ set fileencoding=utf-8
 
 set backupdir=~/.cache/nvim/backup
 
-set ts=2
-set sw=2
+set noexpandtab
 set smarttab
-set expandtab
+"set expandtab
+set ts=4
+set sw=4
 set autoindent
 set smartindent
 
@@ -27,6 +28,8 @@ set hlsearch
 set backspace=start,indent,eol
 
 set mouse=
+set textwidth=78
+set colorcolumn=+1,+2,+3,+4,+5
 
 map <M-l> :tabnext<CR>
 map <M-h> :tabprevious<CR>
@@ -105,6 +108,15 @@ autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
 autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
 " vim-go ======= END ====
 
+Plug 'Thyrum/vim-stabs'
+let g:stabs_maps = 'boO='
+
+Plug 'easymotion/vim-easymotion'
+
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
 call plug#end()
 
 lua require('plugins')
@@ -128,4 +140,15 @@ autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
 " fcitx
 "let g:fcitx5_rime = 1
 
-set tw=0
+lua require('init')
+
+" for nvim-tree
+noremap <C-n> :NvimTreeToggle<CR>
+
+function! SwitchSpaces2Tabs(sz)
+  exe '%s/^ \{'.a:sz.'\}/\t/'
+  while search('^\t\+ \{'.a:sz.'\}') > 0
+    exe '%s/^\(\t\+\) \{'.a:sz.'\}/\1\t/'
+  endwhile
+endfunction
+command -nargs=1 Ss2tab call SwitchSpaces2Tabs(<args>)

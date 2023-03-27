@@ -282,20 +282,24 @@ gh_last_tag() {
   local query_f='{ "query": "query { repository(owner: \"%s\", name: \"%s\") { refs(refPrefix: \"refs/tags/\", %s orderBy: { field: TAG_COMMIT_DATE, direction: DESC }, first: 1) { edges { node { name } } } } }" }'
   printf -v query "${query_f}" ${owner} ${name} \
     "${filter:+query: \\\"${_current_tag_prefix}\\\", }"
-  res=$(_do curl -s -X POST \
+  res=$(_do proxychains -q curl -s -X POST \
     -H "Accept: application/json" \
     -H "Authorization: Bearer $(_do pass show ${gh_gql_path})" \
     -d "${query}" https://api.github.com/graphql )
+  [[ $? == 0 ]] || return $?
   tag=${res#*name\":\"}
   tag=${tag%%\"*}
   echo -n ${tag#\{}
 }
 
 update_v2_libs() {
+  (
+  set -e
   local repo_path='/home/ryan/Git/ryans-repos' \
         branch='dev' p
 
   _do pushd ${repo_path}/dev-libs
+  trap "_do popd" EXIT
   local last_branch=$(git branch --show-current)
   if [[ ${last_branch} != ${branch} ]]; then
     _do git checkout ${branch}
@@ -310,8 +314,9 @@ update_v2_libs() {
   }
 
   # bin pkg
+  local last_tag
   for p in domain-list-community geoip; do
-    local last_tag=$(gh_last_tag v2fly $p)
+    last_tag=$(gh_last_tag v2fly $p)
     if [[ $p == "domain-list-community" ]]; then
       dlcv=$last_tag
     fi
@@ -352,7 +357,7 @@ update_v2_libs() {
   if [[ ${last_branch} != ${branch} ]]; then
     _do git checkout ${last_branch}
   fi
-  _do popd
+  )
 }
 
 alias ip7="ip7 -u -c ~/.config/ip7/config.json"

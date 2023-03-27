@@ -4,9 +4,9 @@ set termencoding=utf-8
 set fileencodings=utf-8,ucs-bom,gbk,default,latin1 
 
 set backupdir=~/.vimbak
-set ts=2
-set sw=2
-set expandtab
+set ts=4
+set sw=4
+set noexpandtab
 
 set autoindent
 set smartindent

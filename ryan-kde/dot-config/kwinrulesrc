@@ -25,11 +25,23 @@ wmclasscomplete=true
 wmclassmatch=1
 
 [10]
+Description=Gvim rule
+decocolor=BreezeDarkForKonsole
+position=560,60
+positionrule=3
+size=860,1100
+sizerule=3
+windowrole=browser
+wmclass=gvim
+wmclassmatch=1
+
+[11]
 Description=konsole rule
 decocolor=BreezeDarkForKonsole
 decocolorrule=2
 maximizehorizrule=3
 maximizevertrule=3
+noborder=true
 position=660,315
 positionrule=3
 size=1190,815
@@ -39,8 +51,9 @@ wmclass=konsole konsole
 wmclasscomplete=true
 wmclassmatch=1
 
-[11]
+[12]
 Description=wayland konsole rule
+activity=00000000-0000-0000-0000-000000000000
 decocolor=BreezeDarkForKonsole
 decocolorrule=2
 maximizehorizrule=3
@@ -55,24 +68,26 @@ wmclass=konsole org.kde.konsole
 wmclasscomplete=true
 wmclassmatch=1
 
-[12]
+[13]
 Description=Chromium rule
 activity=00000000-0000-0000-0000-000000000000
 decocolor=BreezeForChromium
 decocolorrule=2
+desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
 noborder=true
 noborderrule=2
 position=480,30
 positionrule=3
 size=1440,1170
 sizerule=3
+skiptaskbar=true
 windowrole=browser
 windowrolematch=1
 wmclass=chromium-browser-chromium chromium-browser-chromium
 wmclasscomplete=true
 wmclassmatch=1
 
-[13]
+[14]
 Description=Telegram rule
 activity=00000000-0000-0000-0000-000000000000
 activityrule=3
@@ -88,7 +103,7 @@ wmclass=telegram-desktop telegramdesktop
 wmclasscomplete=true
 wmclassmatch=1
 
-[14]
+[15]
 Description=superkonsole rule
 activity=00000000-0000-0000-0000-000000000000
 desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
@@ -104,7 +119,7 @@ wmclass=superkonsole konsole
 wmclasscomplete=true
 wmclassmatch=1
 
-[15]
+[16]
 Description=chrome app for Gmail rule
 activity=00000000-0000-0000-0000-000000000000
 activityrule=2
@@ -123,7 +138,7 @@ wmclass=mail.google.com__mail google-chrome
 wmclasscomplete=true
 wmclassmatch=1
 
-[16]
+[17]
 Description=chromium app for Gmail rule
 activity=00000000-0000-0000-0000-000000000000
 activityrule=2
@@ -142,7 +157,7 @@ wmclass=mail.google.com__mail chromium-browser-chromium
 wmclasscomplete=true
 wmclassmatch=1
 
-[17]
+[18]
 Description=google-chrome rule
 noborder=true
 noborderrule=2
@@ -155,7 +170,7 @@ wmclass=google-chrome google-chrome
 wmclasscomplete=true
 wmclassmatch=1
 
-[18]
+[19]
 Description=Rules for linuxqq-bin
 skiptaskbar=true
 skiptaskbarrule=3
@@ -165,6 +180,28 @@ wmclasscomplete=true
 wmclassmatch=1
 
 [2]
+Description=clickup rule for google-chrome
+activity=b01f026f-ffac-41ff-80a1-390874a19042,0545733d-dc2b-40d3-af0a-90918438c63a
+activityrule=3
+clientmachine=localhost
+desktops=1ad4393b-2c3a-492c-b976-3d826a80b75a
+desktopsrule=3
+noborder=true
+noborderrule=2
+position=588,30
+positionrule=3
+size=1332,1170
+sizerule=3
+skiptaskbar=true
+title=RISC-V | Trello
+types=1
+windowrole=pop-up
+windowrolematch=1
+wmclass=app.clickup.com__9009089463_v_l_4-90090178235-1 google-chrome
+wmclasscomplete=true
+wmclassmatch=1
+
+[3]
 Description=trello rule for chromium
 activity=b01f026f-ffac-41ff-80a1-390874a19042,0545733d-dc2b-40d3-af0a-90918438c63a
 activityrule=3
@@ -187,42 +224,32 @@ wmclass=trello.com__b_p8v6a98n_risc-v chromium-browser-chromium
 wmclasscomplete=true
 wmclassmatch=1
 
-[3]
+[4]
 Description=Window settings for qemu-system-x86_64
 activity=00000000-0000-0000-0000-000000000000
+desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
 noborder=true
 position=0,30
 positionrule=3
 size=1310,1064
 sizerule=3
+skiptaskbar=true
 types=1
 wmclass=qemu qemu-system-x86_64
 wmclasscomplete=true
 wmclassmatch=1
 
-[4]
+[5]
 Description=Application settings for firefox
 activity=00000000-0000-0000-0000-000000000000
 desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
 noborder=true
 noborderrule=3
 position=0,30
-size=1152,450
+size=1152,479
 skiptaskbar=true
 wmclass=navigator firefox
 wmclasscomplete=true
-wmclassmatch=1
-
-[5]
-Description=Application settings for quiterss
-activity=00000000-0000-0000-0000-000000000000
-activityrule=2
-desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
-noborder=true
-position=0,30
-size=1152,479
-skiptaskbar=true
-wmclass=quiterss
 wmclassmatch=1
 
 [59ea5b21-5e82-4142-a54e-e7e344b99edb]
@@ -241,9 +268,23 @@ wmclasscomplete=true
 wmclassmatch=1
 
 [6]
+Description=Application settings for quiterss
+activity=00000000-0000-0000-0000-000000000000
+activityrule=2
+desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
+ignoregeometry=true
+noborder=true
+position=0,30
+size=1216,496
+skiptaskbar=true
+wmclass=quiterss
+wmclassmatch=1
+
+[7]
 Description=Thunderbird rule
 activity=00000000-0000-0000-0000-000000000000
 activityrule=2
+decocolor=BreezeDarkForGoogleKeep
 desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
 desktopsrule=2
 ignoregeometry=true
@@ -257,20 +298,6 @@ skiptaskbar=true
 skiptaskbarrule=3
 wmclass=mail thunderbird
 wmclasscomplete=true
-wmclassmatch=1
-
-[7]
-Description=Application settings for qbittorrent
-activity=0acb0a7e-b74c-4eef-8bc5-1f601d27ef41
-activityrule=2
-decocolor=BreezeDarkForGoogleKeep
-desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
-ignoregeometry=true
-noborder=true
-position=0,509
-size=1152,691
-skiptaskbar=true
-wmclass=qbittorrent
 wmclassmatch=1
 
 [733b00dc-039f-4585-b4ca-28f77d701e18]
@@ -289,22 +316,22 @@ wmclasscomplete=true
 wmclassmatch=1
 
 [8]
-Description=Google keep rule
+Description=Application settings for qbittorrent
+activity=0acb0a7e-b74c-4eef-8bc5-1f601d27ef41
+activityrule=2
 decocolor=BreezeDarkForGoogleKeep
-decocolorrule=2
-wmclass=crx_hmjkmjkepdijhoojdojkdfohbdgmmhki chromium-browser-chromium
-wmclasscomplete=true
+wmclass=qbittorrent
 wmclassmatch=1
 
 [9]
-Description=Gvim rule
+Description=Google keep rule
 decocolor=BreezeDarkForGoogleKeep
+decocolorrule=2
 position=560,60
-positionrule=3
 size=860,1100
-sizerule=3
 windowrole=browser
-wmclass=gvim
+wmclass=crx_hmjkmjkepdijhoojdojkdfohbdgmmhki chromium-browser-chromium
+wmclasscomplete=true
 wmclassmatch=1
 
 [916fa23c-3982-45b9-a3b4-45297261f9c7]
@@ -325,7 +352,7 @@ wmclassmatch=1
 
 [General]
 count=19
-rules=1,a8b5d0a3-5d33-4de2-a190-9828f36a8677,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18
+rules=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
 
 [a8b5d0a3-5d33-4de2-a190-9828f36a8677]
 Description=clickup rule for google-chrome

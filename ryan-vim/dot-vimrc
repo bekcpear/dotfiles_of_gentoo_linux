@@ -3,6 +3,10 @@
 call plug#begin('~/.vim/plugged')
 Plug 'easymotion/vim-easymotion'
 Plug 'justinmk/vim-sneak'
+
+Plug 'Thyrum/vim-stabs'
+let g:stabs_maps = 'boO='
+
 let g:sneak#label = 1
 "Plug 'tpope/vim-fugitive'
 "function! BuildYCM(info)
@@ -20,14 +24,14 @@ let g:sneak#label = 1
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 inoremap <silent><expr> <TAB>
       \ coc#pum#visible() ? coc#pum#next(1) :
-      \ CheckBackspace() ? "\<Tab>" :
+      \ CheckBackspace() ? StabsTab() :
       \ coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+"inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+"                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 function! CheckBackspace() abort
   let col = col('.') - 1
@@ -126,6 +130,9 @@ Plug 'jonsmithers/vim-html-template-literals'
 Plug 'pangloss/vim-javascript'
 "Plug 'Raimondi/delimitMate'
 
+Plug 'Thyrum/vim-stabs'
+let g:stabs_maps = 'boO='
+
 " Initialize plugin system
 call plug#end()
 
@@ -142,9 +149,9 @@ set fileencodings=utf-8,ucs-bom,gbk,default,latin1
 set tabpagemax=100
 
 set backupdir=~/.vimbak
-set ts=2
-set sw=2
-set expandtab
+set ts=4
+set sw=4
+set noexpandtab
 set cursorline
 
 syntax on
@@ -218,10 +225,10 @@ au BufNewFile,BufRead *.css
 \set softtabstop=2
 
 " javascript
-au BufNewFile,BufRead *.js
-\set tabstop=2
-\set shiftwidth=2
-\set expandtab
+"au BufNewFile,BufRead *.js
+"\set tabstop=2
+"\set shiftwidth=2
+"\set expandtab
 
 " PHP
 au BufNewFile,BufRead *.php
