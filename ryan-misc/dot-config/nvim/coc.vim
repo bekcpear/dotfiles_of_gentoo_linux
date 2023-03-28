@@ -150,3 +150,13 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+hi CocInlayHint guifg=#7E8E91 guibg=#1D1E1F gui=italic,underline
+hi CocHighlightText gui=nocombine,underdotted guisp=#3DAEE9
+"#1DF5F1
+hi CocUnusedHighlight guibg=#212223 gui=nocombine,undercurl guisp=#FFA500
+hi CocErrorHighlight gui=nocombine,italic,underdouble guisp=red
+"hi CocErrorLine gui=underdashed
+"hi CocWarningLine gui=underdashed
+"hi CocInfoLine gui=underdashed
+"hi CocHintLine gui=underdashed

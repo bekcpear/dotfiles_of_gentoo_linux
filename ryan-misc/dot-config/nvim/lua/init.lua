@@ -62,3 +62,7 @@ require("nvim-tree").setup({
 --    additional_vim_regex_highlighting = false,
 --  },
 --}
+
+--require("indent_blankline").setup {
+--    show_end_of_line = true,
+--}

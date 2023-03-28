@@ -49,7 +49,7 @@ hi DiffText                      guibg=#635753 gui=italic,bold
 
 hi Directory       guifg=#A6E22E               gui=bold
 hi Error           guifg=#E6DB74 guibg=#1E0010
-hi ErrorMsg        guifg=#F92672 guibg=#838F9E gui=bold
+hi ErrorMsg        guifg=#F92672 guibg=#000000 gui=bold
 hi Exception       guifg=#A6E22E               gui=bold
 hi Float           guifg=#AE81FF
 hi FoldColumn      guifg=#465457 guibg=#000000
@@ -81,11 +81,12 @@ hi Question        guifg=#66D9EF
 hi Repeat          guifg=#F92672               gui=bold
 hi Search          guifg=#000000 guibg=#FFE792
 " marks
-hi SignColumn      guifg=#A6E22E guibg=#232526
+hi SignColumn      guifg=#A6E22E guibg=none    gui=nocombine
 hi SpecialChar     guifg=#F92672               gui=bold
 hi SpecialComment  guifg=#7E8E91               gui=bold
 "hi Special         guifg=#66D9EF guibg=bg      gui=italic
-hi Special         guifg=#66D9EF guibg=#000000 gui=italic
+hi Special         guifg=#66D9EF               gui=italic
+"hi Conceal                       guibg=#2B4751
 if has("spell")
     hi SpellBad    guisp=#FF0000 gui=undercurl
     hi SpellCap    guisp=#7070F0 gui=undercurl
@@ -129,10 +130,10 @@ else
    hi Comment         guifg=#7E8E91
    "hi CursorLine                    guibg=#293739
    hi CursorLine      guifg=none    guibg=#232526
-   hi CursorLineNr    guifg=#FD971F               gui=none
+   hi CursorLineNr    guifg=#FD971F guibg=#232526 gui=none
    "hi CursorColumn                  guibg=#293739
-   hi CursorColumn                  guibg=#515f66
-   hi ColorColumn                   guibg=#1D1E1F
+   hi CursorColumn                  guibg=#1B1C1D
+   hi ColorColumn                   guibg=#18191A
    hi LineNr          guifg=#5C686B guibg=#161718
    hi NonText         guifg=#5C686B
    hi SpecialKey      guifg=#5C686B

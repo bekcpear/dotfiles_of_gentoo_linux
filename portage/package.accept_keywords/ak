@@ -256,3 +256,5 @@ dev-db/lmdb
 app-misc/zellij
 
 app-office/onlyoffice-bin
+
+dev-util/shellcheck-bin
