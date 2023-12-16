@@ -8,8 +8,8 @@ set backupdir=~/.cache/nvim/backup
 set noexpandtab
 "set expandtab
 "set sts=0
-set ts=4
-set sw=4
+set ts=8
+set sw=8
 set autoindent
 set smarttab
 set smartindent
@@ -121,9 +121,15 @@ Plug 'easymotion/vim-easymotion'
 "Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+let g:VM_theme = 'ocean'
+let @l = '\\c\\>'
+let @a = "\\\\c\\\\<=\x1b["
 
 Plug 'gentoo/gentoo-syntax'
 "Plug 'dense-analysis/ale'
+
+" If you have nodejs and yarn
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 
 call plug#end()
 
@@ -176,6 +182,7 @@ function! s:CustomizeColors()
 	endif
 endfunction
 
+
 augroup OnColorScheme
 	autocmd!
 	autocmd ColorScheme,BufEnter,BufWinEnter * call s:CustomizeColors()
@@ -189,3 +196,22 @@ augroup END
 " for ale
 "let g:ale_disable_lsp = 1
 
+augroup MarkdownSpecific
+	au!
+	au FileType markdown,rst,text set
+		\ expandtab ts=2 sw=2 tw=0
+		\ colorcolumn=81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96
+augroup END
+
+augroup HtmlSpecific
+	au!
+	au FileType html set
+		\ expandtab ts=2 sw=2 tw=0
+		\ colorcolumn=81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96
+augroup END
+
+augroup CSSSpecific
+	au!
+	au FileType scss,css set
+		\ ts=4 sw=4 tw=0
+augroup END

@@ -1,1 +1,7 @@
 media-libs/libsdl2 gles2
+
+# required by dev-qt/qtwayland-6.5.1-r1::gentoo
+# required by dev-qt/qtbase-6.5.1-r1::gentoo[wayland]
+# required by dev-qt/qtshadertools-6.5.1::gentoo
+# required by dev-qt/qtdeclarative-6.5.1::gentoo
+dev-qt/qtbase egl

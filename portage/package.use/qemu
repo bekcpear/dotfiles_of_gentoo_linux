@@ -26,3 +26,13 @@ app-emulation/qemu -doc alsa gtk ncurses opengl sdl spice usb virgl virtfs stati
 # required by @world (argument)
 >=dev-libs/libpcre-8.45 static-libs
 dev-libs/libpcre2 static-libs
+
+# required by app-crypt/swtpm-0.8.0::gentoo[gnutls]
+# required by app-emulation/libvirt-9.4.0-r3::gentoo[qemu]
+# required by dev-python/libvirt-python-9.4.0::gentoo
+# required by app-emulation/libvirt-9.3.0::gentoo[qemu]
+# required by app-emulation/libvirt-glib-4.0.0::gentoo
+# required by app-emulation/virt-manager-4.1.0::gentoo[-test]
+# required by @selected
+# required by @world (argument)
+>=net-libs/gnutls-3.8.0 tools pkcs11

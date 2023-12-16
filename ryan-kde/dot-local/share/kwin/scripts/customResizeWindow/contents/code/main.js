@@ -8,17 +8,17 @@ registerShortcut("customResizeWindow", "Move window to right bottom", "Meta+Ctrl
   if (client.moveable && client.resizeable && (client.width < maxArea.width || client.height < maxArea.height)) {
     if (client.resourceName == "superkonsole") {
       client.geometry = {
-        x: 660 + maxArea.x,
-        y: 39 + maxArea.y,
-        width: 1190,
-        height: 1101
+        x: 603 + maxArea.x,
+        y: 823 + maxArea.y,
+        width: 1878,
+        height: 1925
       };
     } else {
       client.geometry = {
-        x: maxArea.width / 2 - 300 + maxArea.x,
-        y: maxArea.height / 2 - 300 + maxArea.y,
-        width: maxArea.width / 2 + 230,
-        height: maxArea.height / 2 + 230
+        x: maxArea.width / 2 - 600 + maxArea.x,
+        y: maxArea.height / 2 - 500 + maxArea.y,
+        width: maxArea.width / 2 + 530,
+        height: maxArea.height / 2 + 130
       };
     }
   }

@@ -65,6 +65,9 @@ GRUB_THEME="/boot/grub/themes/tela/theme.txt"
 # Uncomment if you don't want GRUB to pass "root=UUID=xxx" parameter to kernel
 #GRUB_DISABLE_LINUX_UUID=true
 
+# Comment if you don't want GRUB to pass "root=PARTUUID=xxx" parameter to kernel
+GRUB_DISABLE_LINUX_PARTUUID=false
+
 # Uncomment to disable generation of recovery mode menu entries
 #GRUB_DISABLE_RECOVERY=true
 

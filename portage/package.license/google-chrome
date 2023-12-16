@@ -1,3 +1,4 @@
 # required by google-chrome (argument)
 >=www-client/google-chrome-86.0.4240.75 google-chrome
 >=www-client/google-chrome-beta-86.0.4240.75 google-chrome
+>=www-client/google-chrome-unstable-86.0.4240.75 google-chrome

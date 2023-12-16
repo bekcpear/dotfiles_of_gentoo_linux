@@ -1,15 +1,17 @@
 #!/bin/bash
 case $1/$2 in
-  pre/*)
-    # Put here any commands you want to be run when suspending or hibernating.
-    /sbin/rc-service bluetoothd stop || true
-    #/sbin/rc-service pcscd stop
+	pre/*)
+		# Put here any commands you want to be run when suspending or hibernating.
+		/sbin/rc-service bluetoothd stop || true
+		#/sbin/rc-service pcscd stop
 		/usr/sbin/rfkill block bluetooth
-    ;;
-  post/*)
-    # Put here any commands you want to be run when resuming from suspension or thawing from hibernation.
+		echo "bluetooth blocked manually"
+		;;
+	post/*)
+		# Put here any commands you want to be run when resuming from suspension or thawing from hibernation.
 		/usr/sbin/rfkill unblock bluetooth
-    #/sbin/rc-service pcscd start
-    /root/reload-bt.sh
-    ;;
+		echo "bluetooth unblocked manually"
+		#/sbin/rc-service pcscd start
+		/root/reload-bt.sh
+		;;
 esac

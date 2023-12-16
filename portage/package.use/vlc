@@ -1,0 +1,2 @@
+# <ffmpeg-5 dep for USE="ffmpeg vaapi" for bug #864721
+media-video/vlc -vaapi

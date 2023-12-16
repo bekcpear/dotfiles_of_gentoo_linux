@@ -58,112 +58,132 @@ source /usr/share/zsh/site-functions/zsh-autosuggestions.zsh
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' check-for-staged-changes true
 zstyle ':vcs_info:*' stagedstr "*"
-zstyle ':vcs_info:*' actionformats '%K{233} ᚠ %b%F{2}%c%f %k%K{3} %F{233}%a%f %k'
-zstyle ':vcs_info:*' formats '%K{233} ᚠ %b%F{2}%c%f %k'
+zstyle ':vcs_info:*' actionformats '%K{233}  %b%F{2}%c%f %k%K{3} %F{233}%a%f %k'
+zstyle ':vcs_info:*' formats '%K{233}  %b%F{2}%c%f %k'
+
+SSH_CONNECTION_OLD='_INIT'
 
 # $1: last time
 # $2: current time
 # $3: date consumpted time
 _dtime() {
-  local ltts="$1"
-  local rtts="$2"
-  local -i dtts="${3%us}" hour min sec nano
-  sec=$(( ${rtts%.*} - ${ltts%.*} ))
-  nano=$(( ${rtts#*.} - ${ltts#*.} ))
-  if (( $nano < 0 )); then
-    (( sec=$sec - 1 ))
-    (( nano=$nano + 1000000000 ))
-  fi
-  if (( $sec > 60 )); then
-    min=$(( sec / 60 ))
-    sec=$(( sec % 60 ))
-    if (( $min > 60 )); then
-      hour=$(( min / 60 ))
-      min=$(( min % 60 ))
-    fi
-  fi
-  nano=${nano:0:-3}
-  # remove the time consumpted by date cmd
-  # (should take no more than one second)
-  (( nano=$nano - $dtts ))
+	local ltts="$1"
+	local rtts="$2"
+	local -i dtts="${3%us}" hour min sec nano
+	sec=$(( ${rtts%.*} - ${ltts%.*} ))
+	nano=$(( ${rtts#*.} - ${ltts#*.} ))
+	if (( $nano < 0 )); then
+		(( sec=$sec - 1 ))
+		(( nano=$nano + 1000000000 ))
+	fi
+	if (( $sec > 60 )); then
+		min=$(( sec / 60 ))
+		sec=$(( sec % 60 ))
+		if (( $min > 60 )); then
+			hour=$(( min / 60 ))
+			min=$(( min % 60 ))
+		fi
+	fi
+	nano=${nano:0:-3}
+	# remove the time consumpted by date cmd
+	# (should take no more than one second)
+	(( nano=$nano - $dtts ))
 
-  local t=$nano
-  local -i i p
-  for (( i=0; i < $(( 6 - ${#nano} )); i++ )); do
-    t="0"$t
-  done
-  t=.${t}
-  (( $sec  > 0 )) && t="${sec}\" ${t}"
-  (( $min  > 0 )) && t="${min}' ${t}"
-  (( $hour > 0 )) && t="${hour}hr ${t}"
-  (( $sec  > 0 && $sec < 10 )) && p+=1
-  (( $min  > 0 && $min < 10 )) && p+=1
-  echo -n "$p $t"
+	local t=$nano
+	local -i i p
+	for (( i=0; i < $(( 6 - ${#nano} )); i++ )); do
+		t="0"$t
+	done
+	t=.${t}
+	(( $sec  > 0 )) && t="${sec}\" ${t}"
+	(( $min  > 0 )) && t="${min}' ${t}"
+	(( $hour > 0 )) && t="${hour}hr ${t}"
+	(( $sec  > 0 && $sec < 10 )) && p+=1
+	(( $min  > 0 && $min < 10 )) && p+=1
+	echo -n "$p $t"
 }
 precmd() {
-  local _last_ret=$? noerr=1 extra_info TIMEFMT="%uE"
-  local -a tts=( $(exec 2>&1; time date '+%s.%N') )
+	local _last_ret=$? noerr=1 extra_info TIMEFMT="%uE"
+	local -a tts=( $(exec 2>&1; time date '+%s.%N') )
 
-  # show last run status
-  local _color=209
-  if [[ ${_last_ret} != 0 ]]; then
-    noerr=
-    case ${_last_ret} in
-      130)
-        _last_ret="^C" # ⌃ for Mac
-        _color=212
-        ;;
-      *)
-        ;;
-    esac
-    # printf "\x1b[38;5;%dm\x1b[0m" ${_color}
-    # printf "\x1b[48;5;%dm  ⇑↑⇑⇡☝︎⬆︎⇧⇪⥣↟↾↿⥔⥘⥜⥠⟰⤊↥⇫⇬⇭⇮⇯⇈⤉⇞⤒⥉⇱↸⤴︎ ⤤⤻➚%s  \x1b[0m" ${_color} ${_last_ret}
-    printf -v extra_info "\x1b[48;5;%dm  ⤒%s   \x1b[0m" ${_color} ${_last_ret}
-    # printf "\x1b[38;5;%dm\x1b[0m\n" ${_color}
-  fi
+	# show last run status
+	local _color=209
+	if [[ ${_last_ret} != 0 ]]; then
+		noerr=
+		case ${_last_ret} in
+			130)
+				_last_ret="^C" # ⌃ for Mac
+				_color=212
+				;;
+			*)
+				;;
+		esac
+		# printf "\x1b[38;5;%dm\x1b[0m" ${_color}
+		# printf "\x1b[48;5;%dm  ⇑↑⇑⇡☝︎⬆︎⇧⇪⥣↟↾↿⥔⥘⥜⥠⟰⤊↥⇫⇬⇭⇮⇯⇈⤉⇞⤒⥉⇱↸⤴︎ ⤤⤻➚%s  \x1b[0m" ${_color} ${_last_ret}
+		printf -v extra_info "\x1b[48;5;%dm  ⤒%s   \x1b[0m" ${_color} ${_last_ret}
+		# printf "\x1b[38;5;%dm\x1b[0m\n" ${_color}
+	fi
 
-  # show consumption time
-  local -i p
-  local pp= t=
-  if [[ -n $ltts ]]; then
-    read -r p t <<<$(_dtime "$ltts" "${tts[1]}" "${tts[2]}")
-    ltts="${tts[1]}"
-    if (( $p > 0 )); then
-      pp+=" "
-      (( p-- ))
-    fi
-    printf -v extra_info "\x1b[38;5;242m\x1b[48;5;236m\x1b[3m  %s  %s\x1b[0m%s" "$t" "${extra_info:+$pp}" "$extra_info"
-  fi
+	# show consumption time
+	local -i p
+	local pp= t=
+	if [[ -n $ltts ]]; then
+		read -r p t <<<$(_dtime "$ltts" "${tts[1]}" "${tts[2]}")
+		ltts="${tts[1]}"
+		if (( $p > 0 )); then
+			pp+=" "
+			(( p-- ))
+		fi
+		printf -v extra_info "\x1b[38;5;242m\x1b[48;5;236m\x1b[3m  %s  %s\x1b[0m%s" "$t" "${extra_info:+$pp}" "$extra_info"
+	fi
 
-  # prepare vcs info
-  vcs_info
-  if [[ -n ${vcs_info_msg_0_} ]]; then
-    RPROMPT="${vcs_info_msg_0_} ${D_RPROMPT}"
-  else
-    RPROMPT="${D_RPROMPT}"
-  fi
+	# SSH
+	if [[ -n ${TMUX} ]]; then
+		SSH_CONNECTION="$(tmux show-environment SSH_CONNECTION | cut -d= -f2)"
+	fi
+	if [[ ${SSH_CONNECTION_OLD} != ${SSH_CONNECTION} ]]; then
+		local ip port prompt
+		SSH_CONNECTION_OLD="${SSH_CONNECTION}"
+		read -r ip port _ <<< ${SSH_CONNECTION:-NONE}
+		if [[ -n ${port} ]]; then
+			prompt=" from ${ip}:${port}"
+			S_PROMPT=" :::SSH::: "
+			S_RPROMPT="%U%F{123}@%M%f%u${prompt}"
+		else
+			S_PROMPT="······     "
+		fi
+	fi
 
-  # consumpted time by vcs_info and other logics
-  tts=( $(exec 2>&1; time date '+%s.%N') )
-  if [[ -n $ltts ]]; then
-    read -r _ t <<<$(_dtime "$ltts" "${tts[1]}" "${tts[2]}")
-    ltts=
-    if [[ ${t#*.} != ${t#.} ]] || (( ${t#*.} > 9999 )); then
-      printf -v extra_info "%s\x1b[38;5;242m\x1b[48;5;236m\x1b[3m ${noerr:+\x1b[2D}+%s ${noerr:+ }\x1b[0m" "$extra_info" "${t:0:-3}"
-    fi
-  fi
+	# prepare vcs info
+	vcs_info
+	if [[ -n ${vcs_info_msg_0_} ]]; then
+		RPROMPT="${vcs_info_msg_0_} ${D_RPROMPT} ${S_RPROMPT}"
+	else
+		RPROMPT="${D_RPROMPT} ${S_RPROMPT}"
+	fi
 
-  if [[ -n $extra_info ]]; then
-    printf "%s\n" "$extra_info"
-  fi
+	# consumpted time by vcs_info and other logics
+	tts=( $(exec 2>&1; time date '+%s.%N') )
+	if [[ -n $ltts ]]; then
+		read -r _ t <<<$(_dtime "$ltts" "${tts[1]}" "${tts[2]}")
+		ltts=
+		if [[ ${t#*.} != ${t#.} ]] || (( ${t#*.} > 9999 )); then
+			printf -v extra_info "%s\x1b[38;5;242m\x1b[48;5;236m\x1b[3m ${noerr:+\x1b[2D}+%s ${noerr:+ }\x1b[0m" "$extra_info" "${t:0:-3}"
+		fi
+	fi
+
+	if [[ -n $extra_info ]]; then
+		printf "%s\n" "$extra_info"
+	fi
+
 }
 typeset -g ltts
 preexec() {
-  ltts=$(date '+%s.%N')
+	ltts=$(date '+%s.%N')
 }
 
 setopt prompt_subst
-PROMPT='%F{238}${(l:${COLUMNS}::·:):-}%f\
+PROMPT='%F{238}${S_PROMPT}${(l:$((${COLUMNS}-${#VIRTUAL_ENV_PROMPT}-11))::·:):-}%f\
  %F{227}%~%f %B%F{123}›%f %b'
 D_RPROMPT=" %F{238}%* @%D{%f}%f"
 
@@ -194,8 +214,8 @@ source /home/ryan/.config/broot/launcher/bash/br
 
 # print the average emerge time for the given pkg and it's dependencies
 eaveragetime() {
-  echo "Calculating depgraph ..."
-  equery -Cq g --depth=${2:-1} -lAMU ${1} | cut -d']' -f2 | sed -E '/:$/d;/^[[:space:]]*$/d;s/-[[:digit:]].*//' | xargs qlop -a `<<<"${pkgs}"` | sed -E 's/^(.*):\s+([^ ]*)\s.*/\2 \1/' | awk -v depth=${2:-1} -v pkg=${1} 'BEGIN {tt=0} { if ($1 ~ /′/) { match($1, /([[:digit:]]+)′([[:digit:]]+)″.*/, arr); t=((arr[1] * 60 ) + arr[2] ); print t"s "$2 } else if ($1 ~ /:/) { match($1, /([[:digit:]]+):([[:digit:]]+):([[:digit:]]+)/, arr); t=((arr[1] * 3600) + (arr[2] * 60) + arr[3]); print t"s "$2 } else { match($1, /([[:digit:]]+)s/, arr); t=arr[1]; print $0 } tt+=t } END {s=tt%60; m=(tt-s)%3600/60; h=(tt-m*60-s)/3600; print "=== total: "h":"m":"s" (pkg: "pkg", deps: "NR - 1", depth: "depth") ==="}' | sort -n | awk '{if (NR != 1) print $0; else tip=$0} END {print tip}'
+	echo "Calculating depgraph ..."
+	equery -Cq g --depth=${2:-1} -lAMU ${1} | cut -d']' -f2 | sed -E '/:$/d;/^[[:space:]]*$/d;s/-[[:digit:]].*//' | xargs qlop -a `<<<"${pkgs}"` | sed -E 's/^(.*):\s+([^ ]*)\s.*/\2 \1/' | awk -v depth=${2:-1} -v pkg=${1} 'BEGIN {tt=0} { if ($1 ~ /′/) { match($1, /([[:digit:]]+)′([[:digit:]]+)″.*/, arr); t=((arr[1] * 60 ) + arr[2] ); print t"s "$2 } else if ($1 ~ /:/) { match($1, /([[:digit:]]+):([[:digit:]]+):([[:digit:]]+)/, arr); t=((arr[1] * 3600) + (arr[2] * 60) + arr[3]); print t"s "$2 } else { match($1, /([[:digit:]]+)s/, arr); t=arr[1]; print $0 } tt+=t } END {s=tt%60; m=(tt-s)%3600/60; h=(tt-m*60-s)/3600; print "=== total: "h":"m":"s" (pkg: "pkg", deps: "NR - 1", depth: "depth") ==="}' | sort -n | awk '{if (NR != 1) print $0; else tip=$0} END {print tip}'
 }
 
 alias p="proxychains -q"
@@ -208,65 +228,66 @@ alias rvpa="/mnt/gentoo-test/riscv/doPatch.sh"
 alias rg="rg --no-ignore"
 
 _do() {
-  HP="hidepass -c ~/Git/hidepass/regex.json"
-  local -a args
-  for arg; do
-    eval "args+=( \$($HP '$arg') )"
-  done
-  echo -e "\x1b[1m\x1b[32m>>>\x1b[0m" "${args[@]}" >&2
-  "$@"
+	HP="~/Git/oss.ac/hidapp/hidapp -c ~/Git/oss.ac/hidapp/regex.json"
+	local -a args
+	for arg; do
+		eval "args+=( \$($HP '$arg') )"
+	done
+	echo -e "\x1b[1m\x1b[32m>>>\x1b[0m" "${args[@]}" >&2
+	"$@"
 }
 
 run() {
-  (
-  set -e
-  f=${1%.c}
-  f=${f%.cpp}
-  if [[ -e $f ]]; then
-    _do rm $f
-  fi
-  _do make $f
-  _do "$(pwd)/$f"
-  )
+	(
+	set -e
+	f=${1%.c}
+	f=${f%.cpp}
+	if [[ -e $f ]]; then
+		_do rm $f
+	fi
+	_do make $f
+	_do "$(pwd)/$f"
+	)
 }
 clrun() {
-  local CC CXX
-  export CC="clang"
-  export CXX="clang++"
-  run "$@"
+	local CC CXX
+	export CC="clang"
+	export CXX="clang++"
+	run "$@"
 }
 
 build_cryptpad() {
-  (
-  set -xe
-  _P=$(pwd)
-  proxychains -q npm install --production
-  pushd ..
-  mkdir bower
-  cd bower
-  yarn add bower
-  popd
-  proxychains -q ../bower/node_modules/bower/bin/bower install -p
-  cd ~/Git/cryptpad-release
-  rm -rf node_modules www
-  cp -a ${_P}/{node_modules,www/bower_components} ./
-  mkdir www
-  mv bower_components www
-  git status
-  )
+	(
+	set -xe
+	_P=$(pwd)
+
+	npm install --production
+	npm ci
+	npm run install:components
+
+	cd ~/Git/cryptpad-release
+	rm -rf node_modules www
+	cp -a ${_P}/{node_modules,www/components} ./
+	mkdir www
+	mv components www
+	git status
+	)
 }
 
 if [[ $(pwd) == "/" ]]; then
-  cd
+	cd
 fi
 
 #export https_proxy='socks5h://127.0.0.1:1080'
 
 alias nct="~/Git/network-connectivity-test/nct"
 alias vgen="~/Git/vendor-for-go/gen.sh"
-alias go="https_proxy='socks5://127.0.0.1:1080' go"
-alias golic="https_proxy='socks5://127.0.0.1:1080' ~/Git/go-licenses-for-gentoo/golic.sh"
-alias govenball="https_proxy='socks5://127.0.0.1:1080' ~/Git/vendor-for-go/.do/do.sh ~/Git/gopkg-vendors"
+alias go-build="go build -trimpath -buildmode=pie -ldflags='-w -s'"
+#alias go="https_proxy='socks5://127.0.0.1:1080' go"
+#alias golic="https_proxy='socks5://127.0.0.1:1080' ~/Git/go-licenses-for-gentoo/golic.sh"
+#alias govenball="https_proxy='socks5://127.0.0.1:1080' ~/Git/vendor-for-go/.do/do.sh ~/Git/gopkg-vendors"
+alias golic="~/Git/go-licenses-for-gentoo/golic.sh"
+alias govenball="~/Git/vendor-for-go/.do/do.sh ~/Git/gopkg-vendors"
 alias ls="ls --color"
 alias vim="nvim"
 alias insfunc="~/Git/bash-funcs/ins.sh"
@@ -277,93 +298,124 @@ alias gitcp="git cherry-pick"
 
 . $HOME/walletinfo
 gh_last_tag() {
-  local owner=$1 name=$2 filter=$3
-  local res tag query query_f
-  local query_f='{ "query": "query { repository(owner: \"%s\", name: \"%s\") { refs(refPrefix: \"refs/tags/\", %s orderBy: { field: TAG_COMMIT_DATE, direction: DESC }, first: 1) { edges { node { name } } } } }" }'
-  printf -v query "${query_f}" ${owner} ${name} \
-    "${filter:+query: \\\"${_current_tag_prefix}\\\", }"
-  res=$(_do proxychains -q curl -s -X POST \
-    -H "Accept: application/json" \
-    -H "Authorization: Bearer $(_do pass show ${gh_gql_path})" \
-    -d "${query}" https://api.github.com/graphql )
-  [[ $? == 0 ]] || return $?
-  tag=${res#*name\":\"}
-  tag=${tag%%\"*}
-  echo -n ${tag#\{}
+	local owner=$1 name=$2 filter=$3
+	local res tag query query_f
+	local query_f='{ "query": "query { repository(owner: \"%s\", name: \"%s\") { refs(refPrefix: \"refs/tags/\", %s orderBy: { field: TAG_COMMIT_DATE, direction: DESC }, first: 1) { edges { node { name } } } } }" }'
+	printf -v query "${query_f}" ${owner} ${name} \
+		"${filter:+query: \\\"${_current_tag_prefix}\\\", }"
+	res=$(_do proxychains -q curl -s -X POST \
+		-H "Accept: application/json" \
+		-H "Authorization: Bearer $(_do pass show ${gh_gql_path})" \
+		-d "${query}" https://api.github.com/graphql )
+	[[ $? == 0 ]] || return $?
+	tag=${res#*name\":\"}
+	tag=${tag%%\"*}
+	echo -n ${tag#\{}
 }
 
 update_v2_libs() {
-  (
-  set -e
-  local repo_path='/home/ryan/Git/ryans-repos' \
-        branch='dev' p
+	(
+	set -e
+	local repo_path='/home/ryan/Git/ryans-repos' \
+		branch='dev' p
 
-  _do pushd ${repo_path}/dev-libs
-  trap "_do popd" EXIT
-  local last_branch=$(git branch --show-current)
-  if [[ ${last_branch} != ${branch} ]]; then
-    _do git checkout ${branch}
-  fi
+	_do pushd ${repo_path}/dev-libs
+	trap "_do popd" EXIT
+	local last_branch=$(git branch --show-current)
+	if [[ ${last_branch} != ${branch} ]]; then
+		_do git checkout ${branch}
+	fi
 
-  local dlcv=""
+	local dlcv=""
 
-  _add_and_commit() {
-    _do git add .
-    _do pkgcheck scan
-    _do pkgdev commit -s false
-  }
+	_add_and_commit() {
+		_do git add .
+		_do pkgcheck scan
+		_do pkgdev commit -s false
+	}
 
-  # bin pkg
-  local last_tag
-  for p in domain-list-community geoip; do
-    last_tag=$(gh_last_tag v2fly $p)
-    if [[ $p == "domain-list-community" ]]; then
-      dlcv=$last_tag
-    fi
-    local PN="v2ray-${p}-bin"
-    local NEF="${PN}-5.${last_tag}.ebuild"
-    if _do ls ${PN}/${NEF} &>/dev/null; then
-      echo "already updated, skip ..." >&2
-      continue
-    fi
-    _do pushd $PN
-    _do rm ${PN}-5.*.ebuild
-    _do cp *-9999.ebuild $NEF
-    _do ebuild $NEF manifest
-    _add_and_commit
-    _do popd
-  done
+	# bin pkg
+	local last_tag
+	for p in domain-list-community geoip; do
+		last_tag=$(gh_last_tag v2fly $p)
+		if [[ $p == "domain-list-community" ]]; then
+			dlcv=$last_tag
+		fi
+		local PN="v2ray-${p}-bin"
+		local NEF="${PN}-5.${last_tag}.ebuild"
+		if _do ls ${PN}/${NEF} &>/dev/null; then
+			echo "already updated, skip ..." >&2
+			continue
+		fi
+		_do pushd $PN
+		_do rm ${PN}-5.*.ebuild
+		_do cp *-9999.ebuild $NEF
+		_do ebuild $NEF manifest
+		_add_and_commit
+		_do popd
+	done
 
-  # src pkg
-  local dlcn="v2ray-domain-list-community"
-  local dlc_nef="${dlcn}-5.${dlcv}.ebuild"
-  if ! _do ls ${dlcn}/${dlc_nef} &>/dev/null; then
-    _do pushd $dlcn
-    _do mv ${dlcn}-5.*.ebuild $dlc_nef
-    _do ebuild $dlc_nef fetch --skip-manifest
-    local tmpdir=$(mktemp -d)
-    _do tar -C $tmpdir -xf /var/cache/distfiles/${dlcn}-5.${dlcv}*
-    local go_ver=$(grep -E '^go\s' ${tmpdir}/*/go.mod | cut -d' ' -f2)
-    eval "_do sed -Ei 's@(>=dev-lang/go-).*@\\1${go_ver}\"@' '$dlc_nef'"
-    _do git add .
-    _do git --no-pager diff HEAD .
-    _do rm files/go.sum*
-    _do cp ${tmpdir}/*/go.sum files/go.sum.5.${dlcv}
-    _do ebuild $dlc_nef manifest
-    _add_and_commit
-    _do popd
-  fi
+	# src pkg
+	local dlcn="v2ray-domain-list-community"
+	local dlc_nef="${dlcn}-5.${dlcv}.ebuild"
+	if ! _do ls ${dlcn}/${dlc_nef} &>/dev/null; then
+		_do pushd $dlcn
+		_do mv ${dlcn}-5.*.ebuild $dlc_nef
+		_do ebuild $dlc_nef fetch --skip-manifest
+		local tmpdir=$(mktemp -d)
+		_do tar -C $tmpdir -xf /var/cache/distfiles/${dlcn}-5.${dlcv}*
+		local go_ver=$(grep -E '^go\s' ${tmpdir}/*/go.mod | cut -d' ' -f2)
+		eval "_do sed -Ei 's@(>=dev-lang/go-).*@\\1${go_ver}\"@' '$dlc_nef'"
+		_do git add .
+		_do git --no-pager diff HEAD .
+		_do rm files/go.sum*
+		_do cp ${tmpdir}/*/go.sum files/go.sum.5.${dlcv}
+		_do ebuild $dlc_nef manifest
+		_add_and_commit
+		_do popd
+	fi
 
-  if [[ ${last_branch} != ${branch} ]]; then
-    _do git checkout ${last_branch}
-  fi
-  )
+	if [[ ${last_branch} != ${branch} ]]; then
+		_do git checkout ${last_branch}
+	fi
+	)
 }
 
 alias ip7="ip7 -u -c ~/.config/ip7/config.json"
 
 for riscv_elf_gnu in /home/ryan/Programs/riscv/bin/riscv64-unknown-elf-*; do
-  eval "alias ${riscv_elf_gnu##*/}='$riscv_elf_gnu'"
+	eval "alias ${riscv_elf_gnu##*/}='$riscv_elf_gnu'"
 done
 
 alias mountdolphin="sshfs dolphin:/home/ryan/public_html /home/ryan/dolphin-pub/"
+
+export SHELLCHECK_ARGUMENTS="-e 2120 -e 2317"
+
+
+md2pdf() {
+	set -- pandoc \
+		--toc \
+		-f gfm-smart+east_asian_line_breaks+gfm_auto_identifiers \
+		--template=~/Git/pandoc-latex-template/eisvogel.tex \
+		--pdf-engine lualatex \
+		-V urlcolor=blue \
+		-V block-headings \
+		-V fontsize='12pt' \
+		-V mainfont='Noto Sans' \
+		-V sansfont='Noto Sans' \
+		-V monofont='JetBrains Mono' \
+		-V mathfont='JetBrains Mono' \
+		-V CJKmainfont='Sarasa Gothic SC' \
+		-V CJKsansfont='Sarasa Gothic SC' \
+		-V CJKmonofont='Sarasa Gothic SC' \
+		--listings \
+		-o "$2" "$1"
+	echo ">>>" "$@"
+	"$@"
+}
+#		-V CJKmainfont='Sarasa Gothic SC' \
+#		-V CJKsansfont='Sarasa Gothic SC' \
+#		-V CJKmonofont='Sarasa Gothic SC' \
+
+eval "export IP7_LICENSE_KEY=$(pass show $ip7_key)"
+

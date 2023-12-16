@@ -10,9 +10,9 @@ desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
 desktopsrule=3
 noborder=true
 noborderrule=3
-position=1216,334
+position=1592,921
 positionrule=3
-size=704,866
+size=968,1329
 sizerule=3
 skiptaskbar=true
 skiptaskbarrule=3
@@ -42,12 +42,12 @@ decocolorrule=2
 maximizehorizrule=3
 maximizevertrule=3
 noborder=true
-position=660,315
+position=680,955
 positionrule=3
-size=1190,815
+size=1810,1555
 sizerule=3
 windowrole=browser
-wmclass=konsole konsole
+wmclass=konsole org.kde.konsole
 wmclasscomplete=true
 wmclassmatch=1
 
@@ -109,9 +109,9 @@ activity=00000000-0000-0000-0000-000000000000
 desktops=d7f0effc-79b0-42d0-890e-595e79826c6f
 noborder=true
 noborderrule=2
-position=660,69
+position=603,823
 positionrule=3
-size=1190,1101
+size=1878,1925
 sizerule=3
 skiptaskbar=true
 types=1
@@ -128,9 +128,9 @@ desktopsrule=2
 minimizerule=2
 noborder=true
 noborderrule=3
-position=0,334
+position=0,921
 positionrule=3
-size=1216,866
+size=1592,1329
 sizerule=3
 skiptaskbar=true
 skiptaskbarrule=2
@@ -161,9 +161,9 @@ wmclassmatch=1
 Description=google-chrome rule
 noborder=true
 noborderrule=2
-position=353,30
+position=427,630
 positionrule=3
-size=1567,1170
+size=2133,2250
 sizerule=3
 skiptaskbar=true
 wmclass=google-chrome google-chrome
@@ -188,9 +188,9 @@ desktops=1ad4393b-2c3a-492c-b976-3d826a80b75a
 desktopsrule=3
 noborder=true
 noborderrule=2
-position=588,30
+position=640,630
 positionrule=3
-size=1332,1170
+size=1920,2050
 sizerule=3
 skiptaskbar=true
 title=RISC-V | Trello
@@ -200,6 +200,30 @@ windowrolematch=1
 wmclass=app.clickup.com__9009089463_v_l_4-90090178235-1 google-chrome
 wmclasscomplete=true
 wmclassmatch=1
+
+[20]
+Description=wayland telegram
+position=1577,102
+positionrule=3
+size=983,2778
+sizerule=3
+types=1
+wmclass=telegram-desktop org.telegram.desktop
+wmclasscomplete=true
+wmclassmatch=1
+
+[21]
+Description=wayland telegram-bin
+decocolor=BreezeDarkForTelegram
+decocolorrule=2
+position=1577,102
+positionrule=2
+size=983,2778
+sizerule=2
+types=1
+wmclass=org\\.telegram\\.desktop\\._.*
+wmclasscomplete=true
+wmclassmatch=3
 
 [3]
 Description=trello rule for chromium
@@ -238,6 +262,19 @@ types=1
 wmclass=qemu qemu-system-x86_64
 wmclasscomplete=true
 wmclassmatch=1
+
+[4f2eb36d-4e73-40f6-952b-1fced66c0816]
+Description=wayland telegram-bin
+decocolor=BreezeDarkForTelegram
+decocolorrule=2
+position=1577,102
+positionrule=2
+size=983,2778
+sizerule=2
+types=1
+wmclass=org\\.telegram\\.desktop\\._.*
+wmclasscomplete=true
+wmclassmatch=3
 
 [5]
 Description=Application settings for firefox
@@ -351,8 +388,8 @@ wmclass=chromium-browser-chromium
 wmclassmatch=1
 
 [General]
-count=19
-rules=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+count=21
+rules=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21
 
 [a8b5d0a3-5d33-4de2-a190-9828f36a8677]
 Description=clickup rule for google-chrome
@@ -395,6 +432,17 @@ types=1
 windowrole=pop-up
 windowrolematch=1
 wmclass=trello.com__b_p8v6a98n_risc-v chromium-browser-chromium
+wmclasscomplete=true
+wmclassmatch=1
+
+[e83d53e1-c89b-4e57-bf02-f63f0ebd2ed3]
+Description=wayland telegram
+position=1577,102
+positionrule=2
+size=983,2778
+sizerule=2
+types=1
+wmclass=telegram-desktop org.telegram.desktop
 wmclasscomplete=true
 wmclassmatch=1
 

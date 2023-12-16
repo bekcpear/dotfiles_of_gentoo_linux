@@ -1,7 +1,9 @@
-[http]
-  proxy = socks5h://127.0.0.1:1080
+#[http]
+#  proxy = socks5h://127.0.0.1:1080
 [safe]
 	directory = /var/db/repos/ryans
 	directory = /var/db/repos/steam-overlay
 	directory = /var/db/repos/guru
 	directory = /var/db/repos/riscv
+	directory = /var/db/repos/kde
+	directory = /var/db/repos/benzene-overlay

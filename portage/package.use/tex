@@ -3,3 +3,5 @@
 # required by app-text/texlive-2020-r9::gentoo[-extra,xml]
 # required by app-text/texlive (argument)
 >=app-text/texlive-core-2020-r12 xetex
+
+app-text/texlive luatex xetex

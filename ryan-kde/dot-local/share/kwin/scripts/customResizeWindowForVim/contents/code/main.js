@@ -7,10 +7,10 @@ registerShortcut("customResizeWindowForVim", "Move window to right and resize", 
   var maxArea = workspace.clientArea(KWin.MaximizeArea, client);
   if (client.moveable && client.resizeable && (client.width < maxArea.width || client.height < maxArea.height)) {
     client.geometry = {
-      x: maxArea.width / 4 + maxArea.x,
-      y: maxArea.y,
-      width: maxArea.width / 4 * 3,
-      height: maxArea.height
+      x: maxArea.width / 6 + maxArea.x,
+      y: maxArea.y + 600,
+      width: maxArea.width / 6 * 5,
+      height: maxArea.height - 600
     };
   }
 });

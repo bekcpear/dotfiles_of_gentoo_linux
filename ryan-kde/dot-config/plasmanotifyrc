@@ -19,5 +19,8 @@ Seen=true
 [Applications][org.qbittorrent.qbittorrent]
 Seen=true
 
+[Applications][org.telegram.desktop]
+Seen=true
+
 [Applications][thunderbird]
 Seen=true

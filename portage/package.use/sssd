@@ -5,3 +5,8 @@ sys-auth/sssd sudo
 # required by sys-auth/sssd-2.5.2-r3::gentoo
 # required by sys-auth/sssd (argument)
 >=sys-libs/glibc-2.36-r5 nscd
+
+# required by sys-auth/sssd-2.9.1::gentoo
+# required by @selected
+# required by @world (argument)
+>=net-nds/openldap-2.6.6 experimental

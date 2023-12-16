@@ -1,0 +1,4 @@
+kde-plasma/* gcc-O2.conf
+kde-frameworks/* gcc-O2.conf
+kde-apps/* gcc-O2.conf
+kde-misc/* gcc-O2.conf

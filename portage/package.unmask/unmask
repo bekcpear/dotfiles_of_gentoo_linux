@@ -17,8 +17,11 @@ app-i18n/fcitx5-rime
 x11-libs/xcb-imdkit
 
 app-text/tldr::guru
-net-im/nheko::guru
 gui-apps/wtype::guru
+
+# for nheko
+net-im/nheko::guru
+dev-cpp/blurhash::guru
 
 # for telegram desktop qt6
 # bug #838970.
@@ -37,3 +40,7 @@ dev-libs/libglibutil::guru
 dev-libs/gbinder::guru
 dev-python/pyclip::guru
 dev-python/gbinder::guru
+
+sys-firmware/u-boot-bin::riscv
+
+dev-qt/qtwebkit::benzene-overlay

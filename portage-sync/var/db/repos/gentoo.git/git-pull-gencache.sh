@@ -4,6 +4,8 @@
 # newly pulled commits. After than, regenerate the metadata cache
 # Takes no argument.
 
+set -e
+
 REPO_PATH="/var/db/repos/gentoo.git/gentoo"
 CONTINUED_COMMIT=/var/db/repos/gentoo.git/CONTINUED_COMMIT
 LAST_COMMIT=
@@ -17,8 +19,8 @@ function verify-sign-until() {
 		commit=${commits[i]}
 		msg=$(git --no-pager log -1 --format="%h %s (%cr) << %ce" "$commit")
 		echo "Verifying $msg"
-		output=$(git verify-commit --raw "$commit" 2>&1)
-		res=$?
+		res=0
+		output=$(git verify-commit --raw "$commit" 2>&1) || res=$?
 		if [[ $res != 0 ]]; then
 			echo "Verification failed!"
 			git --no-pager log -1 --pretty=fuller "$commit"
